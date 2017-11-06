@@ -8,26 +8,22 @@ import android.os.Bundle;
 import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.FrameLayout;
 
-import com.cks.hiroyuki2.worksupport3.Adapters.TimeEventRVAdapter;
-import com.cks.hiroyuki2.worksupport3.Adapters.TimeEventRangeRVAdapter;
-import com.cks.hiroyuki2.worksupport3.Fragments.EditTemplateFragment;
-import com.cks.hiroyuki2.worksupport3.Fragments.RecordFragment;
-import com.cks.hiroyuki2.worksupport3.Fragments.HelpFragment;
-import com.cks.hiroyuki2.worksupport3.R;
 import com.cks.hiroyuki2.worksupprotlib.Entity.RecordData;
 import com.cks.hiroyuki2.worksupprotlib.Entity.TimeEvent;
 import com.cks.hiroyuki2.worksupprotlib.Entity.TimeEventDataSet;
 import com.cks.hiroyuki2.worksupprotlib.Entity.TimeEventRange;
 import com.cks.hiroyuki2.worksupprotlib.Util;
+import com.example.hiroyuki3.worksupportlibw.R;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -37,17 +33,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.cks.hiroyuki2.worksupport3.Adapters.RecordVPAdapter.DATA_NUM;
-import static com.cks.hiroyuki2.worksupport3.Adapters.TimeEventRVAdapter.CALLBACK_ITEM_ADD;
-import static com.cks.hiroyuki2.worksupport3.Adapters.TimeEventRVAdapter.DIALOG_TAG_ITEM_ADD;
-import static com.cks.hiroyuki2.worksupport3.Adapters.TimeEventRVAdapter.TIME_EVENT;
-import static com.cks.hiroyuki2.worksupport3.Adapters.TimeEventRangeRVAdapter.POS_IN_LIST;
-import static com.cks.hiroyuki2.worksupport3.DialogKicker.kickCircleAndInputDialog;
-import static com.cks.hiroyuki2.worksupport3.DialogKicker.kickTimePickerDialog;
 import static com.cks.hiroyuki2.worksupprotlib.Util.getTimeEveDataSetFromRecordData;
 import static com.cks.hiroyuki2.worksupprotlib.Util.initRecycler;
 import static com.cks.hiroyuki2.worksupprotlib.UtilSpec.colorId;
-import android.support.v4.app.Fragment;
 
 /**
  * RecordVpItem兄弟！Timelineおじさん！

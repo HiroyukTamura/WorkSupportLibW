@@ -10,8 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.cks.hiroyuki2.worksupport3.Fragments.EditTemplateFragment;
-import com.cks.hiroyuki2.worksupport3.R;
+import com.example.hiroyuki3.worksupportlibw.R;
 
 import org.apmem.tools.layouts.FlowLayout;
 
@@ -22,8 +21,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.cks.hiroyuki2.worksupprotlib.Util.setNullableText;
 import static com.cks.hiroyuki2.worksupprotlib.Util.delimiter;
+import static com.cks.hiroyuki2.worksupprotlib.Util.setNullableText;
 
 /**
  * 本来は{@link RecordVpItemTag}が担当してもいいんだけど、テンプレまわりの処理が特に大変なので、tagPoolに関してだけ、テンプレ専用のクラスを作成しました。
