@@ -6,6 +6,7 @@ package com.example.hiroyuki3.worksupportlibw.Presenter;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -24,6 +25,8 @@ import com.example.hiroyuki3.worksupportlibw.RecordVpItems.RecordVpItemTagPool;
 import com.example.hiroyuki3.worksupportlibw.RecordVpItems.RecordVpItemTime;
 import com.google.gson.Gson;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -41,10 +44,13 @@ import static com.example.hiroyuki3.worksupportlibw.Adapters.TimeEventRangeRVAda
 import static com.example.hiroyuki3.worksupportlibw.Adapters.TimeEventRangeRVAdapter.CALLBACK_RANGE_CLICK_VALUE;
 import static com.example.hiroyuki3.worksupportlibw.Adapters.TimeEventRangeRVAdapter.POSITION;
 import static com.example.hiroyuki3.worksupportlibw.Adapters.TimeEventRangeRVAdapter.POS_IN_LIST;
+import static com.example.hiroyuki3.worksupportlibw.AdditionalUtil.ADD_NEW_TAG;
+import static com.example.hiroyuki3.worksupportlibw.AdditionalUtil.CODE_BLANK_FRAG;
+import static com.example.hiroyuki3.worksupportlibw.AdditionalUtil.CODE_RECORD_FRAG;
 import static com.example.hiroyuki3.worksupportlibw.RecordVpItems.RecordVpItemTime.TIME_EVE_RANGE;
 
 /**
- * {@link RecordVPAdapter}のビューをいい感じに設定する人。
+ * {@link RecordVPAdapter}のビューをいい感じに設定する人。RecordFragmentと、BlankFragmentから呼ばれる。
  */
 public class RecordUiOperator implements RecordVpItemTagPool.onClickCardListener, RecordVpItemParam.OnClickParamsNameListener, RecordVpItemComment.onClickCommentListener{
 
@@ -57,11 +63,17 @@ public class RecordUiOperator implements RecordVpItemTagPool.onClickCardListener
     private List<RecordVpItem> itemList;
     private IRecordUiOperator listener;
 
-    public RecordUiOperator(@NonNull List<RecordData> list/*このRecordDataの中身のcalは特に使われていません*/, LinearLayout ll, Calendar cal, Fragment fragment){
+    private int code;
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef(value = {CODE_RECORD_FRAG, CODE_BLANK_FRAG})
+    private @interface fragCode {}
+
+    public RecordUiOperator(@NonNull List<RecordData> list/*このRecordDataの中身のcalは特に使われていません*/, LinearLayout ll, Calendar cal, Fragment fragment, @fragCode int code){
         this.list = list;
         this.ll = ll;
         this.cal = cal;
         this.fragment = fragment;
+        this.code = code;
         if (fragment instanceof IRecordUiOperator)
             listener = (IRecordUiOperator) fragment;
     }
@@ -94,11 +106,11 @@ public class RecordUiOperator implements RecordVpItemTagPool.onClickCardListener
     private RecordVpItem buildView(RecordData data, int i){
         switch (data.dataType){
             case 1:
-                return new RecordVpItemTime(data, i, cal, fragment);
+                return new RecordVpItemTime(data, i, cal, fragment, code);
             case 2:
                 return new RecordVpItemTagPool(data, i, cal, fragment, this);
             case 3:
-                return new RecordVpItemParam(data, i, cal, fragment);
+                return new RecordVpItemParam(data, i, cal, fragment, code);
             case 4:
                 return new RecordVpItemComment(data, i, cal, fragment, this);
         }
@@ -210,7 +222,7 @@ public class RecordUiOperator implements RecordVpItemTagPool.onClickCardListener
     public void updateTagPool(Intent data){
         int dataNum = data.getIntExtra(DATA_NUM, Integer.MAX_VALUE);
         if (dataNum == Integer.MAX_VALUE) {
-            onError(fragment.getContext(), "dataNum == Integer.MAX_VALUE", R.string.error);
+            onError(fragment, "dataNum == Integer.MAX_VALUE", R.string.error);
             return;
         }
 

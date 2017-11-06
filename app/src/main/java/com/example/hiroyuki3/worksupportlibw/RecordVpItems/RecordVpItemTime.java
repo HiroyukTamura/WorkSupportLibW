@@ -5,6 +5,7 @@
 package com.example.hiroyuki3.worksupportlibw.RecordVpItems;
 
 import android.os.Bundle;
+import android.support.annotation.IntDef;
 import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -27,6 +28,8 @@ import com.example.hiroyuki3.worksupportlibw.Adapters.TimeEventRangeRVAdapter;
 import com.example.hiroyuki3.worksupportlibw.R;
 import com.example.hiroyuki3.worksupportlibw.R2;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -41,9 +44,12 @@ import static com.cks.hiroyuki2.worksupprotlib.Util.initRecycler;
 import static com.cks.hiroyuki2.worksupprotlib.UtilSpec.colorId;
 import static com.example.hiroyuki3.worksupportlibw.Adapters.RecordVPAdapter.DATA_NUM;
 import static com.example.hiroyuki3.worksupportlibw.Adapters.TimeEventRangeRVAdapter.POS_IN_LIST;
+import static com.example.hiroyuki3.worksupportlibw.AdditionalUtil.CODE_BLANK_FRAG;
+import static com.example.hiroyuki3.worksupportlibw.AdditionalUtil.CODE_EDIT_FRAG;
+import static com.example.hiroyuki3.worksupportlibw.AdditionalUtil.CODE_RECORD_FRAG;
 
 /**
- * RecordVpItem兄弟！Timelineおじさん！
+ * RecordVpItem兄弟！Timelineおじさん！ RecordFragment, EditRecordFragmentからnew される
  */
 public class RecordVpItemTime extends RecordVpItem {
 
@@ -60,12 +66,23 @@ public class RecordVpItemTime extends RecordVpItem {
     @BindView(R2.id.rv_container) LinearLayout container;
     @BindView(R2.id.add_range) ImageView addRange;
 
-    public RecordVpItemTime(RecordData data, int dataNum, Calendar cal, Fragment fragment) {
+    private int code;
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef(value = {CODE_RECORD_FRAG, CODE_EDIT_FRAG, CODE_BLANK_FRAG})
+    private @interface fragCode {}
+
+    public RecordVpItemTime(RecordData data, int dataNum, Calendar cal, Fragment fragment, @fragCode int code) {
         super(data, dataNum, cal, fragment);
+        this.code = code;
+        if (fragment instanceof IRecordVpItemTime)
+            listener = (IRecordVpItemTime) fragment;
     }
 
-    public RecordVpItemTime(RecordData data, int dataNum, Fragment fragment){
+    public RecordVpItemTime(RecordData data, int dataNum, Fragment fragment, @fragCode int code){
         super(data, dataNum, Calendar.getInstance(), fragment);
+        this.code = code;
+        if (fragment instanceof IRecordVpItemTime)
+            listener = (IRecordVpItemTime) fragment;
     }
 
     interface IRecordVpItemTime{
@@ -180,10 +197,14 @@ public class RecordVpItemTime extends RecordVpItem {
 
         TimeEventRangeParams params = new TimeEventRangeParams(i);
         ButterKnife.bind(params, v);
-        if (getFragment() instanceof RecordFragment) {
+        if (code == CODE_RECORD_FRAG){
             params.colorFl.setBackground(null);
             params.colorFl.setForeground(null);
         }
+//        if (getFragment() instanceof RecordFragment) {
+//            params.colorFl.setBackground(null);
+//            params.colorFl.setForeground(null);
+//        }
         int colorIdC = colorId.get(range.getColorNum());
         params.setColor(colorIdC);
         TimeEventRangeRVAdapter rangeAdapter = new TimeEventRangeRVAdapter(getFragment(), range, getDataNum(), i);

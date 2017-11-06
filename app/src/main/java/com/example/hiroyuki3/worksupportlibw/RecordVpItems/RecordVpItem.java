@@ -14,7 +14,7 @@ import com.cks.hiroyuki2.worksupprotlib.Entity.RecordData;
 import java.util.Calendar;
 
 /**
- * Created by hiroyuki2 on 2017/09/17.
+ * RecordVpItemsの元締め。このパッケージのクラスは全てこのクラスの子です。
  */
 
 public abstract class RecordVpItem {

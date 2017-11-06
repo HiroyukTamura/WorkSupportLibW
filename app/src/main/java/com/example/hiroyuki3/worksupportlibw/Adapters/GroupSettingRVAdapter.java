@@ -45,11 +45,12 @@ public class GroupSettingRVAdapter extends RecyclerView.Adapter implements Compo
     private FirebaseUser userMe;
     private IGroupSettingRVAdapter listener;
 
-    public GroupSettingRVAdapter(Fragment fragment, List<User> userList, @NonNull FirebaseUser userMe, @NonNull IGroupSettingRVAdapter listener) {
+    public GroupSettingRVAdapter(Fragment fragment, List<User> userList, @NonNull FirebaseUser userMe) {
         this.fragment = fragment;
         this.userList = userList;
         this.userMe = userMe;
-        this.listener = listener;
+        if (fragment instanceof IGroupSettingRVAdapter)
+            listener = (IGroupSettingRVAdapter) fragment;
     }
 
     interface IGroupSettingRVAdapter{

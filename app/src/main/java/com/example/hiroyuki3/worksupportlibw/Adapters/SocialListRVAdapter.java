@@ -37,6 +37,8 @@ import cn.refactor.library.SmoothCheckBox;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.view.View.VISIBLE;
+import static com.example.hiroyuki3.worksupportlibw.AdditionalUtil.CODE_ADD_GROUP_FRAG;
+import static com.example.hiroyuki3.worksupportlibw.AdditionalUtil.CODE_SOCIAL_FRAG;
 
 /**
  * ユーザーリストの表示するRecyclerView
@@ -53,13 +55,11 @@ public class SocialListRVAdapter extends RecyclerView.Adapter implements SmoothC
     private Drawable defBackIcon;
     private List<String> newUserUids = new ArrayList<>();
     private ISocialListRVAdapter listener;
-    public static final int CODE_ADD_GROUP_FRAG = 0;
-    public static final int CODE_SOCIAL_FRAG = 1;
     private int code;
 
     @Retention(RetentionPolicy.SOURCE)
     @IntDef(value = {CODE_ADD_GROUP_FRAG, CODE_SOCIAL_FRAG})
-    public @interface fragCode {}
+    private  @interface fragCode {}
 
     public SocialListRVAdapter(@NonNull List<User> list, Fragment fragment, @fragCode int code){
         super();

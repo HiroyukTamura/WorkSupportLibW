@@ -24,7 +24,6 @@ import android.widget.Toast;
 
 import com.cks.hiroyuki2.worksupportlib.R2;
 import com.cks.hiroyuki2.worksupprotlib.Entity.RecordData;
-import com.cks.hiroyuki2.worksupprotlib.TemplateEditor;
 import com.example.hiroyuki3.worksupportlibw.R;
 import com.example.hiroyuki3.worksupportlibw.RecordVpItems.RecordVpItemParam;
 
@@ -38,12 +37,16 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.cks.hiroyuki2.worksupprotlib.TemplateEditor.writeTemplate;
 import static com.cks.hiroyuki2.worksupprotlib.Util.INDEX;
 import static com.cks.hiroyuki2.worksupprotlib.Util.PARAMS_VALUES;
 import static com.cks.hiroyuki2.worksupprotlib.Util.TEMPLATE_PARAMS_SLIDER_MAX;
 import static com.cks.hiroyuki2.worksupprotlib.Util.bundle2Data;
 import static com.cks.hiroyuki2.worksupprotlib.Util.bundle2DataParams;
 import static com.cks.hiroyuki2.worksupprotlib.Util.onError;
+import static com.example.hiroyuki3.worksupportlibw.AdditionalUtil.CODE_BLANK_FRAG;
+import static com.example.hiroyuki3.worksupportlibw.AdditionalUtil.CODE_EDIT_FRAG;
+import static com.example.hiroyuki3.worksupportlibw.AdditionalUtil.CODE_RECORD_FRAG;
 
 /**
  * RecordVpItemParam所属！うーん、入り組んでる！
@@ -60,14 +63,11 @@ public class RecordParamsRVAdapter extends RecyclerView.Adapter<RecordParamsRVAd
 //    private int indexMax;
     private RecordVpItemParam param;
     private IRecordParamsRVAdapter listener;
-    public static final int EDIT_FRAG = 0;
-    public static final int RECORD_FRAG = 1;
-    public static final int HELP_FRAG = 2;
     private int code;
 
     @Retention(RetentionPolicy.SOURCE)
-    @IntDef(value = {EDIT_FRAG, RECORD_FRAG, HELP_FRAG})
-    public @interface fragCode {}
+    @IntDef(value = {CODE_EDIT_FRAG, CODE_RECORD_FRAG, CODE_BLANK_FRAG})
+    private @interface fragCode {}
 
     public RecordParamsRVAdapter(@NonNull List<Bundle> list, int dataNum, @Nullable String dataName, @NonNull Fragment fragment, @Nullable RecordVpItemParam param, @fragCode int code){
         Log.d(TAG, "RecordParamsRVAdapter: constructor fire");
@@ -78,12 +78,12 @@ public class RecordParamsRVAdapter extends RecyclerView.Adapter<RecordParamsRVAd
         this.param = param;
         this.code = code;
 //        indexMax = list.size()-1;
-        inflater = (LayoutInflater)fragment.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inflater = (LayoutInflater)fragment.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);/*非同期でないのでwarning無視*/
         if (fragment instanceof IRecordParamsRVAdapter)
             listener = (IRecordParamsRVAdapter) fragment;
     }
 
-    RecordParamsRVAdapter(@NonNull List<Bundle> list, int dataNum, @Nullable String dataName, @NonNull Fragment fragment, @fragCode int code){//todo 後でこれなくすこと
+    public RecordParamsRVAdapter(@NonNull List<Bundle> list, int dataNum, @Nullable String dataName, @NonNull Fragment fragment, @fragCode int code){//todo 後でこれなくすこと
         this(list, dataNum, dataName, fragment, null, code);
     }
 
@@ -175,7 +175,7 @@ public class RecordParamsRVAdapter extends RecyclerView.Adapter<RecordParamsRVAd
 //                    }
 //                });
 
-                if (code != EDIT_FRAG)
+                if (code != CODE_RECORD_FRAG)
 //                if (!(fragment instanceof EditTemplateFragment))
                     break;
 
@@ -185,7 +185,7 @@ public class RecordParamsRVAdapter extends RecyclerView.Adapter<RecordParamsRVAd
         }
 
 //        if (!(fragment instanceof EditTemplateFragment))
-        if (code != EDIT_FRAG) return;
+        if (code != CODE_EDIT_FRAG) return;
 
         holder.remove.setVisibility(View.VISIBLE);
 //        holder.remove.setOnClickListener(listener);
@@ -201,7 +201,7 @@ public class RecordParamsRVAdapter extends RecyclerView.Adapter<RecordParamsRVAd
      */
     public void updateData(){
         RecordData data = bundle2Data(list, dataName, 3, 0, 0, 0);/*bundle2DataParamsでなくていいのか？*/
-        boolean success = TemplateEditor.writeTemplate(dataNum, data, fragment.getContext());
+        boolean success = writeTemplate(dataNum, data, fragment.getContext());
         if (success)
             notifyDataSetChanged();
         else
@@ -247,7 +247,7 @@ public class RecordParamsRVAdapter extends RecyclerView.Adapter<RecordParamsRVAd
         Bundle bundle = list.get(pos);
         String[] values = bundle.getStringArray(PARAMS_VALUES);
         if (values == null){
-            onError(fragment.getContext(), TAG + "onCheckedChanged", null);
+            onError(fragment, TAG + "onCheckedChanged", null);
             return;
         }
 
@@ -259,12 +259,12 @@ public class RecordParamsRVAdapter extends RecyclerView.Adapter<RecordParamsRVAd
     private void callBack(String[] values, int pos){
         Bundle bundle = list.get(pos);
         bundle.putStringArray(PARAMS_VALUES, values);
-        if (code == EDIT_FRAG){
+        if (code == CODE_EDIT_FRAG){
             RecordData data = bundle2DataParams(list, dataName, 0, 0, 0);
-            boolean success = TemplateEditor.writeTemplate(dataNum, data, fragment.getContext());
+            boolean success = writeTemplate(dataNum, data, fragment.getContext());/*非同期でないからOK*/
             if (!success)
                 onError(fragment.getContext(), "!success", R.string.template_failure);
-        } else if (code == RECORD_FRAG){
+        } else if (code == CODE_RECORD_FRAG){
             param.syncFirebaseAndMap(list);
         }
     }
@@ -273,7 +273,7 @@ public class RecordParamsRVAdapter extends RecyclerView.Adapter<RecordParamsRVAd
     //region onClick系列
     @OnClick({R2.id.key, R2.id.max, R2.id.remove})
     void onClickBtn(View view){
-        if (code != RECORD_FRAG)
+        if (code != CODE_RECORD_FRAG)
             return;
 
         int pos = (int) ((ViewGroup)view.getParent()).getTag();

@@ -83,7 +83,7 @@ public class ShareBoardRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     interface IShareBoardRVAdapter{
-        void onClickVertAsset();
+        void onClickVertAsset(int code);
         void onClickItemUploaded(int listPos);
         void onClickExpandableView(int listPos);
         void kickViewerActivity(String memberUid);
@@ -323,20 +323,20 @@ public class ShareBoardRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         Bundle bundle = new Bundle();
         bundle.putInt(BUNDLE_KEY_POSITION, listPos);
         if (listener != null)
-            switch (getItemViewTypeForListPos(listPos)){
-                case ITEM_TYPE_DATA:{
-                    listener.onClickVertAsset(DIALOG_TAG_DATA_VERT, DIALOG_CODE_DATA_VERT, bundle, fragment);
+            listener.onClickVertAsset(getItemViewTypeForListPos(listPos));
+
+//        if (listener != null)
+//            switch (getItemViewTypeForListPos(listPos)){
+//                case ITEM_TYPE_DATA:{
 //                    kickDialogInOnClick(DIALOG_TAG_DATA_VERT, DIALOG_CODE_DATA_VERT, bundle, fragment);
-                    break;}
-                case ITEM_TYPE_UPLOADED:{
-                    listener.onClickVertAsset(DIALOG_TAG_ITEM_VERT, DIALOG_CODE_ITEM_VERT, bundle, fragment);
+//                    break;}
+//                case ITEM_TYPE_UPLOADED:{
 //                    kickDialogInOnClick(DIALOG_TAG_ITEM_VERT, DIALOG_CODE_ITEM_VERT, bundle, fragment);
-                    break;}
-                case ITEM_TYPE_DOCUMENT:{
-                    listener.onClickVertAsset(DIALOG_TAG_DOC_VERT, DIALOG_CODE_DOC_VERT, bundle, fragment);
+//                    break;}
+//                case ITEM_TYPE_DOCUMENT:{
 //                    kickDialogInOnClick(DIALOG_TAG_DOC_VERT, DIALOG_CODE_DOC_VERT, bundle, fragment);
-                    break;}
-            }
+//                    break;}
+//            }
     }
 
     private void onClickCardAsset(View view){

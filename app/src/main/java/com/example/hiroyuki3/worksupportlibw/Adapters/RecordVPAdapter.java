@@ -44,8 +44,11 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.concurrent.TimeUnit;
 
+import static android.content.Context.MODE_PRIVATE;
 import static com.cks.hiroyuki2.worksupprotlib.Util.DATE_PATTERN_YM;
 import static com.cks.hiroyuki2.worksupprotlib.Util.DEFAULT;
+import static com.cks.hiroyuki2.worksupprotlib.Util.PREF_KEY_TEMPLATE;
+import static com.cks.hiroyuki2.worksupprotlib.Util.PREF_NAME;
 import static com.cks.hiroyuki2.worksupprotlib.Util.cal2date;
 import static com.cks.hiroyuki2.worksupprotlib.Util.date2Cal;
 import static com.cks.hiroyuki2.worksupprotlib.Util.logStackTrace;
@@ -53,6 +56,7 @@ import static com.example.hiroyuki3.worksupportlibw.Adapters.TimeEventRVAdapter.
 import static com.example.hiroyuki3.worksupportlibw.Adapters.TimeEventRVAdapter.CALLBACK_ITEM_CLICK2;
 import static com.example.hiroyuki3.worksupportlibw.Adapters.TimeEventRangeRVAdapter.CALLBACK_RANGE_CLICK_TIME;
 import static com.example.hiroyuki3.worksupportlibw.Adapters.TimeEventRangeRVAdapter.CALLBACK_RANGE_CLICK_VALUE;
+import static com.example.hiroyuki3.worksupportlibw.AdditionalUtil.CODE_RECORD_FRAG;
 import static com.example.hiroyuki3.worksupportlibw.RecordVpItems.RecordVpItemTime.CALLBACK_RANGE_COLOR;
 
 /**
@@ -112,7 +116,7 @@ public class RecordVPAdapter extends PagerAdapter {
     public RecordVPAdapter(Calendar calMed, Fragment fragment){
 //        RecordUiUtil.getInstance().setAdapter(this);
         this.fragment = fragment;
-        inflater = (LayoutInflater)fragment.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inflater = (LayoutInflater)fragment.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);/*非同期ではないのでok*/
         this.calMed = calMed;
         rdu = RecordDataUtil.getInstance();
         if (fragment instanceof IRecordVPAdapter)
@@ -160,8 +164,8 @@ public class RecordVPAdapter extends PagerAdapter {
 
     private void getTemplate(){
         Log.d(TAG, "getTemplate: fire");
-        final SharedPreferences pref = fragment.getContext().getSharedPreferences(Util.PREF_NAME, Context.MODE_PRIVATE);
-        templateCode = pref.getString(Util.PREF_KEY_TEMPLATE, DEFAULT);
+        final SharedPreferences pref = fragment.getContext().getSharedPreferences(PREF_NAME, MODE_PRIVATE);/*非同期ではないのでok*/
+        templateCode = pref.getString(PREF_KEY_TEMPLATE, DEFAULT);
 
         final DatabaseReference ref = FirebaseConnection.getInstance().userAttrDir.child("template");
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -174,7 +178,7 @@ public class RecordVPAdapter extends PagerAdapter {
                     templateCode = (String) dataSnapshot.getValue();
                     Log.d(TAG, "onDataChange: template:" + templateCode);
                     SharedPreferences.Editor editor = pref.edit();
-                    editor.putString(Util.PREF_KEY_TEMPLATE, templateCode);
+                    editor.putString(PREF_KEY_TEMPLATE, templateCode);
                     editor.apply();
                 }
             }
@@ -269,7 +273,7 @@ public class RecordVPAdapter extends PagerAdapter {
     //endregion
 
     private void initRecordViewUtil(List<RecordData> list, LinearLayout ll, int position, Fragment fragment){
-        RecordUiOperator util2 = new RecordUiOperator(list, ll, getTodayCal(position), fragment);
+        RecordUiOperator util2 = new RecordUiOperator(list, ll, getTodayCal(position), fragment, CODE_RECORD_FRAG);/*Rec*/
         pageMap.put(position, util2);
         util2.initRecordData();
     }

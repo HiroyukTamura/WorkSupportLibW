@@ -51,7 +51,7 @@ public class SharedCalendarVPAdapter extends PagerAdapter {
         startCal.setTime(calMed.getTime());
         startCal.add(Calendar.MONTH, -COUNT/2);
 
-        SharedPreferences pref = fragment.getContext().getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences pref = fragment.getContext().getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);/*非同期ではないのでok*/
         startDayOfWeek = pref.getInt(PREF_KEY_START_OF_WEEK, Calendar.SUNDAY);
     }
 
@@ -116,7 +116,7 @@ public class SharedCalendarVPAdapter extends PagerAdapter {
         Calendar currentCal = getCalenderOfItem(currentPos);
         if (cal.get(Calendar.YEAR) != currentCal.get(Calendar.YEAR)
                 || cal.get(Calendar.MONTH) != currentCal.get(Calendar.MONTH)){
-            onError(getFragment().getContext(), "ym != currentPos", R.string.error);
+            onError(getFragment(), "ym != currentPos", R.string.error);
             return;
         }
 

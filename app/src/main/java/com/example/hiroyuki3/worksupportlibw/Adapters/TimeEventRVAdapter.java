@@ -64,11 +64,13 @@ public class TimeEventRVAdapter extends RecyclerView.Adapter implements Comparat
     public static final String TIME_EVENT = "TIME_EVENT";
     //endregion
 
-    public TimeEventRVAdapter(@Nullable List<TimeEvent> list, @NonNull Fragment fragment, Calendar cal, int dataNum, ITimeEventRVAdapter listener) {
+    public TimeEventRVAdapter(@Nullable List<TimeEvent> list, @NonNull Fragment fragment, Calendar cal, int dataNum) {
         this.fragment = fragment;
         this.dataNum = dataNum;
         this.cal = cal;
-        this.listener = listener;
+        if (fragment instanceof ITimeEventRVAdapter){
+            listener = (ITimeEventRVAdapter) fragment;
+        }
         inflater = fragment.getLayoutInflater();
         if (list != null)
             this.list = list;

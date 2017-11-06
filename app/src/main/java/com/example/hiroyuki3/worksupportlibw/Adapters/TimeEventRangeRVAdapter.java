@@ -40,6 +40,7 @@ public class TimeEventRangeRVAdapter extends RecyclerView.Adapter {
     private Fragment fragment;
     private int dataNum;
     private int posInList;
+    private ITimeEventRangeRVAdapter listener;
     public static final String POSITION = "POSITION";
     public static final String POS_IN_LIST = "POS_IN_LIST";
 
@@ -49,6 +50,14 @@ public class TimeEventRangeRVAdapter extends RecyclerView.Adapter {
         this.fragment = fragment;
         this.dataNum = dataNum;
         this.posInList = posInList;
+        if (fragment instanceof ITimeEventRangeRVAdapter){
+            listener = (ITimeEventRangeRVAdapter) fragment;
+        }
+    }
+
+    interface ITimeEventRangeRVAdapter{
+        void onClickValue(Bundle bundle);
+        void onClickTime(Bundle bundle);
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -85,6 +94,8 @@ public class TimeEventRangeRVAdapter extends RecyclerView.Adapter {
 
     @OnClick({R2.id.value, R2.id.time})
     void onClickValue(View v){
+        if (listener == null) return;
+
         int pos = (int)v.getTag();
         Bundle bundle = new Bundle();
         bundle.putInt(POSITION, pos);
@@ -92,9 +103,11 @@ public class TimeEventRangeRVAdapter extends RecyclerView.Adapter {
         bundle.putInt(POS_IN_LIST, posInList);
         bundle.putSerializable(TIME_EVENT, range.getTimeEve(pos));
         if (v.getId() == R.id.value) {
-            kickInputDialog(bundle, DIALOG_TAG_RANGE_CLICK_VALUE, CALLBACK_RANGE_CLICK_VALUE, fragment);
+            listener.onClickValue(bundle);
+//            kickInputDialog(bundle, DIALOG_TAG_RANGE_CLICK_VALUE, CALLBACK_RANGE_CLICK_VALUE, fragment);
         } else if (v.getId() == R.id.time){
-            kickTimePickerDialog(DIALOG_TAG_RANGE_CLICK_TIME, CALLBACK_RANGE_CLICK_TIME, bundle, fragment);
+            listener.onClickTime(bundle);
+//            kickTimePickerDialog(DIALOG_TAG_RANGE_CLICK_TIME, CALLBACK_RANGE_CLICK_TIME, bundle, fragment);
         }
     }
 

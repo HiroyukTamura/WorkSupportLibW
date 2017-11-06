@@ -6,6 +6,7 @@ package com.example.hiroyuki3.worksupportlibw.RecordVpItems;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -20,6 +21,8 @@ import com.cks.hiroyuki2.worksupprotlib.Entity.RecordData;
 import com.example.hiroyuki3.worksupportlibw.Adapters.RecordParamsRVAdapter;
 import com.example.hiroyuki3.worksupportlibw.R;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.Calendar;
 import java.util.List;
 
@@ -34,6 +37,9 @@ import static com.cks.hiroyuki2.worksupprotlib.Util.data2BundleParams;
 import static com.cks.hiroyuki2.worksupprotlib.Util.datePattern;
 import static com.cks.hiroyuki2.worksupprotlib.Util.setNullableText;
 import static com.cks.hiroyuki2.worksupprotlib.Util.setRecycler;
+import static com.example.hiroyuki3.worksupportlibw.AdditionalUtil.CODE_BLANK_FRAG;
+import static com.example.hiroyuki3.worksupportlibw.AdditionalUtil.CODE_EDIT_FRAG;
+import static com.example.hiroyuki3.worksupportlibw.AdditionalUtil.CODE_RECORD_FRAG;
 
 /**
  * アセット兄弟！Paramsおじさん！
@@ -49,14 +55,20 @@ public class RecordVpItemParam extends RecordVpItem {
     @BindColor(R2.color.blue_gray_light) int draggingColor;
     private RecordParamsRVAdapter adapter;
 
+    private int code;
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef(value = {CODE_BLANK_FRAG, CODE_EDIT_FRAG, CODE_RECORD_FRAG})
+    private  @interface fragCode {}
+
     public interface OnClickParamsNameListener{
         void onClickParamsName(int dataNum);
         void onClickParamsAddBtn(int dataNum);
     }
 
-    public RecordVpItemParam(RecordData data, int dataNum, @Nullable Calendar cal, Fragment fragment){
+    public RecordVpItemParam(RecordData data, int dataNum, @Nullable Calendar cal, Fragment fragment, @fragCode int code){
         super(data, dataNum, cal, fragment);
 
+        this.code = code;
         if (fragment instanceof OnClickParamsNameListener)
             listener = (OnClickParamsNameListener) fragment;
     }
@@ -69,10 +81,12 @@ public class RecordVpItemParam extends RecordVpItem {
         View view = getFragment().getLayoutInflater().inflate(R.layout.record_vp_item_params, null);
         ButterKnife.bind(this, view);
         setNullableText(name, getData().dataName);
-        adapter = new RecordParamsRVAdapter(listBundle, getDataNum(), getData().dataName, getFragment(), this);
+        adapter = new RecordParamsRVAdapter(listBundle, getDataNum(), getData().dataName, getFragment(), this, code);
         setRecycler(getFragment().getContext(), view, adapter, R.id.recycler);
 
-        if (getFragment() instanceof RecordFragment)
+//        if (getFragment() instanceof RecordFragment)
+//            return view;
+        if (code == CODE_EDIT_FRAG)
             return view;
 
         addBtn.setVisibility(View.VISIBLE);
@@ -113,15 +127,14 @@ public class RecordVpItemParam extends RecordVpItem {
     }
 
     public void syncFirebaseAndMap(List<Bundle> bundles){
-        RecordFragment fragment = (RecordFragment)getFragment();
         RecordData data = bundle2DataParams(bundles, getData().dataName, getCal());
         super.setData(data);
         String date = cal2date(getCal(), datePattern);
         int dateInt = Integer.parseInt(date);
-        List<RecordData> list = fragment.adapter.retrieveList(dateInt);
-        if (list == null) return;
-        list.set(getDataNum(), data);
-        fragment.adapter.syncDataMapAndFireBase(list, date);
+//        List<RecordData> list = fragment.adapter.retrieveList(dateInt);// TODO: 2017/11/07 ここの処理どうするんだ？？ 
+//        if (list == null) return;
+//        list.set(getDataNum(), data);
+//        fragment.adapter.syncDataMapAndFireBase(list, date);
     }
 
     @OnClick(R2.id.tag_pool_name)
