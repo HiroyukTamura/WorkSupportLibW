@@ -22,7 +22,6 @@ import com.cks.hiroyuki2.worksupprotlib.Entity.RecordData;
 import com.cks.hiroyuki2.worksupprotlib.Entity.TimeEvent;
 import com.cks.hiroyuki2.worksupprotlib.Entity.TimeEventDataSet;
 import com.cks.hiroyuki2.worksupprotlib.Entity.TimeEventRange;
-import com.cks.hiroyuki2.worksupprotlib.Util;
 import com.example.hiroyuki3.worksupportlibw.Adapters.TimeEventRVAdapter;
 import com.example.hiroyuki3.worksupportlibw.Adapters.TimeEventRangeRVAdapter;
 import com.example.hiroyuki3.worksupportlibw.R;
@@ -36,13 +35,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.cks.hiroyuki2.worksupprotlib.Util.getCopyOfCal;
 import static com.cks.hiroyuki2.worksupprotlib.Util.getTimeEveDataSetFromRecordData;
 import static com.cks.hiroyuki2.worksupprotlib.Util.initRecycler;
 import static com.cks.hiroyuki2.worksupprotlib.UtilSpec.colorId;
 import static com.example.hiroyuki3.worksupportlibw.Adapters.RecordVPAdapter.DATA_NUM;
-import static com.example.hiroyuki3.worksupportlibw.Adapters.TimeEventRVAdapter.CALLBACK_ITEM_ADD;
-import static com.example.hiroyuki3.worksupportlibw.Adapters.TimeEventRVAdapter.DIALOG_TAG_ITEM_ADD;
-import static com.example.hiroyuki3.worksupportlibw.Adapters.TimeEventRVAdapter.TIME_EVENT;
 import static com.example.hiroyuki3.worksupportlibw.Adapters.TimeEventRangeRVAdapter.POS_IN_LIST;
 
 /**
@@ -73,6 +70,7 @@ public class RecordVpItemTime extends RecordVpItem {
 
     interface IRecordVpItemTime{
         void onClickColorFl(Bundle bundle);
+        void onClickAddTimeEveBtn(TimeEvent timeEvent, int dataNum);
     }
 
     /**
@@ -144,17 +142,20 @@ public class RecordVpItemTime extends RecordVpItem {
 
     @OnClick(R2.id.add_time_eve)
     void onClickAddTimeEveBtn() {
-        Bundle bundle = new Bundle();
-        bundle.putInt(DATA_NUM, getDataNum());
-        TimeEvent timeEvent = new TimeEvent("", 0, Util.getCopyOfCal(getCal()), 0);
-        bundle.putSerializable(TIME_EVENT, timeEvent);
-        kickTimePickerDialog(DIALOG_TAG_ITEM_ADD, CALLBACK_ITEM_ADD, bundle, getFragment());
+//        Bundle bundle = new Bundle();
+//        bundle.putInt(DATA_NUM, getDataNum());
+        TimeEvent timeEvent = new TimeEvent("", 0, getCopyOfCal(getCal()), 0);
+//        bundle.putSerializable(TIME_EVENT, timeEvent);
+//        kickTimePickerDialog(DIALOG_TAG_ITEM_ADD, CALLBACK_ITEM_ADD, bundle, getFragment());
+
+        if (listener != null)
+            listener.onClickAddTimeEveBtn(timeEvent, getDataNum());
     }
 
     @OnClick(R2.id.add_range)
     void onClickAddRangeBtn() {
-        TimeEvent start = new TimeEvent("起床", 0, Util.getCopyOfCal(getCal()), 0);
-        TimeEvent end = new TimeEvent("就寝", 0, Util.getCopyOfCal(getCal()), 0);
+        TimeEvent start = new TimeEvent("起床", 0, getCopyOfCal(getCal()), 0);
+        TimeEvent end = new TimeEvent("就寝", 0, getCopyOfCal(getCal()), 0);
         TimeEventRange range = new TimeEventRange(start, end);
 
         addRangeItem(range, rangePairList.size());

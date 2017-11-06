@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 
 import com.cks.hiroyuki2.worksupportlib.R2;
 import com.cks.hiroyuki2.worksupprotlib.Util;
+import com.example.hiroyuki3.worksupportlibw.Presenter.AnalyticsVPUiOperator;
 
 import org.jetbrains.annotations.Contract;
 
@@ -35,11 +36,13 @@ public class AnalyticsVPAdapter extends PagerAdapter {
     private Calendar startCal;
     private TreeMap<Integer, AnalyticsVPUiOperator> operators = new TreeMap<>();
     private Fragment analyticsFragment;
+    private String uid;
 
-    public AnalyticsVPAdapter(Context context, Fragment analyticsFragment){
+    public AnalyticsVPAdapter(Context context, Fragment analyticsFragment, String uid){
         this.context = context;
         this.startCal = makeStartCal(context);
         this.analyticsFragment = analyticsFragment;
+        this.uid = uid;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -59,13 +62,13 @@ public class AnalyticsVPAdapter extends PagerAdapter {
         container.removeView((View) object);
     }
 
-    @Override
+    @Override @NonNull
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
         View root =  inflater.inflate(R2.layout.fragment_analytics, null);
         root.setTag(position);
         Calendar cal = getCal(position);
         Log.d(TAG, "instantiateItem: "+ cal.getTime().toString());
-        AnalyticsVPUiOperator operator = new AnalyticsVPUiOperator(new WeakReference<>(root), cal, analyticsFragment);
+        AnalyticsVPUiOperator operator = new AnalyticsVPUiOperator(new WeakReference<>(root), cal, analyticsFragment, uid);
         operators.put(position, operator);
         container.addView(root);
         return root;

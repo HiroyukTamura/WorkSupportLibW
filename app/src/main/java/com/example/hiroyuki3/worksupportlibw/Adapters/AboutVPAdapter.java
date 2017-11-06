@@ -16,7 +16,7 @@ import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 
 /**
- * Created by hiroyuki2 on 2017/11/04.
+ * About画面まわりやる人。@see AboutFragment
  */
 public class AboutVPAdapter extends PagerAdapter {
 

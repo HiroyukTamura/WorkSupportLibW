@@ -6,8 +6,8 @@ package com.example.hiroyuki3.worksupportlibw.Adapters;
 
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -37,17 +37,25 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class SocialGroupListRVAdapter extends RecyclerView.Adapter {
 
     private List<GroupInUserDataNode> list;
-    private SocialFragment fragment;
+    private Fragment fragment;
     private Drawable defaultDrw;
+    private ISocialGroupListRVAdapter listener;
     public static final String GROUP = "GROUP";
     public  static final String TAG_GROUP_NON_ADDED = "TAG_GROUP_NON_ADDED";
     public static final int CALLBACK_GROUP_NON_ADDED = 8674;
 
-    public SocialGroupListRVAdapter(@NonNull List<GroupInUserDataNode> list, @NonNull SocialFragment fragment){
+    public SocialGroupListRVAdapter(@NonNull List<GroupInUserDataNode> list, @NonNull Fragment fragment){
         super();
         this.list =list;
         this.fragment = fragment;
         defaultDrw = new ColorDrawable(ContextCompat.getColor(fragment.getContext(), R.color.colorAccent));
+        if (fragment instanceof ISocialGroupListRVAdapter)
+            listener = (ISocialGroupListRVAdapter) fragment;
+    }
+
+    interface ISocialGroupListRVAdapter{
+        void showBoard(GroupInUserDataNode node);
+        void showDialog(GroupInUserDataNode node);
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder{
@@ -107,12 +115,13 @@ public class SocialGroupListRVAdapter extends RecyclerView.Adapter {
     void onClickItem(LinearLayout container){
         int pos = (int)container.getTag();
         if (list.get(pos).added)
-            fragment.showBoard(list.get(pos));
+            listener.showBoard(list.get(pos));
         else {
-            Bundle bundle = new Bundle();
-            bundle.putSerializable(GROUP, list.get(pos));
-            bundle.putString("from", TAG_GROUP_NON_ADDED);
-            kickDialogInOnClick(TAG_GROUP_NON_ADDED, CALLBACK_GROUP_NON_ADDED, bundle, fragment);
+            listener.showDialog(list.get(pos));
+//            Bundle bundle = new Bundle();
+//            bundle.putSerializable(GROUP, list.get(pos));
+//            bundle.putString("from", TAG_GROUP_NON_ADDED);
+//            kickDialogInOnClick(TAG_GROUP_NON_ADDED, CALLBACK_GROUP_NON_ADDED, bundle, fragment);
         }
     }
 

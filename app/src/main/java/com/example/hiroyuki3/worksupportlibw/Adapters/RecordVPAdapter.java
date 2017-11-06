@@ -25,6 +25,7 @@ import com.cks.hiroyuki2.worksupprotlib.FirebaseEventHandler;
 import com.cks.hiroyuki2.worksupprotlib.RecordDataUtil;
 import com.cks.hiroyuki2.worksupprotlib.TemplateEditor;
 import com.cks.hiroyuki2.worksupprotlib.Util;
+import com.example.hiroyuki3.worksupportlibw.Presenter.RecordUiOperator;
 import com.example.hiroyuki3.worksupportlibw.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -188,7 +189,7 @@ public class RecordVPAdapter extends PagerAdapter {
     //endregion
 
     @Override
-    public void setPrimaryItem(ViewGroup container, int position, Object object) {
+    public void setPrimaryItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
         currentPage = (View) object;
         currentPos = position;
         Log.d(TAG, "setPrimaryItem: " + currentPage.getTag().toString());
@@ -202,7 +203,7 @@ public class RecordVPAdapter extends PagerAdapter {
     }
 
     @Override
-    public boolean isViewFromObject(View view, Object object) {
+    public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
         return view == object;
     }
 
@@ -212,13 +213,14 @@ public class RecordVPAdapter extends PagerAdapter {
     }
 
     @Override
-    public void destroyItem(ViewGroup container, int position, Object object) {
+    public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
         pageMap.remove(position);
         container.removeView((View) object);
     }
 
+    @NonNull
     @Override
-    public Object instantiateItem(ViewGroup container, int position) {
+    public Object instantiateItem(@NonNull ViewGroup container, int position) {
         Log.d(TAG, "instantiateItem: fire");
         View v =  inflater.inflate(R.layout.record_vp_item_frame, null);
         Calendar cal = getTodayCal(position);
@@ -266,7 +268,7 @@ public class RecordVPAdapter extends PagerAdapter {
     }
     //endregion
 
-    private void initRecordViewUtil(List<RecordData> list, LinearLayout ll, int position, RecordFragment fragment){
+    private void initRecordViewUtil(List<RecordData> list, LinearLayout ll, int position, Fragment fragment){
         RecordUiOperator util2 = new RecordUiOperator(list, ll, getTodayCal(position), fragment);
         pageMap.put(position, util2);
         util2.initRecordData();

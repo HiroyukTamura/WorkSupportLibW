@@ -22,9 +22,8 @@ import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
 /**
- * Created by hiroyuki2 on 2017/09/17.
+ * @see RecordVpItem
  */
-
 class RecordVpItemTag {
     private View view;
     private Context context;

@@ -46,13 +46,15 @@ public class AddFriendVPAdapter extends PagerAdapter implements Callback{
     private String pageName1;
     private IAddFriendVPAdapter listener;
 
-    public AddFriendVPAdapter(Context context, Fragment fragment, @NonNull IAddFriendVPAdapter listener){
+    public AddFriendVPAdapter(Context context, Fragment fragment){
         this.context = context;
         this.fragment = fragment;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         pageName0 = context.getString(R.string.vp_page_name0);
         pageName1 = context.getString(R.string.vp_page_name1);
-        this.listener = listener;
+        if (fragment instanceof IAddFriendVPAdapter){
+            listener = (IAddFriendVPAdapter) fragment;
+        }
     }
 
     public interface IAddFriendVPAdapter{
@@ -141,7 +143,8 @@ public class AddFriendVPAdapter extends PagerAdapter implements Callback{
 //        SparseArray<Barcode> barcodes = detector.detect(frame);
 
 //        fragment.checkPermission();
-        listener.onClickCameraButton();
+        if (listener != null)
+            listener.onClickCameraButton();
     }
 
 

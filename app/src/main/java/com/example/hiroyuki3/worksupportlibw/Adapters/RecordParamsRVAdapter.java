@@ -6,6 +6,7 @@ package com.example.hiroyuki3.worksupportlibw.Adapters;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -29,17 +30,16 @@ import com.example.hiroyuki3.worksupportlibw.RecordVpItems.RecordVpItemParam;
 
 import org.adw.library.widgets.discreteseekbar.DiscreteSeekBar;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.cks.hiroyuki2.worksupprotlib.Util.CALLBACK_TEMPLATE_PARAMS_ITEM;
-import static com.cks.hiroyuki2.worksupprotlib.Util.CALLBACK_TEMPLATE_PARAMS_SLIDER_MAX;
 import static com.cks.hiroyuki2.worksupprotlib.Util.INDEX;
 import static com.cks.hiroyuki2.worksupprotlib.Util.PARAMS_VALUES;
-import static com.cks.hiroyuki2.worksupprotlib.Util.TEMPLATE_PARAMS_ITEM;
 import static com.cks.hiroyuki2.worksupprotlib.Util.TEMPLATE_PARAMS_SLIDER_MAX;
 import static com.cks.hiroyuki2.worksupprotlib.Util.bundle2Data;
 import static com.cks.hiroyuki2.worksupprotlib.Util.bundle2DataParams;
@@ -59,25 +59,37 @@ public class RecordParamsRVAdapter extends RecyclerView.Adapter<RecordParamsRVAd
     private Fragment fragment;
 //    private int indexMax;
     private RecordVpItemParam param;
+    private IRecordParamsRVAdapter listener;
+    public static final int EDIT_FRAG = 0;
+    public static final int RECORD_FRAG = 1;
+    public static final int HELP_FRAG = 2;
+    private int code;
 
-    public RecordParamsRVAdapter(@NonNull List<Bundle> list, int dataNum, @Nullable String dataName, @NonNull Fragment fragment, @Nullable RecordVpItemParam param){
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef(value = {EDIT_FRAG, RECORD_FRAG, HELP_FRAG})
+    public @interface fragCode {}
+
+    public RecordParamsRVAdapter(@NonNull List<Bundle> list, int dataNum, @Nullable String dataName, @NonNull Fragment fragment, @Nullable RecordVpItemParam param, @fragCode int code){
         Log.d(TAG, "RecordParamsRVAdapter: constructor fire");
         this.list = list;
         this.dataNum = dataNum;
         this.dataName = dataName;
         this.fragment = fragment;
         this.param = param;
+        this.code = code;
 //        indexMax = list.size()-1;
         inflater = (LayoutInflater)fragment.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        if (fragment instanceof IRecordParamsRVAdapter)
+            listener = (IRecordParamsRVAdapter) fragment;
     }
 
-    RecordParamsRVAdapter(@NonNull List<Bundle> list, int dataNum, @Nullable String dataName, @NonNull Fragment fragment){//todo 後でこれなくすこと
-        this(list, dataNum, dataName, fragment, null);
+    RecordParamsRVAdapter(@NonNull List<Bundle> list, int dataNum, @Nullable String dataName, @NonNull Fragment fragment, @fragCode int code){//todo 後でこれなくすこと
+        this(list, dataNum, dataName, fragment, null, code);
     }
 
     public interface IRecordParamsRVAdapter{
-        void onClickKey(int pos);
-        void onClickMax(int pos);
+        void onClickKey(Bundle bundle);
+        void onClickMax(Bundle bundle);
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -163,7 +175,8 @@ public class RecordParamsRVAdapter extends RecyclerView.Adapter<RecordParamsRVAd
 //                    }
 //                });
 
-                if (!(fragment instanceof EditTemplateFragment))
+                if (code != EDIT_FRAG)
+//                if (!(fragment instanceof EditTemplateFragment))
                     break;
 
                 holder.max.setVisibility(View.VISIBLE);
@@ -171,7 +184,8 @@ public class RecordParamsRVAdapter extends RecyclerView.Adapter<RecordParamsRVAd
                 break;}
         }
 
-        if (!(fragment instanceof EditTemplateFragment)) return;
+//        if (!(fragment instanceof EditTemplateFragment))
+        if (code != EDIT_FRAG) return;
 
         holder.remove.setVisibility(View.VISIBLE);
 //        holder.remove.setOnClickListener(listener);
@@ -212,7 +226,7 @@ public class RecordParamsRVAdapter extends RecyclerView.Adapter<RecordParamsRVAd
         Bundle bundle = list.get(pos);
         String[] values = bundle.getStringArray(PARAMS_VALUES);
         if (values == null){
-            onError(fragment.getContext(), TAG + "onCheckedChanged", null);
+            onError(fragment, TAG + "onCheckedChanged", null);
             return;
         }
 
@@ -245,12 +259,12 @@ public class RecordParamsRVAdapter extends RecyclerView.Adapter<RecordParamsRVAd
     private void callBack(String[] values, int pos){
         Bundle bundle = list.get(pos);
         bundle.putStringArray(PARAMS_VALUES, values);
-        if (fragment instanceof EditTemplateFragment){
+        if (code == EDIT_FRAG){
             RecordData data = bundle2DataParams(list, dataName, 0, 0, 0);
             boolean success = TemplateEditor.writeTemplate(dataNum, data, fragment.getContext());
             if (!success)
                 onError(fragment.getContext(), "!success", R.string.template_failure);
-        } else if (fragment instanceof RecordFragment){
+        } else if (code == RECORD_FRAG){
             param.syncFirebaseAndMap(list);
         }
     }
@@ -259,34 +273,41 @@ public class RecordParamsRVAdapter extends RecyclerView.Adapter<RecordParamsRVAd
     //region onClick系列
     @OnClick({R2.id.key, R2.id.max, R2.id.remove})
     void onClickBtn(View view){
-        if (!(fragment instanceof EditTemplateFragment))
+        if (code != RECORD_FRAG)
             return;
 
         int pos = (int) ((ViewGroup)view.getParent()).getTag();
 
         int id = view.getId();
         if (id == R.id.key){
-            onClickKey(pos);
+            Bundle bundle = list.get(pos);
+            bundle.putInt(INDEX, pos);
+            if (listener != null)
+                listener.onClickKey(bundle);
         } else if (id == R.id.max) {
-            onClickMax(pos);
+//            onClickMax(pos);
+            Bundle bundle = list.get(pos);
+            bundle.putInt(TEMPLATE_PARAMS_SLIDER_MAX, pos);
+            if (listener != null)
+                listener.onClickMax(bundle);
         } else if (id == R.id.remove) {
             onClickRemove(pos);
         }
     }
 
-    private void onClickKey(int pos){
-        Bundle bundle = list.get(pos);
-        bundle.putInt(INDEX, pos);
-        makeBundleInOnClick(bundle, TEMPLATE_PARAMS_ITEM, dataNum);
-        kickInputDialog(bundle, TEMPLATE_PARAMS_ITEM, CALLBACK_TEMPLATE_PARAMS_ITEM, fragment);
-    }
+//    private void onClickKey(int pos){
+//        Bundle bundle = list.get(pos);
+//        bundle.putInt(INDEX, pos);
+//        makeBundleInOnClick(bundle, TEMPLATE_PARAMS_ITEM, dataNum);
+//        kickInputDialog(bundle, TEMPLATE_PARAMS_ITEM, CALLBACK_TEMPLATE_PARAMS_ITEM, fragment);
+//    }
 
-    private void onClickMax(int pos){
-        Bundle bundle = list.get(pos);
-        makeBundleInOnClick(bundle, TEMPLATE_PARAMS_SLIDER_MAX, dataNum);
-        bundle.putInt(TEMPLATE_PARAMS_SLIDER_MAX, pos);
-        kickDialogInOnClick(TEMPLATE_PARAMS_SLIDER_MAX, CALLBACK_TEMPLATE_PARAMS_SLIDER_MAX, bundle, fragment);
-    }
+//    private void onClickMax(int pos){
+//        Bundle bundle = list.get(pos);
+//        makeBundleInOnClick(bundle, TEMPLATE_PARAMS_SLIDER_MAX, dataNum);
+//        bundle.putInt(TEMPLATE_PARAMS_SLIDER_MAX, pos);
+//        kickDialogInOnClick(TEMPLATE_PARAMS_SLIDER_MAX, CALLBACK_TEMPLATE_PARAMS_SLIDER_MAX, bundle, fragment);
+//    }
 
     private void onClickRemove(int pos){
         list.remove(pos);

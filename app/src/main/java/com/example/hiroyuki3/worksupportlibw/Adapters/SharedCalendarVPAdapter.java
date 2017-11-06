@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.cks.hiroyuki2.worksupprotlib.Entity.CalendarOneEvent;
+import com.example.hiroyuki3.worksupportlibw.Presenter.SharedCalendarUIOperator;
 import com.example.hiroyuki3.worksupportlibw.R;
 import com.google.firebase.database.DatabaseReference;
 
@@ -102,7 +103,7 @@ public class SharedCalendarVPAdapter extends PagerAdapter {
     }
 
     @Override
-    public void setPrimaryItem(ViewGroup container, int position, Object object) {
+    public void setPrimaryItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
         super.setPrimaryItem(container, position, object);
         currentPos = position;
     }

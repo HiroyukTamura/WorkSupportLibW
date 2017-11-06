@@ -37,17 +37,20 @@ class TempItemTag {
     private String value;
     private int dataNum;
     private Fragment frag;
+    private ITempItemTag listener;
 
     TempItemTag(int tagNum, String value, int dataNum, Fragment frag){
         this.tagNum = tagNum;
         this.value = value;
         this.dataNum = dataNum;
         this.frag = frag;
+        if (frag instanceof ITempItemTag)
+            listener = (ITempItemTag) frag;
     }
     
     interface ITempItemTag{
         void onClickRemoveTagBtn(int dataNum, int tagNum);
-        // TODO: 2017/11/06 次作業ここから 
+        void onClickTag(int tagNum, int dataNum, String value);
     }
 
     View buildView(){
@@ -65,12 +68,16 @@ class TempItemTag {
 
     @OnClick(R2.id.remove)
     void onClickRemoveTagBtn(){
-        frag.onClickRemoveTagBtn(dataNum, tagNum);
+//        frag.onClickRemoveTagBtn(dataNum, tagNum);
+        if (listener != null)
+            listener.onClickRemoveTagBtn(dataNum, tagNum);
     }
 
     @OnClick(R2.id.tv)
     void onClickTv(){
-        frag.onClickTag(tagNum, dataNum, value);
+        if (listener != null)
+            listener.onClickTag(tagNum, dataNum, value);
+//        frag.onClickTag(tagNum, dataNum, value);
     }
 
     void updateDataNum(int dataNum){

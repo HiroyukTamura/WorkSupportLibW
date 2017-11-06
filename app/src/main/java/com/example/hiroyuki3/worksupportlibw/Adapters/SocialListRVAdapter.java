@@ -6,6 +6,7 @@ package com.example.hiroyuki3.worksupportlibw.Adapters;
 
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -23,6 +24,8 @@ import com.example.hiroyuki3.worksupportlibw.R;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,20 +52,42 @@ public class SocialListRVAdapter extends RecyclerView.Adapter implements SmoothC
     private LayoutInflater inflater;
     private Drawable defBackIcon;
     private List<String> newUserUids = new ArrayList<>();
+    private ISocialListRVAdapter listener;
+    public static final int CODE_ADD_GROUP_FRAG = 0;
+    public static final int CODE_SOCIAL_FRAG = 1;
+    private int code;
 
-    public SocialListRVAdapter(@NonNull List<User> list, Fragment fragment){
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef(value = {CODE_ADD_GROUP_FRAG, CODE_SOCIAL_FRAG})
+    public @interface fragCode {}
+
+    public SocialListRVAdapter(@NonNull List<User> list, Fragment fragment, @fragCode int code){
         super();
         this.list = list;
         this.fragment = fragment;
+        this.code = code;
+        if (fragment instanceof ISocialListRVAdapter)
+            listener = (ISocialListRVAdapter) fragment;
+
         inflater = fragment.getLayoutInflater();
         defBackIcon = new ColorDrawable(ContextCompat.getColor(fragment.getContext(), R.color.colorAccent));
 
-        if (fragment instanceof AddGroupFragment){
+        if (code == CODE_ADD_GROUP_FRAG){
             checkList = new ArrayList<>();
             for (int i = 0; i < list.size(); i++) {
                 checkList.add(false);
             }
         }
+    }
+
+//               ((AddGroupFragment)fragment).kickShowFab();
+//        else if (i==0)
+//            //チェックされた項目がない
+//            ((AddGroupFragment)fragment).kickHideFab();
+
+    interface ISocialListRVAdapter{
+        void kickShowFab();
+        void kickHideFab();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -106,7 +131,7 @@ public class SocialListRVAdapter extends RecyclerView.Adapter implements SmoothC
 
         setImgOnCircle(user, ((ViewHolder) holder).icon, ((ViewHolder) holder).iconInner);
 
-        if (fragment instanceof AddGroupFragment){
+        if (code == CODE_ADD_GROUP_FRAG){
             ((ViewHolder) holder).checkBox.setTag(position);
             ((ViewHolder) holder).checkBox.setVisibility(VISIBLE);
             ((ViewHolder) holder).checkBox.setOnCheckedChangeListener(this);
@@ -120,9 +145,9 @@ public class SocialListRVAdapter extends RecyclerView.Adapter implements SmoothC
 
     @OnClick(R2.id.container)
     void onClickItem(LinearLayout container) {
-        if (fragment instanceof SocialFragment) {
+        if (code == CODE_SOCIAL_FRAG) {
 
-        } else if (fragment instanceof AddGroupFragment){
+        } else if (code == CODE_ADD_GROUP_FRAG){
             SmoothCheckBox checkBox = container.findViewById(R.id.checkbox);
             checkBox.setChecked(!checkBox.isChecked(), true);
         }
@@ -144,6 +169,9 @@ public class SocialListRVAdapter extends RecyclerView.Adapter implements SmoothC
 
     @Override
     public void onCheckedChanged(SmoothCheckBox smoothCheckBox, boolean b) {
+        if (listener == null)
+            return;
+
         int pos = (int)smoothCheckBox.getTag();
         checkList.set(pos, b);
 
@@ -154,10 +182,10 @@ public class SocialListRVAdapter extends RecyclerView.Adapter implements SmoothC
 
         if (b && i==1)
             //新しく1コチェックされた
-            ((AddGroupFragment)fragment).kickShowFab();
+            listener.kickShowFab();
         else if (i==0)
             //チェックされた項目がない
-            ((AddGroupFragment)fragment).kickHideFab();
+            listener.kickHideFab();
     }
 
     @NonNull

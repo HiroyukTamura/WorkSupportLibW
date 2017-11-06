@@ -5,11 +5,13 @@
 package com.example.hiroyuki3.worksupportlibw.RecordVpItems;
 
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.cks.hiroyuki2.worksupprotlib.Entity.RecordData;
 import com.example.hiroyuki3.worksupportlibw.R;
 import com.example.hiroyuki3.worksupportlibw.R2;
 
@@ -35,14 +37,23 @@ public class TempItemTagPool extends RecordVpItem {
 
     private int dataNum;
     private View view;
+    private ITempItemTagPool listener;
     private List<TempItemTag> tagList = new ArrayList<>();
     @BindView(R2.id.tag_pool_name) TextView name;
     @BindView(R2.id.tag_box0) FlowLayout fl0;
     @BindView(R2.id.tag_box1) FlowLayout fl1;
 
-    public TempItemTagPool(EditTemplateFragment frag, int dataNum){
-        super(frag.getList().get(dataNum), dataNum, null, frag);
+    public TempItemTagPool(Fragment frag, List<RecordData> list, int dataNum){
+        super(list.get(dataNum), dataNum, null, frag);
         this.dataNum = dataNum;
+        if (frag instanceof ITempItemTagPool){
+            listener = (ITempItemTagPool) frag;
+        }
+    }
+
+    interface ITempItemTagPool{
+        void onClickTagPoolName(int dataNum);
+        void onClickTagPoolAdd(int dataNum);
     }
 
     @Override
@@ -71,12 +82,14 @@ public class TempItemTagPool extends RecordVpItem {
 
     @OnClick(R2.id.tag_pool_name)
     void onClickTagPoolName(){
-        ((EditTemplateFragment)getFragment()).onClickTagPoolName(dataNum);
+        if (listener != null)
+            listener.onClickTagPoolName(dataNum);
     }
 
     @OnClick(R2.id.add_btn)
     void onClickAddBtn(){
-        ((EditTemplateFragment)getFragment()).onClickTagPoolAdd(dataNum);
+        if (listener != null)
+            listener.onClickTagPoolAdd(dataNum);
     }
 
     public void inputTag(final @NonNull String value, final int tagNum){
@@ -84,7 +97,7 @@ public class TempItemTagPool extends RecordVpItem {
 
         Log.d(TAG, "setTagsView: value:" + strings[0]);
 
-        TempItemTag tag = new TempItemTag(tagNum, value, dataNum, (EditTemplateFragment)getFragment());
+        TempItemTag tag = new TempItemTag(tagNum, value, dataNum, getFragment());
         tagList.add(tag);
         final View item = tag.buildView();
 
@@ -145,7 +158,7 @@ public class TempItemTagPool extends RecordVpItem {
         currentFl.removeView(tag);
         setFlHeightIfEmpty(currentFl);
         int i = getInsertPos(tagNum, visibility);
-        TempItemTag itemTag = new TempItemTag(tagNum, value, dataNum, (EditTemplateFragment)getFragment());
+        TempItemTag itemTag = new TempItemTag(tagNum, value, dataNum, getFragment());
         tagList.set(tagNum, itemTag);
         otherFl.addView(itemTag.buildView(), i);
     }
