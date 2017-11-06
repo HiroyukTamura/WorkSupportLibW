@@ -7,6 +7,7 @@ package com.example.hiroyuki3.worksupportlibw.Adapters;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -47,6 +48,7 @@ import static com.cks.hiroyuki2.worksupprotlib.Util.setImgFromStorage;
 /**
  * ボードの中身を表示するおじさん！頼りになる！
  * ButterKnifeのonClickを実装しないのは、なぜかそうすると落ちるから。
+ * ShareBoardFragment附属。
  */
 
 public class ShareBoardRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -62,19 +64,30 @@ public class ShareBoardRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public static final String BUNDLE_KEY_NEW_COMMENT = "BUNDLE_KEY_NEW_COMMENT";
     public static final String BUNDLE_KEY_TYPE = "BUNDLE_KEY_TYPE";
     public static String BUNDLE_KEY_HTML = "BUNDLE_KEY_HTML";
-    private ShareBoardFragment fragment;
+    private Fragment fragment;
     private LayoutInflater inflater;
     private Group group;
     private List<Boolean> expandList;
+    private IShareBoardRVAdapter listener;
     @BindColor(R2.color.word_blue_dark) int blue;
     @BindColor(R2.color.word_red) int red;
 
-    public ShareBoardRVAdapter(@NonNull Group group, @NonNull ShareBoardFragment fragment){
+    public ShareBoardRVAdapter(@NonNull Group group, @NonNull Fragment fragment){
         super();
         this.fragment = fragment;
         this.group = group;
+        if (fragment instanceof IShareBoardRVAdapter)
+            listener = (IShareBoardRVAdapter) fragment;
         setExpandList();
         inflater = LayoutInflater.from(fragment.getContext());
+    }
+
+    interface IShareBoardRVAdapter{
+        void onClickVertAsset();
+        void onClickItemUploaded(int listPos);
+        void onClickExpandableView(int listPos);
+        void kickViewerActivity(String memberUid);
+        void showEditDocActAsComment(int listPos, String comment);
     }
 
     class ViewHolderUploaded extends RecyclerView.ViewHolder {
@@ -309,30 +322,36 @@ public class ShareBoardRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         int listPos = (int) ll.getTag();
         Bundle bundle = new Bundle();
         bundle.putInt(BUNDLE_KEY_POSITION, listPos);
-        switch (getItemViewTypeForListPos(listPos)){
-            case ITEM_TYPE_DATA:{
-                kickDialogInOnClick(DIALOG_TAG_DATA_VERT, DIALOG_CODE_DATA_VERT, bundle, fragment);
-                break;}
-            case ITEM_TYPE_UPLOADED:{
-                kickDialogInOnClick(DIALOG_TAG_ITEM_VERT, DIALOG_CODE_ITEM_VERT, bundle, fragment);
-                break;}
-            case ITEM_TYPE_DOCUMENT:{
-                kickDialogInOnClick(DIALOG_TAG_DOC_VERT, DIALOG_CODE_DOC_VERT, bundle, fragment);
-                break;}
-        }
+        if (listener != null)
+            switch (getItemViewTypeForListPos(listPos)){
+                case ITEM_TYPE_DATA:{
+                    listener.onClickVertAsset(DIALOG_TAG_DATA_VERT, DIALOG_CODE_DATA_VERT, bundle, fragment);
+//                    kickDialogInOnClick(DIALOG_TAG_DATA_VERT, DIALOG_CODE_DATA_VERT, bundle, fragment);
+                    break;}
+                case ITEM_TYPE_UPLOADED:{
+                    listener.onClickVertAsset(DIALOG_TAG_ITEM_VERT, DIALOG_CODE_ITEM_VERT, bundle, fragment);
+//                    kickDialogInOnClick(DIALOG_TAG_ITEM_VERT, DIALOG_CODE_ITEM_VERT, bundle, fragment);
+                    break;}
+                case ITEM_TYPE_DOCUMENT:{
+                    listener.onClickVertAsset(DIALOG_TAG_DOC_VERT, DIALOG_CODE_DOC_VERT, bundle, fragment);
+//                    kickDialogInOnClick(DIALOG_TAG_DOC_VERT, DIALOG_CODE_DOC_VERT, bundle, fragment);
+                    break;}
+            }
     }
 
     private void onClickCardAsset(View view){
+
+        if (listener == null) return;
+
         final int listPos = (int)((View) view.getParent()).getTag();
         int type = getItemViewTypeForListPos(listPos);
-
         if (type == ITEM_TYPE_UPLOADED) {
-            fragment.onClickItemUploaded(listPos);
+            listener.onClickItemUploaded(listPos);
         } else if (type == ITEM_TYPE_DOCUMENT) {
-            fragment.onClickExpandableView(listPos);
+            listener.onClickExpandableView(listPos);
         } else if (type == ITEM_TYPE_DATA) {
             String memberUid = group.contentList.get(listPos).whose;
-            fragment.kickViewerActivity(memberUid);
+            listener.kickViewerActivity(memberUid);
         }
     }
 
@@ -350,8 +369,10 @@ public class ShareBoardRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 //    }
 
     private void onClickAddCommentAsset(View v){
+        if (listener == null) return;
         int listPos = (int)v.getTag();
-        fragment.showEditDocActAsComment(listPos, group.contentList.get(listPos).comment);
+        listener.showEditDocActAsComment(listPos, group.contentList.get(listPos).comment);
+//        fragment.showEditDocActAsComment(listPos, group.contentList.get(listPos).comment);
     }
     //endregion
 

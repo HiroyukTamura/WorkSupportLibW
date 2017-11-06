@@ -26,8 +26,8 @@ import static com.cks.hiroyuki2.worksupprotlib.Util.PREF_NAME;
 import static com.cks.hiroyuki2.worksupprotlib.Util.onError;
 
 /**
- * {@link SharedCalendarFragment}の子分。{@link SharedCalendarUIOperator}の親分。
- * {@link SharedCalendarUIOperator}のおかげで、VPAdapterとしての機能だけで済んでいるおじさん！
+ * SharedCalendarFragmentの子分。{@link SharedCalendarUIOperator}の親分。
+ * SharedCalendarUIOperatorのおかげで、VPAdapterとしての機能だけで済んでいるおじさん！
  */
 
 public class SharedCalendarVPAdapter extends PagerAdapter {
@@ -41,9 +41,10 @@ public class SharedCalendarVPAdapter extends PagerAdapter {
     private TreeMap<Integer, SharedCalendarUIOperator> operatorMap = new TreeMap<>();
     private int currentPos;
 
-    public SharedCalendarVPAdapter(Fragment fragment, Calendar calMed){
+    public SharedCalendarVPAdapter(Fragment fragment, Calendar calMed, @NonNull DatabaseReference ref){
         this.fragment = fragment;
         this.calMed = calMed;
+        this.ref = ref;
 
         startCal = Calendar.getInstance();
         startCal.setTime(calMed.getTime());
@@ -51,7 +52,6 @@ public class SharedCalendarVPAdapter extends PagerAdapter {
 
         SharedPreferences pref = fragment.getContext().getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         startDayOfWeek = pref.getInt(PREF_KEY_START_OF_WEEK, Calendar.SUNDAY);
-        ref = ((SharedCalendarFragment)fragment).getRef();
     }
 
     @Override
@@ -65,8 +65,8 @@ public class SharedCalendarVPAdapter extends PagerAdapter {
         operatorMap.remove(position);
     }
 
-    @Override
-    public Object instantiateItem(ViewGroup container, int position) {
+    @Override @NonNull
+    public Object instantiateItem(@NonNull ViewGroup container, int position) {
         View root =  fragment.getLayoutInflater().inflate(R.layout.calendar_vp_item, container, false);
         Calendar cal = getCalenderOfItem(position);
         SharedCalendarUIOperator operator = new SharedCalendarUIOperator(this, root, cal, ref);

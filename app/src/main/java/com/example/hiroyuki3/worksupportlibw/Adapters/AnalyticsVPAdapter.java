@@ -6,14 +6,14 @@ package com.example.hiroyuki3.worksupportlibw.Adapters;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.cks.hiroyuki2.worksupport3.AnalyticsVPUiOperator;
-import com.cks.hiroyuki2.worksupport3.Fragments.AnalyticsFragment;
 import com.cks.hiroyuki2.worksupportlib.R2;
 import com.cks.hiroyuki2.worksupprotlib.Util;
 
@@ -34,9 +34,9 @@ public class AnalyticsVPAdapter extends PagerAdapter {
     private Context context;
     private Calendar startCal;
     private TreeMap<Integer, AnalyticsVPUiOperator> operators = new TreeMap<>();
-    private AnalyticsFragment analyticsFragment;
+    private Fragment analyticsFragment;
 
-    public AnalyticsVPAdapter(Context context, AnalyticsFragment analyticsFragment){
+    public AnalyticsVPAdapter(Context context, Fragment analyticsFragment){
         this.context = context;
         this.startCal = makeStartCal(context);
         this.analyticsFragment = analyticsFragment;
@@ -44,7 +44,7 @@ public class AnalyticsVPAdapter extends PagerAdapter {
     }
 
     @Override
-    public boolean isViewFromObject(View view, Object object) {
+    public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
         return view == object;
     }
 
@@ -54,18 +54,18 @@ public class AnalyticsVPAdapter extends PagerAdapter {
     }
 
     @Override
-    public void destroyItem(ViewGroup container, int position, Object object) {
+    public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
         operators.remove(position);
         container.removeView((View) object);
     }
 
     @Override
-    public Object instantiateItem(ViewGroup container, int position) {
+    public Object instantiateItem(@NonNull ViewGroup container, int position) {
         View root =  inflater.inflate(R2.layout.fragment_analytics, null);
         root.setTag(position);
         Calendar cal = getCal(position);
         Log.d(TAG, "instantiateItem: "+ cal.getTime().toString());
-        AnalyticsVPUiOperator operator = new AnalyticsVPUiOperator(new WeakReference<View>(root), cal, analyticsFragment);
+        AnalyticsVPUiOperator operator = new AnalyticsVPUiOperator(new WeakReference<>(root), cal, analyticsFragment);
         operators.put(position, operator);
         container.addView(root);
         return root;

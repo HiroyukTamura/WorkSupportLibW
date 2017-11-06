@@ -27,7 +27,7 @@ public class AboutVPAdapter extends PagerAdapter {
     private String title1;
     private IAboutVPAdapter listener;
 
-    public AboutVPAdapter(@NonNull Context context, IAboutVPAdapter listener){
+    public AboutVPAdapter(@NonNull Context context, @NonNull IAboutVPAdapter listener){
         this.context = context;
         this.listener = listener;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -38,16 +38,18 @@ public class AboutVPAdapter extends PagerAdapter {
     public interface IAboutVPAdapter{
         void onClickLibItem();
         void onClickLauncher();
+        void onCheckedChange0();
+        void onCheckedChange1();
     }
 
     public class Item0{
         @OnCheckedChanged(R2.id.toggle)
         void onCheckChange0(){
-
+            listener.onCheckedChange0();
         }
         @OnCheckedChanged(R2.id.toggle1)
         void onCheckChange1(){
-
+            listener.onCheckedChange1();
         }
     }
 

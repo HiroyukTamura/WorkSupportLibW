@@ -5,6 +5,7 @@
 package com.example.hiroyuki3.worksupportlibw.RecordVpItems;
 
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.view.View;
@@ -23,7 +24,7 @@ import static android.view.View.VISIBLE;
 import static com.cks.hiroyuki2.worksupprotlib.Util.delimiter;
 
 /**
- * Created by hiroyuki2 on 2017/09/21.
+ * EditTemplateFragment専属。
  */
 
 class TempItemTag {
@@ -35,13 +36,18 @@ class TempItemTag {
     private int tagNum;
     private String value;
     private int dataNum;
-    private EditTemplateFragment frag;
+    private Fragment frag;
 
-    TempItemTag(int tagNum, String value, int dataNum, EditTemplateFragment frag){
+    TempItemTag(int tagNum, String value, int dataNum, Fragment frag){
         this.tagNum = tagNum;
         this.value = value;
         this.dataNum = dataNum;
         this.frag = frag;
+    }
+    
+    interface ITempItemTag{
+        void onClickRemoveTagBtn(int dataNum, int tagNum);
+        // TODO: 2017/11/06 次作業ここから 
     }
 
     View buildView(){

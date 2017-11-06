@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.util.ArrayMap;
 import android.support.v4.view.PagerAdapter;
 import android.util.Log;
@@ -61,12 +62,14 @@ public class RecordVPAdapter extends PagerAdapter {
     private final static int PAGE_NUM = RecordTabVPAdapter.PAGE_NUM * 7;
     public static int MED_NUM = PAGE_NUM/2;
     public final static int DATALIST_DEF_LENGTH = 11;
-    public RecordFragment fragment;
+//    public RecordFragment fragment;
+    public Fragment fragment;
     public LayoutInflater inflater;
     private Calendar calMed;
     private static final String TAG = "MANUAL_TAG: " + RecordVPAdapter.class.getSimpleName();
     private TreeMap<Integer, TreeSet<Integer>> indexTree = new TreeMap<>();//indexTreeは空でありえない()
     private String templateCode = null;
+    private IRecordVPAdapter listener;
 
     public TreeMap<Integer, TreeMap<Integer, RecordRVAdapter>> timeAdapterTree = new TreeMap<>();//外側はdateInt, 内側はdataNumを表す
     public HashMap<Integer, HashMap<String, String>> arrayMap = new HashMap<>();
@@ -105,12 +108,19 @@ public class RecordVPAdapter extends PagerAdapter {
     @IntDef(value = {CALLBACK_RANGE_CLICK_TIME, CALLBACK_RANGE_CLICK_VALUE})
     public @interface UpdateCode {}
 
-    public RecordVPAdapter(Calendar calMed, RecordFragment fragment){
+    public RecordVPAdapter(Calendar calMed, Fragment fragment){
 //        RecordUiUtil.getInstance().setAdapter(this);
         this.fragment = fragment;
         inflater = (LayoutInflater)fragment.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.calMed = calMed;
         rdu = RecordDataUtil.getInstance();
+        if (fragment instanceof IRecordVPAdapter)
+            listener = (IRecordVPAdapter) fragment;
+    }
+
+    interface IRecordVPAdapter{
+        void onPostInitData();
+        void onPostUpdateData();
     }
 
     //region 初期化系列メソッド
@@ -350,9 +360,12 @@ public class RecordVPAdapter extends PagerAdapter {
             isInitOneDayData = new ArrayList<>();
             if (!isInitilizedData){
                 isInitilizedData = true;
-                fragment.onPostInitData();
+                if (listener != null)
+                    listener.onPostInitData();
             } else {
-                fragment.onPostUpdateData();
+                if (listener != null)
+                    listener.onPostUpdateData();
+//                fragment.onPostUpdateData();
             }
         }
     }

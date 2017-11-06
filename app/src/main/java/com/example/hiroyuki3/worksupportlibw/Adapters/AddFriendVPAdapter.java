@@ -6,6 +6,7 @@ package com.example.hiroyuki3.worksupportlibw.Adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.example.hiroyuki3.worksupportlibw.R;
 import com.example.hiroyuki3.worksupportlibw.R2;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
@@ -36,19 +38,25 @@ public class AddFriendVPAdapter extends PagerAdapter implements Callback{
     private static final int WIDTH = 500;//QRコードの解像度ってどうやって決めよう？？
     private static final String ENCODING_CHAR = "UTF-8";
     private Context context;
-    private AddFriendFragment fragment;
+    private Fragment fragment;
     private LayoutInflater inflater;
     @BindView(R2.id.camera_btn) Button btn;
     @BindView(R2.id.my_qr_img) ImageView iv;
     private String pageName0;
     private String pageName1;
+    private IAddFriendVPAdapter listener;
 
-    public AddFriendVPAdapter(Context context, AddFriendFragment fragment){
+    public AddFriendVPAdapter(Context context, Fragment fragment, @NonNull IAddFriendVPAdapter listener){
         this.context = context;
         this.fragment = fragment;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        pageName0 = context.getString(R2.string.vp_page_name0);
-        pageName1 = context.getString(R2.string.vp_page_name1);
+        pageName0 = context.getString(R.string.vp_page_name0);
+        pageName1 = context.getString(R.string.vp_page_name1);
+        this.listener = listener;
+    }
+
+    public interface IAddFriendVPAdapter{
+        void onClickCameraButton();
     }
 
     @Override
@@ -132,7 +140,8 @@ public class AddFriendVPAdapter extends PagerAdapter implements Callback{
 //        Frame frame = new Frame.Builder().setBitmap(myBitmap).build();
 //        SparseArray<Barcode> barcodes = detector.detect(frame);
 
-        fragment.checkPermission();
+//        fragment.checkPermission();
+        listener.onClickCameraButton();
     }
 
 
@@ -196,6 +205,6 @@ public class AddFriendVPAdapter extends PagerAdapter implements Callback{
 
     @Override
     public void onError() {
-        toastNullable(context, R2.string.qr_err_msg);
+        toastNullable(context, R.string.qr_err_msg);
     }
 }

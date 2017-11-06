@@ -48,6 +48,7 @@ public class TimeEventRVAdapter extends RecyclerView.Adapter implements Comparat
     private List<TimeEvent> list = new LinkedList<>();
     private int dataNum;
     private Calendar cal;
+    private ITimeEventRVAdapter listener;
     //region static member
     public static final String DIALOG_TAG_ITEM_CLICK = "DIALOG_TAG_ITEMCLICK";
     public static final String DIALOG_TAG_ITEM_ADD = "DIALOG_TAG_ITEM_ADD";
@@ -63,13 +64,18 @@ public class TimeEventRVAdapter extends RecyclerView.Adapter implements Comparat
     public static final String TIME_EVENT = "TIME_EVENT";
     //endregion
 
-    public TimeEventRVAdapter(@Nullable List<TimeEvent> list, @NonNull Fragment fragment, Calendar cal, int dataNum) {
+    public TimeEventRVAdapter(@Nullable List<TimeEvent> list, @NonNull Fragment fragment, Calendar cal, int dataNum, ITimeEventRVAdapter listener) {
         this.fragment = fragment;
         this.dataNum = dataNum;
         this.cal = cal;
+        this.listener = listener;
         inflater = fragment.getLayoutInflater();
         if (list != null)
             this.list = list;
+    }
+
+    public interface ITimeEventRVAdapter{
+        void onClickItem(Bundle bundle);
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -111,6 +117,9 @@ public class TimeEventRVAdapter extends RecyclerView.Adapter implements Comparat
 
     @OnClick(R2.id.item_ll)
     void onClickItem(View v){
+        if (listener == null)
+            return;
+
         int pos = (int)v.getTag();
         Bundle bundle = new Bundle();
         bundle.putInt(DATA_NUM, dataNum);
@@ -118,7 +127,8 @@ public class TimeEventRVAdapter extends RecyclerView.Adapter implements Comparat
         TimeEvent timeEvent = list.get(pos);
         bundle.putSerializable(TIME_EVENT, timeEvent);
         bundle.putInt(RV_POS, pos);
-        kickTimePickerDialog(DIALOG_TAG_ITEM_CLICK, CALLBACK_ITEM_CLICK, bundle, fragment);
+        listener.onClickItem(bundle);
+//        kickTimePickerDialog(DIALOG_TAG_ITEM_CLICK, CALLBACK_ITEM_CLICK, bundle, fragment);
     }
 
     @OnClick(R2.id.remove)

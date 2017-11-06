@@ -58,6 +58,7 @@ public class RecordVpItemTime extends RecordVpItem {
     public static final int CALLBACK_RANGE_COLOR = 2048;
     public static String TIME_EVE_RANGE = "TIME_EVE_RANGE";
     private View view;
+    private IRecordVpItemTime listener;
     @BindView(R2.id.time_event_rv) RecyclerView timeEventRv;
     @BindView(R2.id.rv_container) LinearLayout container;
     @BindView(R2.id.add_range) ImageView addRange;
@@ -68,6 +69,10 @@ public class RecordVpItemTime extends RecordVpItem {
 
     public RecordVpItemTime(RecordData data, int dataNum, Fragment fragment){
         super(data, dataNum, Calendar.getInstance(), fragment);
+    }
+
+    interface IRecordVpItemTime{
+        void onClickColorFl(Bundle bundle);
     }
 
     /**
@@ -98,13 +103,18 @@ public class RecordVpItemTime extends RecordVpItem {
 
         @OnClick(R2.id.color_fl)
         void onClickColorFl(){
-            if (getFragment() instanceof RecordFragment)
-                return;
+            if (listener == null) return;
+
             Bundle bundle = new Bundle();
             bundle.putInt(DATA_NUM, getDataNum());
             bundle.putInt(POS_IN_LIST, posInList);
             bundle.putSerializable(TIME_EVE_RANGE, dataSet.getRangeList().get(posInList));
-            kickCircleAndInputDialog(DIALOG_TAG_RANGE_COLOR, CALLBACK_RANGE_COLOR, bundle, getFragment());
+            listener.onClickColorFl(bundle);
+
+//            if (getFragment() instanceof RecordFragment)
+//                return;
+//
+//            kickCircleAndInputDialog(DIALOG_TAG_RANGE_COLOR, CALLBACK_RANGE_COLOR, bundle, getFragment());
         }
     }
 

@@ -6,6 +6,7 @@ package com.example.hiroyuki3.worksupportlibw.Adapters;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SwitchCompat;
 import android.view.View;
@@ -14,8 +15,6 @@ import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.cks.hiroyuki2.worksupport3.Fragments.GroupSettingFragment;
-import com.cks.hiroyuki2.worksupport3.R;
 import com.cks.hiroyuki2.worksupportlib.R2;
 import com.cks.hiroyuki2.worksupprotlib.Entity.User;
 import com.google.firebase.auth.FirebaseUser;
@@ -28,7 +27,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import static com.cks.hiroyuki2.worksupport3.DialogKicker.kickDialogInOnClick;
 import static com.cks.hiroyuki2.worksupprotlib.Util.UID;
 import static com.cks.hiroyuki2.worksupprotlib.Util.setNullableText;
 
@@ -39,17 +37,24 @@ import static com.cks.hiroyuki2.worksupprotlib.Util.setNullableText;
 
 public class GroupSettingRVAdapter extends RecyclerView.Adapter implements CompoundButton.OnCheckedChangeListener{
 
-    private GroupSettingFragment fragment;
+    private Fragment fragment;
     private List<User> userList;
     public static final String REMOVE_MEMBER = "REMOVE_MEMBER";
     public static final String USER = "USER";
     public static final int CALLBACK_REMOVE_MEMBER = 8731;
     private FirebaseUser userMe;
+    private IGroupSettingRVAdapter listener;
 
-    public GroupSettingRVAdapter(GroupSettingFragment fragment, List<User> userList, @NonNull FirebaseUser userMe) {
+    public GroupSettingRVAdapter(Fragment fragment, List<User> userList, @NonNull FirebaseUser userMe, @NonNull IGroupSettingRVAdapter listener) {
         this.fragment = fragment;
         this.userList = userList;
         this.userMe = userMe;
+        this.listener = listener;
+    }
+
+    interface IGroupSettingRVAdapter{
+        void onClickRemoveMe();
+        void onClickRemoveOthers(Bundle bundle);
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -95,14 +100,16 @@ public class GroupSettingRVAdapter extends RecyclerView.Adapter implements Compo
     public void onViewClicked(View v) {
         String uid = (String)v.getTag();
         if (userMe.getUid().equals(uid)) {
-            fragment.onClickItemExit();
+//            fragment.onClickItemExit();
+            listener.onClickRemoveMe();
             return;
         }
 
         Bundle bundle = new Bundle();
         bundle.putSerializable(UID, uid);
         bundle.putString("from", REMOVE_MEMBER);
-        kickDialogInOnClick(REMOVE_MEMBER, CALLBACK_REMOVE_MEMBER, bundle, fragment);
+        listener.onClickRemoveOthers(bundle);
+//        kickDialogInOnClick(REMOVE_MEMBER, CALLBACK_REMOVE_MEMBER, bundle, fragment);
     }
 
     @Override

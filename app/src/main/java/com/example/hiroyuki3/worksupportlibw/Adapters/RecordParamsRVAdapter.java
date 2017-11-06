@@ -21,14 +21,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cks.hiroyuki2.worksupport3.DialogKicker;
-import com.cks.hiroyuki2.worksupport3.Fragments.EditTemplateFragment;
-import com.cks.hiroyuki2.worksupport3.Fragments.RecordFragment;
-import com.cks.hiroyuki2.worksupport3.R;
-import com.cks.hiroyuki2.worksupport3.RecordVpItems.RecordVpItemParam;
 import com.cks.hiroyuki2.worksupportlib.R2;
 import com.cks.hiroyuki2.worksupprotlib.Entity.RecordData;
 import com.cks.hiroyuki2.worksupprotlib.TemplateEditor;
+import com.example.hiroyuki3.worksupportlibw.R;
+import com.example.hiroyuki3.worksupportlibw.RecordVpItems.RecordVpItemParam;
 
 import org.adw.library.widgets.discreteseekbar.DiscreteSeekBar;
 
@@ -38,8 +35,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.cks.hiroyuki2.worksupport3.DialogKicker.kickInputDialog;
-import static com.cks.hiroyuki2.worksupport3.DialogKicker.makeBundleInOnClick;
 import static com.cks.hiroyuki2.worksupprotlib.Util.CALLBACK_TEMPLATE_PARAMS_ITEM;
 import static com.cks.hiroyuki2.worksupprotlib.Util.CALLBACK_TEMPLATE_PARAMS_SLIDER_MAX;
 import static com.cks.hiroyuki2.worksupprotlib.Util.INDEX;
@@ -51,7 +46,7 @@ import static com.cks.hiroyuki2.worksupprotlib.Util.bundle2DataParams;
 import static com.cks.hiroyuki2.worksupprotlib.Util.onError;
 
 /**
- * {@link RecordVpItemParam}所属！うーん、入り組んでる！
+ * RecordVpItemParam所属！うーん、入り組んでる！
  */
 
 public class RecordParamsRVAdapter extends RecyclerView.Adapter<RecordParamsRVAdapter.ViewHolder> implements CompoundButton.OnCheckedChangeListener, DiscreteSeekBar.OnProgressChangeListener {
@@ -78,6 +73,11 @@ public class RecordParamsRVAdapter extends RecyclerView.Adapter<RecordParamsRVAd
 
     RecordParamsRVAdapter(@NonNull List<Bundle> list, int dataNum, @Nullable String dataName, @NonNull Fragment fragment){//todo 後でこれなくすこと
         this(list, dataNum, dataName, fragment, null);
+    }
+
+    public interface IRecordParamsRVAdapter{
+        void onClickKey(int pos);
+        void onClickMax(int pos);
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -191,7 +191,7 @@ public class RecordParamsRVAdapter extends RecyclerView.Adapter<RecordParamsRVAd
         if (success)
             notifyDataSetChanged();
         else
-            Toast.makeText(fragment.getContext(), R2.string.template_failure, Toast.LENGTH_LONG).show();
+            Toast.makeText(fragment.getContext(), R.string.template_failure, Toast.LENGTH_LONG).show();
     }
 
     public void swap(int fromPos, int toPos){
@@ -264,16 +264,13 @@ public class RecordParamsRVAdapter extends RecyclerView.Adapter<RecordParamsRVAd
 
         int pos = (int) ((ViewGroup)view.getParent()).getTag();
 
-        switch (view.getId()){
-            case R.id.key:
-                onClickKey(pos);
-                break;
-            case R.id.max:
-                onClickMax(pos);
-                break;
-            case R.id.remove:
-                onClickRemove(pos);
-                break;
+        int id = view.getId();
+        if (id == R.id.key){
+            onClickKey(pos);
+        } else if (id == R.id.max) {
+            onClickMax(pos);
+        } else if (id == R.id.remove) {
+            onClickRemove(pos);
         }
     }
 
@@ -288,7 +285,7 @@ public class RecordParamsRVAdapter extends RecyclerView.Adapter<RecordParamsRVAd
         Bundle bundle = list.get(pos);
         makeBundleInOnClick(bundle, TEMPLATE_PARAMS_SLIDER_MAX, dataNum);
         bundle.putInt(TEMPLATE_PARAMS_SLIDER_MAX, pos);
-        DialogKicker.kickDialogInOnClick(TEMPLATE_PARAMS_SLIDER_MAX, CALLBACK_TEMPLATE_PARAMS_SLIDER_MAX, bundle, fragment);
+        kickDialogInOnClick(TEMPLATE_PARAMS_SLIDER_MAX, CALLBACK_TEMPLATE_PARAMS_SLIDER_MAX, bundle, fragment);
     }
 
     private void onClickRemove(int pos){
