@@ -18,9 +18,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.cks.hiroyuki2.worksupprotlib.FirebaseConnection;
-import com.cks.hiroyuki2.worksupport3.R;
+import com.cks.hiroyuki2.worksupportlib.R2;
 import com.cks.hiroyuki2.worksupprotlib.Util;
+import com.example.hiroyuki3.worksupportlibw.R;
 
 import java.text.ParseException;
 import java.util.Arrays;
@@ -75,10 +75,10 @@ public class RecordTabVPAdapter extends PagerAdapter implements View.OnClickList
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        View view = inflater.inflate(R.layout.record_tab_item, null);
+        View view = inflater.inflate(R2.layout.record_tab_item, null);
 
-        LinearLayout ll = (LinearLayout) view.findViewById(R.id.date_container);
-        LinearLayout dayContainer = (LinearLayout) view.findViewById(R.id.day_container);
+        LinearLayout ll = view.findViewById(R.id.date_container);
+        LinearLayout dayContainer = view.findViewById(R.id.day_container);
         int dayOfWeekMed = calMed.get(Calendar.DAY_OF_WEEK);
         Calendar calTmp = Calendar.getInstance();
         calTmp.setTime(calMed.getTime());
@@ -89,9 +89,9 @@ public class RecordTabVPAdapter extends PagerAdapter implements View.OnClickList
             FrameLayout fm = (FrameLayout) ll.getChildAt(i);
             fm.setOnClickListener(this);
             fm.setTag(Integer.parseInt(Util.cal2date(calTmp, Util.datePattern)));
-            TextView dayTv = (TextView) fm.findViewById(R.id.tv);
+            TextView dayTv = fm.findViewById(R.id.tv);
             dayTv.setText(String.valueOf(calTmp.get(Calendar.DAY_OF_MONTH)));
-            ImageView iv = (ImageView) fm.findViewById(R.id.iv);
+            ImageView iv = fm.findViewById(R.id.iv);
             if (calMed.compareTo(calTmp) == 0){
                 iv.setVisibility(View.VISIBLE);
                 dayTv.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
@@ -126,7 +126,7 @@ public class RecordTabVPAdapter extends PagerAdapter implements View.OnClickList
         if (oldCircle != null){
             oldCircle.setTag(null);
             oldCircle.setVisibility(View.GONE);
-            TextView oldTv = (TextView) ((FrameLayout)oldCircle.getParent()).findViewById(R.id.tv);
+            TextView oldTv = ((FrameLayout)oldCircle.getParent()).findViewById(R.id.tv);
             oldTv.setTextColor(Color.WHITE);
         }
 

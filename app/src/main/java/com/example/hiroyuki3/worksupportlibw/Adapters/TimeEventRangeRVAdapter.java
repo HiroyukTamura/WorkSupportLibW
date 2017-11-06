@@ -13,19 +13,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.cks.hiroyuki2.worksupport3.R;
-import com.cks.hiroyuki2.worksupprotlib.Util;
+import com.cks.hiroyuki2.worksupportlib.R2;
 import com.cks.hiroyuki2.worksupprotlib.Entity.TimeEvent;
 import com.cks.hiroyuki2.worksupprotlib.Entity.TimeEventRange;
+import com.cks.hiroyuki2.worksupprotlib.Util;
+import com.example.hiroyuki3.worksupportlibw.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.cks.hiroyuki2.worksupport3.Adapters.RecordVPAdapter.DATA_NUM;
-import static com.cks.hiroyuki2.worksupport3.Adapters.TimeEventRVAdapter.TIME_EVENT;
-import static com.cks.hiroyuki2.worksupport3.DialogKicker.kickInputDialog;
-import static com.cks.hiroyuki2.worksupport3.DialogKicker.kickTimePickerDialog;
+import static com.example.hiroyuki3.worksupportlibw.Adapters.RecordVPAdapter.DATA_NUM;
+import static com.example.hiroyuki3.worksupportlibw.Adapters.TimeEventRVAdapter.TIME_EVENT;
 
 /**
  * Created by hiroyuki2 on 2017/10/14.
@@ -53,8 +52,8 @@ public class TimeEventRangeRVAdapter extends RecyclerView.Adapter {
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.time) TextView time;
-        @BindView(R.id.value) TextView value;
+        @BindView(R2.id.time) TextView time;
+        @BindView(R2.id.value) TextView value;
 
         ViewHolder(View v) {
             super(v);
@@ -84,7 +83,7 @@ public class TimeEventRangeRVAdapter extends RecyclerView.Adapter {
         return 2;
     }
 
-    @OnClick({R.id.value, R.id.time})
+    @OnClick({R2.id.value, R2.id.time})
     void onClickValue(View v){
         int pos = (int)v.getTag();
         Bundle bundle = new Bundle();
@@ -92,13 +91,10 @@ public class TimeEventRangeRVAdapter extends RecyclerView.Adapter {
         bundle.putInt(DATA_NUM, dataNum);
         bundle.putInt(POS_IN_LIST, posInList);
         bundle.putSerializable(TIME_EVENT, range.getTimeEve(pos));
-        switch (v.getId()){
-            case R.id.value:
-                kickInputDialog(bundle, DIALOG_TAG_RANGE_CLICK_VALUE, CALLBACK_RANGE_CLICK_VALUE, fragment);
-                break;
-            case R.id.time:
-                kickTimePickerDialog(DIALOG_TAG_RANGE_CLICK_TIME, CALLBACK_RANGE_CLICK_TIME, bundle, fragment);
-                break;
+        if (v.getId() == R.id.value) {
+            kickInputDialog(bundle, DIALOG_TAG_RANGE_CLICK_VALUE, CALLBACK_RANGE_CLICK_VALUE, fragment);
+        } else if (v.getId() == R.id.time){
+            kickTimePickerDialog(DIALOG_TAG_RANGE_CLICK_TIME, CALLBACK_RANGE_CLICK_TIME, bundle, fragment);
         }
     }
 

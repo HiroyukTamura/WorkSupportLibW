@@ -13,11 +13,10 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.cks.hiroyuki2.worksupport3.Activities.SharedCalendarActivity;
-import com.cks.hiroyuki2.worksupport3.R;
-import com.cks.hiroyuki2.worksupport3.SharedCalendarUIOperator;
+import com.cks.hiroyuki2.worksupportlib.R2;
 import com.cks.hiroyuki2.worksupprotlib.Entity.CalendarEvent;
 import com.cks.hiroyuki2.worksupprotlib.Entity.CalendarOneEvent;
+import com.example.hiroyuki3.worksupportlibw.R;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -30,15 +29,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.cks.hiroyuki2.worksupprotlib.Util.DATE_PATTERN_SLASH_MD;
 import static com.cks.hiroyuki2.worksupprotlib.Util.DATE_PATTERN_YM;
 import static com.cks.hiroyuki2.worksupprotlib.Util.cal2DateWithSlash;
-import static com.cks.hiroyuki2.worksupprotlib.Util.cal2date;
 import static com.cks.hiroyuki2.worksupprotlib.Util.date2Cal;
 import static com.cks.hiroyuki2.worksupprotlib.UtilSpec.colorId;
 
 /**
- * {@link SharedCalendarUIOperator}の子分。{@link SharedCalendarActivity}系列で最も子分のおじさん！
+ * SharedCalendarUIOperatorの子分。SharedCalendarActivity系列で最も子分のおじさん！
  */
 
 public class CalendarRVAdapter extends RecyclerView.Adapter<CalendarRVAdapter.ViewHolder> {
@@ -67,8 +64,8 @@ public class CalendarRVAdapter extends RecyclerView.Adapter<CalendarRVAdapter.Vi
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.date) TextView date;
-        @BindView(R.id.root) ViewGroup root;
+        @BindView(R2.id.date) TextView date;
+        @BindView(R2.id.root) ViewGroup root;
 
         ViewHolder(View v){
             super(v);
@@ -77,8 +74,8 @@ public class CalendarRVAdapter extends RecyclerView.Adapter<CalendarRVAdapter.Vi
     }
 
     class Item{
-        @BindView(R.id.color_line) View colorLine;
-        @BindView(R.id.tv) TextView tv;
+        @BindView(R2.id.color_line) View colorLine;
+        @BindView(R2.id.tv) TextView tv;
         String eventKey;
         int day;
 
@@ -87,7 +84,7 @@ public class CalendarRVAdapter extends RecyclerView.Adapter<CalendarRVAdapter.Vi
             this.eventKey = eventKey;
         }
 
-        @OnClick(R.id.vert)
+        @OnClick(R2.id.vert)
         void deleteSchedule(){
             operator.removeScheduleOnFb(day, eventKey);
         }

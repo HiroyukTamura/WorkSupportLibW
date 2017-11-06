@@ -13,8 +13,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.cks.hiroyuki2.worksupport3.R;
+import com.cks.hiroyuki2.worksupportlib.R2;
 import com.cks.hiroyuki2.worksupprotlib.Entity.RecordData;
+import com.example.hiroyuki3.worksupportlibw.R;
 
 import java.util.List;
 
@@ -25,7 +26,7 @@ import butterknife.OnClick;
 import static com.cks.hiroyuki2.worksupprotlib.Util.setNullableText;
 
 /**
- * {@link com.cks.hiroyuki2.worksupport3.TempWidgetDialogFragment}附属。
+ * TempWidgetDialogFragment附属。
  * テンプレの並びかえを担当。
  */
 public class TemplateDialogRVAdapter extends RecyclerView.Adapter<TemplateDialogRVAdapter.ViewHolder>{
@@ -41,8 +42,8 @@ public class TemplateDialogRVAdapter extends RecyclerView.Adapter<TemplateDialog
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.iv) ImageView iv;
-        @BindView(R.id.tv) TextView tv;
+        @BindView(R2.id.iv) ImageView iv;
+        @BindView(R2.id.tv) TextView tv;
         ViewHolder(View v){
             super(v);
             ButterKnife.bind(this, v);
@@ -82,7 +83,7 @@ public class TemplateDialogRVAdapter extends RecyclerView.Adapter<TemplateDialog
         notifyItemMoved(old, newI);
     }
 
-    @OnClick(R.id.iv)
+    @OnClick(R2.id.iv)
     void onClickIv(View v){
         int pos = (int)v.getTag();
         remove(pos);

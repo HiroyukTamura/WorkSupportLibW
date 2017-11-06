@@ -17,10 +17,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.cks.hiroyuki2.worksupportlib.R2;
 import com.cks.hiroyuki2.worksupprotlib.Entity.User;
-import com.cks.hiroyuki2.worksupport3.Fragments.AddGroupFragment;
-import com.cks.hiroyuki2.worksupport3.Fragments.SocialFragment;
-import com.cks.hiroyuki2.worksupport3.R;
+import com.example.hiroyuki3.worksupportlibw.R;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -38,7 +37,7 @@ import static android.view.View.VISIBLE;
 
 /**
  * ユーザーリストの表示するRecyclerView
- * {@link AddGroupFragment}と{@link SocialFragment}からnewされることに注意してください
+ * AddGroupFragmentとSocialFragmentからnewされることに注意してください
  */
 
 public class SocialListRVAdapter extends RecyclerView.Adapter implements SmoothCheckBox.OnCheckedChangeListener{
@@ -67,13 +66,13 @@ public class SocialListRVAdapter extends RecyclerView.Adapter implements SmoothC
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.seem) View seem;
-        @BindView(R.id.name) TextView name;
-        @BindView(R.id.icon) CircleImageView icon;
-        @BindView(R.id.icon_inner) ImageView iconInner;
-        @BindView(R.id.container) LinearLayout container;
-        @BindView(R.id.checkbox) SmoothCheckBox checkBox;
-        @BindColor(R.color.green_light) int greenLight;
+        @BindView(R2.id.seem) View seem;
+        @BindView(R2.id.name) TextView name;
+        @BindView(R2.id.icon) CircleImageView icon;
+        @BindView(R2.id.icon_inner) ImageView iconInner;
+        @BindView(R2.id.container) LinearLayout container;
+        @BindView(R2.id.checkbox) SmoothCheckBox checkBox;
+        @BindColor(R2.color.green_light) int greenLight;
         @BindColor(android.R.color.white) int white;
         ViewHolder(View v){
             super(v);
@@ -119,7 +118,7 @@ public class SocialListRVAdapter extends RecyclerView.Adapter implements SmoothC
         return list.size();
     }
 
-    @OnClick(R.id.container)
+    @OnClick(R2.id.container)
     void onClickItem(LinearLayout container) {
         if (fragment instanceof SocialFragment) {
 

@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.hiroyuki3.worksupportlibw.R;
+import com.example.hiroyuki3.worksupportlibw.R2;
 
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
@@ -40,23 +41,23 @@ public class AboutVPAdapter extends PagerAdapter {
     }
 
     public class Item0{
-        @OnCheckedChanged(R.id.toggle)
+        @OnCheckedChanged(R2.id.toggle)
         void onCheckChange0(){
 
         }
-        @OnCheckedChanged(R.id.toggle1)
+        @OnCheckedChanged(R2.id.toggle1)
         void onCheckChange1(){
 
         }
     }
 
     public class Item1{
-        @OnClick(R.id.ll0)
+        @OnClick(R2.id.ll0)
         void onClickLL0(){
             listener.onClickLibItem();
         }
 
-        @OnClick(R.id.ll1)
+        @OnClick(R2.id.ll1)
         void onClickLL1(){
             listener.onClickLauncher();
         }

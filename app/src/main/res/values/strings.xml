@@ -1,10 +1,3 @@
 <resources>
     <string name="app_name">WorkSupportLibW</string>
-    <string name="non_display_fst">最初に非表示になっているタグ</string>
-    <string name="display_fst">最初に表示するタグ</string>
-    <string name="about_vp_title0">設定</string>
-    <string name="about_vp_title1">アバウト</string>
-    <string name="tab_title0">開発者より</string>
-    <string name="tab_titel1">著作権表示</string>
-    <string name="license">ライセンス</string>
 </resources>

@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.hiroyuki3.worksupportlibw.R;
+import com.example.hiroyuki3.worksupportlibw.R2;
 
 import org.apmem.tools.layouts.FlowLayout;
 
@@ -35,9 +36,9 @@ public class TempItemTagPool extends RecordVpItem {
     private int dataNum;
     private View view;
     private List<TempItemTag> tagList = new ArrayList<>();
-    @BindView(R.id.tag_pool_name) TextView name;
-    @BindView(R.id.tag_box0) FlowLayout fl0;
-    @BindView(R.id.tag_box1) FlowLayout fl1;
+    @BindView(R2.id.tag_pool_name) TextView name;
+    @BindView(R2.id.tag_box0) FlowLayout fl0;
+    @BindView(R2.id.tag_box1) FlowLayout fl1;
 
     public TempItemTagPool(EditTemplateFragment frag, int dataNum){
         super(frag.getList().get(dataNum), dataNum, null, frag);
@@ -68,12 +69,12 @@ public class TempItemTagPool extends RecordVpItem {
         return view;
     }
 
-    @OnClick(R.id.tag_pool_name)
+    @OnClick(R2.id.tag_pool_name)
     void onClickTagPoolName(){
         ((EditTemplateFragment)getFragment()).onClickTagPoolName(dataNum);
     }
 
-    @OnClick(R.id.add_btn)
+    @OnClick(R2.id.add_btn)
     void onClickAddBtn(){
         ((EditTemplateFragment)getFragment()).onClickTagPoolAdd(dataNum);
     }

@@ -74,11 +74,11 @@ public class RecordVpItemTime extends RecordVpItem {
      * posInListは、アイテムが削除されるたびに値が変更されることに注意してください。
      */
     class TimeEventRangeParams {
-        @BindView(R.id.start_circle) ImageView startCircle;
-        @BindView(R.id.end_circle) ImageView endCircle;
-        @BindView(R.id.stroke) View stroke;
-        @BindView(R.id.rv) RecyclerView rv;
-        @BindView(R.id.color_fl) FrameLayout colorFl;
+        @BindView(R2.id.start_circle) ImageView startCircle;
+        @BindView(R2.id.end_circle) ImageView endCircle;
+        @BindView(R2.id.stroke) View stroke;
+        @BindView(R2.id.rv) RecyclerView rv;
+        @BindView(R2.id.color_fl) FrameLayout colorFl;
         int posInList;
 
         TimeEventRangeParams(int posInList){

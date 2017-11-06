@@ -14,9 +14,10 @@ import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.cks.hiroyuki2.worksupprotlib.Entity.User;
 import com.cks.hiroyuki2.worksupport3.Fragments.GroupSettingFragment;
 import com.cks.hiroyuki2.worksupport3.R;
+import com.cks.hiroyuki2.worksupportlib.R2;
+import com.cks.hiroyuki2.worksupprotlib.Entity.User;
 import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
 
@@ -32,7 +33,7 @@ import static com.cks.hiroyuki2.worksupprotlib.Util.UID;
 import static com.cks.hiroyuki2.worksupprotlib.Util.setNullableText;
 
 /**
- * Groupのメンバーを表すRVAdapter. {@link GroupSettingFragment}の舎弟。
+ * Groupのメンバーを表すRVAdapter. GroupSettingFragmentの舎弟。
  * itemの識別には、positionを一切使わずにUIDで識別しているところがミソ。
  */
 
@@ -53,10 +54,10 @@ public class GroupSettingRVAdapter extends RecyclerView.Adapter implements Compo
 
     static class ViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.icon) CircleImageView icon;
-        @BindView(R.id.switch_widget) SwitchCompat switchWidget;
-        @BindView(R.id.remove) ImageButton remove;
-        @BindView(R.id.name) TextView name;
+        @BindView(R2.id.icon) CircleImageView icon;
+        @BindView(R2.id.switch_widget) SwitchCompat switchWidget;
+        @BindView(R2.id.remove) ImageButton remove;
+        @BindView(R2.id.name) TextView name;
 
         ViewHolder(View v) {
             super(v);
@@ -66,7 +67,7 @@ public class GroupSettingRVAdapter extends RecyclerView.Adapter implements Compo
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = fragment.getLayoutInflater().inflate(R.layout.group_setting_rv_item, parent, false);
+        View v = fragment.getLayoutInflater().inflate(R2.layout.group_setting_rv_item, parent, false);
         ButterKnife.bind(this, v);
         return new ViewHolder(v);
     }
@@ -90,7 +91,7 @@ public class GroupSettingRVAdapter extends RecyclerView.Adapter implements Compo
         return userList.size();
     }
 
-    @OnClick(R.id.remove)
+    @OnClick(R2.id.remove)
     public void onViewClicked(View v) {
         String uid = (String)v.getTag();
         if (userMe.getUid().equals(uid)) {

@@ -34,8 +34,8 @@ import static com.cks.hiroyuki2.worksupprotlib.Util.setNullableText;
 public class RecordVpItemTagPool extends RecordVpItem {
     private static final String TAG = "MANUAL_TAG: " + RecordVpItemTagPool.class.getSimpleName();
     private List<RecordVpItemTag> tagList = new ArrayList<>();
-    @BindView(R.id.tag_pool_name) TextView name;
-    @BindView(R.id.tag_box) FlowLayout ll;
+    @BindView(R2.id.tag_pool_name) TextView name;
+    @BindView(R2.id.tag_box) FlowLayout ll;
 
     private onClickCardListener listener;
 
@@ -89,7 +89,7 @@ public class RecordVpItemTagPool extends RecordVpItem {
         }
     }
 
-    @OnClick(R.id.tag_box_card)
+    @OnClick(R2.id.tag_box_card)
     void onClickTagPoolContent(){
         listener.onClickTagPoolContent(getCal(), getDataNum());
     }

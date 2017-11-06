@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.TextView;
 
+import com.cks.hiroyuki2.worksupportlib.R2;
 import com.cks.hiroyuki2.worksupprotlib.Entity.RecordData;
 import com.example.hiroyuki3.worksupportlibw.R;
 
@@ -27,8 +28,8 @@ import static com.cks.hiroyuki2.worksupprotlib.Util.setNullableText;
 public class RecordVpItemComment extends RecordVpItem {
 
     private static final String TAG = "MANUAL_TAG: " + RecordVpItemComment.class.getSimpleName();
-    @BindView(R.id.comment_name) TextView name;
-    @BindView(R.id.edit_text) TextView tv;
+    @BindView(R2.id.comment_name) TextView name;
+    @BindView(R2.id.edit_text) TextView tv;
     private View view;
     private onClickCommentListener listener;
 
@@ -63,12 +64,12 @@ public class RecordVpItemComment extends RecordVpItem {
         setNullableText(name, title);
     }
 
-    @OnClick(R.id.comment_name)
+    @OnClick(R2.id.comment_name)
     void onClickCommentName(){
         listener.onClickCommentName(getDataNum());
     }
 
-    @OnClick(R.id.edit_text)
+    @OnClick(R2.id.edit_text)
     void onClickEditText(){
         listener.onClickCommentEdit(getDataNum(), getNullableText(tv));
     }

@@ -6,8 +6,6 @@ package com.example.hiroyuki3.worksupportlibw.Adapters;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.support.annotation.NonNull;
-import android.support.v4.util.Pair;
 import android.support.v4.view.PagerAdapter;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,19 +14,18 @@ import android.view.ViewGroup;
 
 import com.cks.hiroyuki2.worksupport3.AnalyticsVPUiOperator;
 import com.cks.hiroyuki2.worksupport3.Fragments.AnalyticsFragment;
-import com.cks.hiroyuki2.worksupport3.R;
+import com.cks.hiroyuki2.worksupportlib.R2;
 import com.cks.hiroyuki2.worksupprotlib.Util;
 
 import org.jetbrains.annotations.Contract;
 
 import java.lang.ref.WeakReference;
 import java.util.Calendar;
-import java.util.List;
 import java.util.TreeMap;
 
 /**
- * Analytics画面のVPAdapterおじさん！でもUIの操作{@link AnalyticsVPUiOperator}におまかせ
- * @see AnalyticsFragment
+ * Analytics画面のVPAdapterおじさん！でもUIの操作AnalyticsVPUiOperatorにおまかせ
+ * AnalyticsFragment
  */
 public class AnalyticsVPAdapter extends PagerAdapter {
     private static final String TAG = "MANUAL_TAG: " + AnalyticsVPAdapter.class.getSimpleName();
@@ -64,7 +61,7 @@ public class AnalyticsVPAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        View root =  inflater.inflate(R.layout.fragment_analytics, null);
+        View root =  inflater.inflate(R2.layout.fragment_analytics, null);
         root.setTag(position);
         Calendar cal = getCal(position);
         Log.d(TAG, "instantiateItem: "+ cal.getTime().toString());

@@ -20,15 +20,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.cks.hiroyuki2.worksupportlib.R2;
 import com.cks.hiroyuki2.worksupprotlib.Entity.Content;
 import com.cks.hiroyuki2.worksupprotlib.Entity.Document;
 import com.cks.hiroyuki2.worksupprotlib.Entity.DocumentEle;
 import com.cks.hiroyuki2.worksupprotlib.Entity.Group;
 import com.cks.hiroyuki2.worksupprotlib.Entity.User;
-import com.cks.hiroyuki2.worksupprotlib.FirebaseConnection;
-import com.cks.hiroyuki2.worksupport3.Fragments.ShareBoardFragment;
-import com.cks.hiroyuki2.worksupport3.R;
 import com.cks.hiroyuki2.worksupprotlib.Util;
+import com.example.hiroyuki3.worksupportlibw.R;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -43,13 +42,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
-import static com.cks.hiroyuki2.worksupport3.DialogKicker.kickDialogInOnClick;
-import static com.cks.hiroyuki2.worksupport3.Fragments.ShareBoardFragment.DIALOG_CODE_DATA_VERT;
-import static com.cks.hiroyuki2.worksupport3.Fragments.ShareBoardFragment.DIALOG_CODE_DOC_VERT;
-import static com.cks.hiroyuki2.worksupport3.Fragments.ShareBoardFragment.DIALOG_CODE_ITEM_VERT;
-import static com.cks.hiroyuki2.worksupport3.Fragments.ShareBoardFragment.DIALOG_TAG_DATA_VERT;
-import static com.cks.hiroyuki2.worksupport3.Fragments.ShareBoardFragment.DIALOG_TAG_DOC_VERT;
-import static com.cks.hiroyuki2.worksupport3.Fragments.ShareBoardFragment.DIALOG_TAG_ITEM_VERT;
 import static com.cks.hiroyuki2.worksupprotlib.Util.setImgFromStorage;
 
 /**
@@ -74,8 +66,8 @@ public class ShareBoardRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private LayoutInflater inflater;
     private Group group;
     private List<Boolean> expandList;
-    @BindColor(R.color.word_blue_dark) int blue;
-    @BindColor(R.color.word_red) int red;
+    @BindColor(R2.color.word_blue_dark) int blue;
+    @BindColor(R2.color.word_red) int red;
 
     public ShareBoardRVAdapter(@NonNull Group group, @NonNull ShareBoardFragment fragment){
         super();
@@ -86,53 +78,53 @@ public class ShareBoardRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     class ViewHolderUploaded extends RecyclerView.ViewHolder {
-        @BindView(R.id.icon) ImageView iconIv;
-        @BindView(R.id.title) TextView titleTv;
-        @BindView(R.id.sub_title) TextView subTitleTv;
-        @BindView(R.id.fl_uploaded) FrameLayout fl;
-        @BindView(R.id.card) CardView card;
-        @BindView(R.id.comment_ll) LinearLayout commentLl;
-        @BindView(R.id.sub_titlef) TextView commentTv;
-        @BindView(R.id.vert) ImageView vert;
+        @BindView(R2.id.icon) ImageView iconIv;
+        @BindView(R2.id.title) TextView titleTv;
+        @BindView(R2.id.sub_title) TextView subTitleTv;
+        @BindView(R2.id.fl_uploaded) FrameLayout fl;
+        @BindView(R2.id.card) CardView card;
+        @BindView(R2.id.comment_ll) LinearLayout commentLl;
+        @BindView(R2.id.sub_titlef) TextView commentTv;
+        @BindView(R2.id.vert) ImageView vert;
         ViewHolderUploaded(View v){
             super(v);
             ButterKnife.bind(this, v);
         }
 
-        @OnClick(R.id.vert)
+        @OnClick(R2.id.vert)
         void onClickVert(View ll){
             onClickVertAsset(ll);
         }
 
-        @OnClick(R.id.card)
+        @OnClick(R2.id.card)
         void onClickCard(View v){
             onClickCardAsset(v);
         }
     }
 
     class ViewHolderFile extends RecyclerView.ViewHolder {
-        @BindView(R.id.icon) CircleImageView iconIv;
-        @BindView(R.id.title) TextView titleTv;
-        @BindView(R.id.sub_title) TextView subTitleTv;
-        @BindView(R.id.fl) FrameLayout fl;
+        @BindView(R2.id.icon) CircleImageView iconIv;
+        @BindView(R2.id.title) TextView titleTv;
+        @BindView(R2.id.sub_title) TextView subTitleTv;
+        @BindView(R2.id.fl) FrameLayout fl;
 //        @BindView(R.id.btn_ll) LinearLayout btn_ll;
-        @BindView(R.id.comment_ll) LinearLayout commentLl;
-        @BindView(R.id.sub_titlef) TextView commentTv;
+        @BindView(R2.id.comment_ll) LinearLayout commentLl;
+        @BindView(R2.id.sub_titlef) TextView commentTv;
 //        @BindView(R.id.item1) LinearLayout item1;
 //        @BindView(R.id.item2) LinearLayout item2;
 //        @BindView(R.id.item3) LinearLayout item3;
-        @BindView(R.id.vert) ImageView vert;
+        @BindView(R2.id.vert) ImageView vert;
         ViewHolderFile(View v){
             super(v);
             ButterKnife.bind(this, v);
         }
 
-        @OnClick(R.id.vert)
+        @OnClick(R2.id.vert)
         void onClickVert(View ll){
             onClickVertAsset(ll);
         }
 
-        @OnClick(R.id.card)
+        @OnClick(R2.id.card)
         void onClickCard(View v){
             onClickCardAsset(v);
         }
@@ -144,41 +136,41 @@ public class ShareBoardRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     class ViewHolderDocument extends RecyclerView.ViewHolder {
-        @BindView(R.id.card) CardView card;
-        @BindView(R.id.icon) ImageView iconIv;
-        @BindView(R.id.fl) FrameLayout fl;
-        @BindView(R.id.vert) ImageView vert;
-        @BindView(R.id.title) TextView titleTv;
-        @BindView(R.id.sub_title) TextView subTitleTv;
-        @BindView(R.id.add_comment) ImageButton expandIv;
-        @BindView(R.id.expand_view) LinearLayout expandView;
-        @BindView(R.id.content_main_doc) TextView docEllipsis;
+        @BindView(R2.id.card) CardView card;
+        @BindView(R2.id.icon) ImageView iconIv;
+        @BindView(R2.id.fl) FrameLayout fl;
+        @BindView(R2.id.vert) ImageView vert;
+        @BindView(R2.id.title) TextView titleTv;
+        @BindView(R2.id.sub_title) TextView subTitleTv;
+        @BindView(R2.id.add_comment) ImageButton expandIv;
+        @BindView(R2.id.expand_view) LinearLayout expandView;
+        @BindView(R2.id.content_main_doc) TextView docEllipsis;
         ViewHolderDocument(View v){
             super(v);
             ButterKnife.bind(this, v);
         }
 
-        @OnClick(R.id.vert)
+        @OnClick(R2.id.vert)
         void onClickVert(View ll){
             onClickVertAsset(ll);
         }
 
-        @OnClick(R.id.card)
+        @OnClick(R2.id.card)
         void onClickCard(View v){
             onClickCardAsset(v);
         }
 
-        @OnClick(R.id.add_comment)
+        @OnClick(R2.id.add_comment)
         void onClickAddComment(View v){
             onClickAddCommentAsset(v);
         }
     }
 
     class ViewHolderFooter extends RecyclerView.ViewHolder {
-        @BindView(R.id.horizontal_sv) HorizontalScrollView hsv;
-        @BindView(R.id.hsv_ll) LinearLayout ll;
-        @BindDimen(R.dimen.board_icon_padding) int iconPadding;
-        @BindDimen(R.dimen.board_icon) int iconSize;
+        @BindView(R2.id.horizontal_sv) HorizontalScrollView hsv;
+        @BindView(R2.id.hsv_ll) LinearLayout ll;
+        @BindDimen(R2.dimen.board_icon_padding) int iconPadding;
+        @BindDimen(R2.dimen.board_icon) int iconSize;
 
         ViewHolderFooter(View v){
             super(v);

@@ -17,8 +17,9 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.cks.hiroyuki2.worksupport3.R;
+import com.cks.hiroyuki2.worksupportlib.R2;
 import com.cks.hiroyuki2.worksupprotlib.Entity.TimeEvent;
+import com.example.hiroyuki3.worksupportlibw.R;
 
 import java.util.Calendar;
 import java.util.Collections;
@@ -30,13 +31,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.cks.hiroyuki2.worksupport3.Adapters.RecordVPAdapter.DATA_NUM;
-import static com.cks.hiroyuki2.worksupport3.Adapters.RecordVPAdapter.PAGE_TAG;
-import static com.cks.hiroyuki2.worksupport3.DialogKicker.kickTimePickerDialog;
-import static com.cks.hiroyuki2.worksupprotlib.Util.datePattern;
 import static com.cks.hiroyuki2.worksupprotlib.Util.cal2date;
-import static com.cks.hiroyuki2.worksupprotlib.UtilSpec.colorId;
+import static com.cks.hiroyuki2.worksupprotlib.Util.datePattern;
 import static com.cks.hiroyuki2.worksupprotlib.Util.getCalFromTimeEvent;
+import static com.cks.hiroyuki2.worksupprotlib.UtilSpec.colorId;
+import static com.example.hiroyuki3.worksupportlibw.Adapters.RecordVPAdapter.DATA_NUM;
+import static com.example.hiroyuki3.worksupportlibw.Adapters.RecordVPAdapter.PAGE_TAG;
 
 /**
  * itemにpositionをtagとして張り付けるため、必ず{@link RecyclerView.Adapter#notifyDataSetChanged()}を使用してください。それ以外のnotify系は使わないでください。
@@ -73,11 +73,11 @@ public class TimeEventRVAdapter extends RecyclerView.Adapter implements Comparat
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.circle) ImageView circle;
-        @BindView(R.id.time) TextView time;
-        @BindView(R.id.value) TextView value;
-        @BindView(R.id.remove) ImageButton removeBtn;
-        @BindView(R.id.item_ll) View itemLL;
+        @BindView(R2.id.circle) ImageView circle;
+        @BindView(R2.id.time) TextView time;
+        @BindView(R2.id.value) TextView value;
+        @BindView(R2.id.remove) ImageButton removeBtn;
+        @BindView(R2.id.item_ll) View itemLL;
 
         ViewHolder(View v) {
             super(v);
@@ -109,7 +109,7 @@ public class TimeEventRVAdapter extends RecyclerView.Adapter implements Comparat
         return list.size();
     }
 
-    @OnClick(R.id.item_ll)
+    @OnClick(R2.id.item_ll)
     void onClickItem(View v){
         int pos = (int)v.getTag();
         Bundle bundle = new Bundle();
@@ -121,7 +121,7 @@ public class TimeEventRVAdapter extends RecyclerView.Adapter implements Comparat
         kickTimePickerDialog(DIALOG_TAG_ITEM_CLICK, CALLBACK_ITEM_CLICK, bundle, fragment);
     }
 
-    @OnClick(R.id.remove)
+    @OnClick(R2.id.remove)
     void onClickRemoveBtn(View v){
         int pos = (int)v.getTag();
         list.remove(pos);

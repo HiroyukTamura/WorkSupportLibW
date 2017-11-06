@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.cks.hiroyuki2.worksupportlib.R2;
 import com.cks.hiroyuki2.worksupprotlib.Entity.RecordData;
 import com.example.hiroyuki3.worksupportlibw.Adapters.RecordParamsRVAdapter;
 import com.example.hiroyuki3.worksupportlibw.R;
@@ -38,14 +39,14 @@ import static com.cks.hiroyuki2.worksupprotlib.Util.setRecycler;
  * アセット兄弟！Paramsおじさん！
  */
 
-public class RecordVpItemParam extends RecordVpItems.RecordVpItem {
+public class RecordVpItemParam extends RecordVpItem {
     private static final String TAG = "MANUAL_TAG: " + RecordVpItemParam.class.getSimpleName();
     private OnClickParamsNameListener listener;
 
-    @BindView(R.id.tag_pool_name) TextView name;
-    @BindView(R.id.add_btn) ImageView addBtn;
-    @BindView(R.id.recycler) RecyclerView recycler;
-    @BindColor(R.color.blue_gray_light) int draggingColor;
+    @BindView(R2.id.tag_pool_name) TextView name;
+    @BindView(R2.id.add_btn) ImageView addBtn;
+    @BindView(R2.id.recycler) RecyclerView recycler;
+    @BindColor(R2.color.blue_gray_light) int draggingColor;
     private RecordParamsRVAdapter adapter;
 
     public interface OnClickParamsNameListener{
@@ -123,13 +124,13 @@ public class RecordVpItemParam extends RecordVpItems.RecordVpItem {
         fragment.adapter.syncDataMapAndFireBase(list, date);
     }
 
-    @OnClick(R.id.tag_pool_name)
+    @OnClick(R2.id.tag_pool_name)
     void onClickName(){
         if (listener != null)
             listener.onClickParamsName(getDataNum());
     }
 
-    @OnClick(R.id.add_btn)
+    @OnClick(R2.id.add_btn)
     void onClickAddBtn(){
         if (listener != null)
             listener.onClickParamsAddBtn(getDataNum());

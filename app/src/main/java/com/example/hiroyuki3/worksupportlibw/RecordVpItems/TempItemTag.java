@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.cks.hiroyuki2.worksupprotlib.UtilSpec;
 import com.example.hiroyuki3.worksupportlibw.R;
+import com.example.hiroyuki3.worksupportlibw.R2;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,9 +28,9 @@ import static com.cks.hiroyuki2.worksupprotlib.Util.delimiter;
 
 class TempItemTag {
     private static final String TAG = "MANUAL_TAG: " + TempItemTag.class.getSimpleName();
-    @BindView(R.id.tv) TextView tv;
-    @BindView(R.id.card_container) CardView cv;
-    @BindView(R.id.remove) ImageView removeBtn;
+    @BindView(R2.id.tv) TextView tv;
+    @BindView(R2.id.card_container) CardView cv;
+    @BindView(R2.id.remove) ImageView removeBtn;
     private View view;
     private int tagNum;
     private String value;
@@ -56,12 +57,12 @@ class TempItemTag {
         return view;
     }
 
-    @OnClick(R.id.remove)
+    @OnClick(R2.id.remove)
     void onClickRemoveTagBtn(){
         frag.onClickRemoveTagBtn(dataNum, tagNum);
     }
 
-    @OnClick(R.id.tv)
+    @OnClick(R2.id.tv)
     void onClickTv(){
         frag.onClickTag(tagNum, dataNum, value);
     }

@@ -13,9 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.cks.hiroyuki2.worksupprotlib.Entity.CalendarOneEvent;
-import com.cks.hiroyuki2.worksupport3.Fragments.SharedCalendarFragment;
-import com.cks.hiroyuki2.worksupport3.R;
-import com.cks.hiroyuki2.worksupport3.SharedCalendarUIOperator;
+import com.example.hiroyuki3.worksupportlibw.R;
 import com.google.firebase.database.DatabaseReference;
 
 import org.jetbrains.annotations.Contract;

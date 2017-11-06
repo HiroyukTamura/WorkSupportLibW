@@ -26,8 +26,9 @@ import com.cks.hiroyuki2.worksupport3.Fragments.EditTemplateFragment;
 import com.cks.hiroyuki2.worksupport3.Fragments.RecordFragment;
 import com.cks.hiroyuki2.worksupport3.R;
 import com.cks.hiroyuki2.worksupport3.RecordVpItems.RecordVpItemParam;
-import com.cks.hiroyuki2.worksupprotlib.TemplateEditor;
+import com.cks.hiroyuki2.worksupportlib.R2;
 import com.cks.hiroyuki2.worksupprotlib.Entity.RecordData;
+import com.cks.hiroyuki2.worksupprotlib.TemplateEditor;
 
 import org.adw.library.widgets.discreteseekbar.DiscreteSeekBar;
 
@@ -80,12 +81,12 @@ public class RecordParamsRVAdapter extends RecyclerView.Adapter<RecordParamsRVAd
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.key) TextView key;
-        @BindView(R.id.checkbox) CheckBox checkBox;
-        @BindView(R.id.seek_bar) DiscreteSeekBar seekBar;
-        @BindView(R.id.remove) ImageView remove;
-        @BindView(R.id.max) ImageView max;
-        @BindView(R.id.container) LinearLayout container;
+        @BindView(R2.id.key) TextView key;
+        @BindView(R2.id.checkbox) CheckBox checkBox;
+        @BindView(R2.id.seek_bar) DiscreteSeekBar seekBar;
+        @BindView(R2.id.remove) ImageView remove;
+        @BindView(R2.id.max) ImageView max;
+        @BindView(R2.id.container) LinearLayout container;
         ViewHolder(View v){
             super(v);
             ButterKnife.bind(this, v);
@@ -94,7 +95,7 @@ public class RecordParamsRVAdapter extends RecyclerView.Adapter<RecordParamsRVAd
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = inflater.inflate(R.layout.record_params_rv_item, parent, false);
+        View v = inflater.inflate(R2.layout.record_params_rv_item, parent, false);
         ButterKnife.bind(this, v);
         return new ViewHolder(v);
     }
@@ -190,7 +191,7 @@ public class RecordParamsRVAdapter extends RecyclerView.Adapter<RecordParamsRVAd
         if (success)
             notifyDataSetChanged();
         else
-            Toast.makeText(fragment.getContext(), R.string.template_failure, Toast.LENGTH_LONG).show();
+            Toast.makeText(fragment.getContext(), R2.string.template_failure, Toast.LENGTH_LONG).show();
     }
 
     public void swap(int fromPos, int toPos){
@@ -256,7 +257,7 @@ public class RecordParamsRVAdapter extends RecyclerView.Adapter<RecordParamsRVAd
     //endregion
 
     //region onClick系列
-    @OnClick({R.id.key, R.id.max, R.id.remove})
+    @OnClick({R2.id.key, R2.id.max, R2.id.remove})
     void onClickBtn(View view){
         if (!(fragment instanceof EditTemplateFragment))
             return;

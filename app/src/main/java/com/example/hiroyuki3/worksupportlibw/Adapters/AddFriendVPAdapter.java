@@ -13,8 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import com.cks.hiroyuki2.worksupport3.Fragments.AddFriendFragment;
-import com.cks.hiroyuki2.worksupport3.R;
+import com.example.hiroyuki3.worksupportlibw.R2;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -29,7 +28,7 @@ import static com.cks.hiroyuki2.worksupprotlib.Util.toastNullable;
 
 /**
  * PagerAdapterおじさん！
- * {@link AddFriendFragment}付属
+ * AddFriendFragment付属
  */
 public class AddFriendVPAdapter extends PagerAdapter implements Callback{
 
@@ -39,8 +38,8 @@ public class AddFriendVPAdapter extends PagerAdapter implements Callback{
     private Context context;
     private AddFriendFragment fragment;
     private LayoutInflater inflater;
-    @BindView(R.id.camera_btn) Button btn;
-    @BindView(R.id.my_qr_img) ImageView iv;
+    @BindView(R2.id.camera_btn) Button btn;
+    @BindView(R2.id.my_qr_img) ImageView iv;
     private String pageName0;
     private String pageName1;
 
@@ -48,8 +47,8 @@ public class AddFriendVPAdapter extends PagerAdapter implements Callback{
         this.context = context;
         this.fragment = fragment;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        pageName0 = context.getString(R.string.vp_page_name0);
-        pageName1 = context.getString(R.string.vp_page_name1);
+        pageName0 = context.getString(R2.string.vp_page_name0);
+        pageName1 = context.getString(R2.string.vp_page_name1);
     }
 
     @Override
@@ -83,7 +82,7 @@ public class AddFriendVPAdapter extends PagerAdapter implements Callback{
         View view = null;
         switch (position){
             case 0:
-                view = inflater.inflate(R.layout.addfriend_vp_item_qr, null);
+                view = inflater.inflate(R2.layout.addfriend_vp_item_qr, null);
                 ButterKnife.bind(this, view);
                 File file = new File(context.getFilesDir(), QR_FILE_NAME);
                 Picasso.with(context).load(file).into(iv, this);
@@ -112,7 +111,7 @@ public class AddFriendVPAdapter extends PagerAdapter implements Callback{
 //                }
                 break;
             case 1:
-                view = inflater.inflate(R.layout.social_vp_item_shake, null);
+                view = inflater.inflate(R2.layout.social_vp_item_shake, null);
                 //todo 整備してください
                 break;
         }
@@ -120,7 +119,7 @@ public class AddFriendVPAdapter extends PagerAdapter implements Callback{
         return view;
     }
 
-    @OnClick(R.id.camera_btn)
+    @OnClick(R2.id.camera_btn)
     void onClickCameraBtn(){
 //        BarcodeDetector detector = new BarcodeDetector.Builder(getApplicationContext())
 //                        .setBarcodeFormats(Barcode.QR_CODE)
@@ -197,6 +196,6 @@ public class AddFriendVPAdapter extends PagerAdapter implements Callback{
 
     @Override
     public void onError() {
-        toastNullable(context, R.string.qr_err_msg);
+        toastNullable(context, R2.string.qr_err_msg);
     }
 }

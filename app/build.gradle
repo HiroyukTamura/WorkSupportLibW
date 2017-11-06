@@ -66,5 +66,6 @@ dependencies {
     compile 'com.firebaseui:firebase-ui:3.1.0'
     compile 'com.github.SumiMakito:AwesomeQRCode:1.0.6'
     compile 'com.gordonwong:material-sheet-fab:1.2.1'
-    compile 'com.github.HiroyukTamura:WorkSupprotLib:1.2.3'
+    compile 'com.github.HiroyukTamura:WorkSupprotLib:2.0.3'
+    compile 'de.hdodenhof:circleimageview:2.2.0'
 }
