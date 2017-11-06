@@ -8,8 +8,8 @@ import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.TextView;
 
-import com.cks.hiroyuki2.worksupport3.R;
 import com.cks.hiroyuki2.worksupprotlib.Entity.RecordData;
+import com.example.hiroyuki3.worksupportlibw.R;
 
 import java.util.Calendar;
 

@@ -15,10 +15,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.cks.hiroyuki2.worksupport3.Adapters.RecordParamsRVAdapter;
-import com.cks.hiroyuki2.worksupport3.Fragments.RecordFragment;
-import com.cks.hiroyuki2.worksupport3.R;
 import com.cks.hiroyuki2.worksupprotlib.Entity.RecordData;
+import com.example.hiroyuki3.worksupportlibw.Adapters.RecordParamsRVAdapter;
+import com.example.hiroyuki3.worksupportlibw.R;
 
 import java.util.Calendar;
 import java.util.List;
@@ -39,7 +38,7 @@ import static com.cks.hiroyuki2.worksupprotlib.Util.setRecycler;
  * アセット兄弟！Paramsおじさん！
  */
 
-public class RecordVpItemParam extends com.cks.hiroyuki2.worksupport3.RecordVpItems.RecordVpItem {
+public class RecordVpItemParam extends RecordVpItems.RecordVpItem {
     private static final String TAG = "MANUAL_TAG: " + RecordVpItemParam.class.getSimpleName();
     private OnClickParamsNameListener listener;
 

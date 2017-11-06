@@ -11,8 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
-import com.cks.hiroyuki2.worksupport3.R;
 import com.cks.hiroyuki2.worksupprotlib.UtilSpec;
+import com.example.hiroyuki3.worksupportlibw.R;
+import com.example.hiroyuki3.worksupportlibw.R2;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,8 +28,8 @@ import static android.view.View.VISIBLE;
 class RecordVpItemTag {
     private View view;
     private Context context;
-    @BindView(R.id.tv) TextView tv;
-    @BindView(R.id.card_container) CardView cv;
+    @BindView(R2.id.tv) TextView tv;
+    @BindView(R2.id.card_container) CardView cv;
 
     RecordVpItemTag(Context context){
         this.context = context;

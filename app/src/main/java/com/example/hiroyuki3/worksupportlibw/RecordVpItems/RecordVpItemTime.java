@@ -23,7 +23,10 @@ import com.cks.hiroyuki2.worksupprotlib.Entity.TimeEvent;
 import com.cks.hiroyuki2.worksupprotlib.Entity.TimeEventDataSet;
 import com.cks.hiroyuki2.worksupprotlib.Entity.TimeEventRange;
 import com.cks.hiroyuki2.worksupprotlib.Util;
+import com.example.hiroyuki3.worksupportlibw.Adapters.TimeEventRVAdapter;
+import com.example.hiroyuki3.worksupportlibw.Adapters.TimeEventRangeRVAdapter;
 import com.example.hiroyuki3.worksupportlibw.R;
+import com.example.hiroyuki3.worksupportlibw.R2;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -36,6 +39,11 @@ import butterknife.OnClick;
 import static com.cks.hiroyuki2.worksupprotlib.Util.getTimeEveDataSetFromRecordData;
 import static com.cks.hiroyuki2.worksupprotlib.Util.initRecycler;
 import static com.cks.hiroyuki2.worksupprotlib.UtilSpec.colorId;
+import static com.example.hiroyuki3.worksupportlibw.Adapters.RecordVPAdapter.DATA_NUM;
+import static com.example.hiroyuki3.worksupportlibw.Adapters.TimeEventRVAdapter.CALLBACK_ITEM_ADD;
+import static com.example.hiroyuki3.worksupportlibw.Adapters.TimeEventRVAdapter.DIALOG_TAG_ITEM_ADD;
+import static com.example.hiroyuki3.worksupportlibw.Adapters.TimeEventRVAdapter.TIME_EVENT;
+import static com.example.hiroyuki3.worksupportlibw.Adapters.TimeEventRangeRVAdapter.POS_IN_LIST;
 
 /**
  * RecordVpItem兄弟！Timelineおじさん！
@@ -50,9 +58,9 @@ public class RecordVpItemTime extends RecordVpItem {
     public static final int CALLBACK_RANGE_COLOR = 2048;
     public static String TIME_EVE_RANGE = "TIME_EVE_RANGE";
     private View view;
-    @BindView(R.id.time_event_rv) RecyclerView timeEventRv;
-    @BindView(R.id.rv_container) LinearLayout container;
-    @BindView(R.id.add_range) ImageView addRange;
+    @BindView(R2.id.time_event_rv) RecyclerView timeEventRv;
+    @BindView(R2.id.rv_container) LinearLayout container;
+    @BindView(R2.id.add_range) ImageView addRange;
 
     public RecordVpItemTime(RecordData data, int dataNum, Calendar cal, Fragment fragment) {
         super(data, dataNum, cal, fragment);
@@ -83,12 +91,12 @@ public class RecordVpItemTime extends RecordVpItem {
             endCircle.setColorFilter(ContextCompat.getColor(getFragment().getContext(), colorRes));
         }
 
-        @OnClick(R.id.remove)
+        @OnClick(R2.id.remove)
         void onClickRemove(View view){
             removeRangeItem(posInList);
         }
 
-        @OnClick(R.id.color_fl)
+        @OnClick(R2.id.color_fl)
         void onClickColorFl(){
             if (getFragment() instanceof RecordFragment)
                 return;
@@ -124,7 +132,7 @@ public class RecordVpItemTime extends RecordVpItem {
         return view;
     }
 
-    @OnClick(R.id.add_time_eve)
+    @OnClick(R2.id.add_time_eve)
     void onClickAddTimeEveBtn() {
         Bundle bundle = new Bundle();
         bundle.putInt(DATA_NUM, getDataNum());
@@ -133,7 +141,7 @@ public class RecordVpItemTime extends RecordVpItem {
         kickTimePickerDialog(DIALOG_TAG_ITEM_ADD, CALLBACK_ITEM_ADD, bundle, getFragment());
     }
 
-    @OnClick(R.id.add_range)
+    @OnClick(R2.id.add_range)
     void onClickAddRangeBtn() {
         TimeEvent start = new TimeEvent("起床", 0, Util.getCopyOfCal(getCal()), 0);
         TimeEvent end = new TimeEvent("就寝", 0, Util.getCopyOfCal(getCal()), 0);

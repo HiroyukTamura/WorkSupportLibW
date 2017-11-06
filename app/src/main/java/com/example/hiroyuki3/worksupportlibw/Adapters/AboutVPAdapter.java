@@ -7,12 +7,9 @@ import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Switch;
 
-import com.cks.hiroyuki2.worksupport3.R;
+import com.example.hiroyuki3.worksupportlibw.R;
 
-import butterknife.BindString;
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
