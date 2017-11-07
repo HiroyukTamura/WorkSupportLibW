@@ -19,7 +19,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.cks.hiroyuki2.worksupportlib.R2;
 import com.cks.hiroyuki2.worksupprotlib.Util;
 import com.example.hiroyuki3.worksupportlibw.R;
 
@@ -76,7 +75,7 @@ public class RecordTabVPAdapter extends PagerAdapter implements View.OnClickList
 
     @Override @NonNull
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
-        View view = inflater.inflate(R2.layout.record_tab_item, null);
+        View view = inflater.inflate(R.layout.record_tab_item, null);
 
         LinearLayout ll = view.findViewById(R.id.date_container);
         LinearLayout dayContainer = view.findViewById(R.id.day_container);
