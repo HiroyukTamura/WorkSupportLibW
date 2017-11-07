@@ -85,7 +85,7 @@ public class RecordVpItemTime extends RecordVpItem {
             listener = (IRecordVpItemTime) fragment;
     }
 
-    interface IRecordVpItemTime{
+    public interface IRecordVpItemTime{
         void onClickColorFl(Bundle bundle);
         void onClickAddTimeEveBtn(TimeEvent timeEvent, int dataNum);
     }

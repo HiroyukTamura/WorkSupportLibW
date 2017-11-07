@@ -51,7 +51,7 @@ public class TempItemTagPool extends RecordVpItem {
         }
     }
 
-    interface ITempItemTagPool{
+    public interface ITempItemTagPool{
         void onClickTagPoolName(int dataNum);
         void onClickTagPoolAdd(int dataNum);
     }

@@ -48,7 +48,7 @@ class TempItemTag {
             listener = (ITempItemTag) frag;
     }
     
-    interface ITempItemTag{
+    public interface ITempItemTag{
         void onClickRemoveTagBtn(int dataNum, int tagNum);
         void onClickTag(int tagNum, int dataNum, String value);
     }
