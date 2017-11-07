@@ -84,7 +84,7 @@ public class ShareBoardRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
 
     public interface IShareBoardRVAdapter{
-        public void onClickVertAsset(int code);
+        public void onClickVertAsset(int code, Bundle bundle);
         public void onClickItemUploaded(int listPos);
         public void onClickExpandableView(int listPos);
         public void kickViewerActivity(String memberUid);
@@ -324,7 +324,7 @@ public class ShareBoardRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         Bundle bundle = new Bundle();
         bundle.putInt(BUNDLE_KEY_POSITION, listPos);
         if (listener != null)
-            listener.onClickVertAsset(getItemViewTypeForListPos(listPos));
+            listener.onClickVertAsset(getItemViewTypeForListPos(listPos), bundle);
 
 //        if (listener != null)
 //            switch (getItemViewTypeForListPos(listPos)){
