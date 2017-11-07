@@ -92,7 +92,7 @@ public class AddFriendVPAdapter extends PagerAdapter implements Callback{
         View view = null;
         switch (position){
             case 0:
-                view = inflater.inflate(R2.layout.addfriend_vp_item_qr, null);
+                view = inflater.inflate(R.layout.addfriend_vp_item_qr, null);
                 ButterKnife.bind(this, view);
                 File file = new File(context.getFilesDir(), QR_FILE_NAME);
                 Picasso.with(context).load(file).into(iv, this);
@@ -121,7 +121,7 @@ public class AddFriendVPAdapter extends PagerAdapter implements Callback{
 //                }
                 break;
             case 1:
-                view = inflater.inflate(R2.layout.social_vp_item_shake, null);
+                view = inflater.inflate(R.layout.social_vp_item_shake, null);
                 //todo 整備してください
                 break;
         }

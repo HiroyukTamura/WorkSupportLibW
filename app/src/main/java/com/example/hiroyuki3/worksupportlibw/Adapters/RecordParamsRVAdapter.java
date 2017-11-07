@@ -107,7 +107,7 @@ public class RecordParamsRVAdapter extends RecyclerView.Adapter<RecordParamsRVAd
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = inflater.inflate(R2.layout.record_params_rv_item, parent, false);
+        View v = inflater.inflate(R.layout.record_params_rv_item, parent, false);
         ButterKnife.bind(this, v);
         return new ViewHolder(v);
     }
