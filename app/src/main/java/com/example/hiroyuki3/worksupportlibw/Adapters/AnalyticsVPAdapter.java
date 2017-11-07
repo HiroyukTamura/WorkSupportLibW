@@ -14,9 +14,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.cks.hiroyuki2.worksupportlib.R2;
 import com.cks.hiroyuki2.worksupprotlib.Util;
 import com.example.hiroyuki3.worksupportlibw.Presenter.AnalyticsVPUiOperator;
+import com.example.hiroyuki3.worksupportlibw.R;
 
 import org.jetbrains.annotations.Contract;
 
@@ -64,7 +64,7 @@ public class AnalyticsVPAdapter extends PagerAdapter {
 
     @Override @NonNull
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
-        View root =  inflater.inflate(R2.layout.fragment_analytics, null);
+        View root =  inflater.inflate(R.layout.fragment_analytics, null);
         root.setTag(position);
         Calendar cal = getCal(position);
         Log.d(TAG, "instantiateItem: "+ cal.getTime().toString());

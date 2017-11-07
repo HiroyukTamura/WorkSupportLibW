@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.cks.hiroyuki2.worksupportlib.R2;
 import com.cks.hiroyuki2.worksupprotlib.Entity.User;
+import com.example.hiroyuki3.worksupportlibw.R;
 import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
 
@@ -73,7 +74,7 @@ public class GroupSettingRVAdapter extends RecyclerView.Adapter implements Compo
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = fragment.getLayoutInflater().inflate(R2.layout.group_setting_rv_item, parent, false);
+        View v = fragment.getLayoutInflater().inflate(R.layout.group_setting_rv_item, parent, false);
         ButterKnife.bind(this, v);
         return new ViewHolder(v);
     }
