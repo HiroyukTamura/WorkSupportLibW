@@ -54,11 +54,11 @@ import static com.cks.hiroyuki2.worksupprotlib.Util.setImgFromStorage;
 public class ShareBoardRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static final String TAG = "MANUAL_TAG: " + ShareBoardRVAdapter.class.getSimpleName();
-    private static final int ITEM_TYPE_DATA = 0;
-    private static final int ITEM_TYPE_UPLOADED = 1;
-    private static final int ITEM_TYPE_DOCUMENT = 2;
-    private static final int ITEM_TYPE_FOOTER = 3;
-    private static final int ITEM_TYPE_UNKNOWN = -1;/**多分ここにはこない。*/
+    public static final int ITEM_TYPE_DATA = 0;
+    public static final int ITEM_TYPE_UPLOADED = 1;
+    public static final int ITEM_TYPE_DOCUMENT = 2;
+    public static final int ITEM_TYPE_FOOTER = 3;
+    public static final int ITEM_TYPE_UNKNOWN = -1;/**多分ここにはこない。*/
     public static final String BUNDLE_KEY_POSITION = "BUNDLE_KEY_POSITION";
     public static final String BUNDLE_KEY_OLD_COMMENT = "BUNDLE_KEY_OLD_COMMENT";
     public static final String BUNDLE_KEY_NEW_COMMENT = "BUNDLE_KEY_NEW_COMMENT";
