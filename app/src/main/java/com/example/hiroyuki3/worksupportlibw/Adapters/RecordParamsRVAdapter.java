@@ -88,8 +88,8 @@ public class RecordParamsRVAdapter extends RecyclerView.Adapter<RecordParamsRVAd
     }
 
     public interface IRecordParamsRVAdapter{
-        void onClickKey(Bundle bundle);
-        void onClickMax(Bundle bundle);
+        public void onClickKey(Bundle bundle);
+        public void onClickMax(Bundle bundle);
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

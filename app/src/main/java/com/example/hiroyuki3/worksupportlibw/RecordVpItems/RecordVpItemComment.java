@@ -34,8 +34,8 @@ public class RecordVpItemComment extends RecordVpItem {
     private onClickCommentListener listener;
 
     public interface onClickCommentListener{
-        void onClickCommentName(int dataNum);
-        void onClickCommentEdit(int dataNum, String comment);
+        public void onClickCommentName(int dataNum);
+        public void onClickCommentEdit(int dataNum, String comment);
     }
 
     public RecordVpItemComment(RecordData data, int dataNum, Calendar cal, Fragment fragment, onClickCommentListener listener) {

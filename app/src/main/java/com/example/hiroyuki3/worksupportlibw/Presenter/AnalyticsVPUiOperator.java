@@ -145,9 +145,9 @@ public class AnalyticsVPUiOperator implements ValueEventListener, IValueFormatte
     }
 
     public interface IAnalyticsVPUiOperator {
-        void onScrollChanged(HorizontalScrollView scrollView, int x);
-        void onClickDownBtn();
-        void onClickUpBtn();
+        public void onScrollChanged(HorizontalScrollView scrollView, int x);
+        public void onClickDownBtn();
+        public void onClickUpBtn();
     }
 
     private void initParams(){

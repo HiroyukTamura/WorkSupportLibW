@@ -86,8 +86,8 @@ public class SocialListRVAdapter extends RecyclerView.Adapter implements SmoothC
 //            ((AddGroupFragment)fragment).kickHideFab();
 
     public interface ISocialListRVAdapter{
-        void kickShowFab();
-        void kickHideFab();
+        public void kickShowFab();
+        public void kickHideFab();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

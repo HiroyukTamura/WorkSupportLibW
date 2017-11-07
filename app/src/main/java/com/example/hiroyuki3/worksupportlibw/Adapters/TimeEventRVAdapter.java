@@ -77,7 +77,7 @@ public class TimeEventRVAdapter extends RecyclerView.Adapter implements Comparat
     }
 
     public interface ITimeEventRVAdapter{
-        void onClickItem(Bundle bundle);
+        public void onClickItem(Bundle bundle);
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

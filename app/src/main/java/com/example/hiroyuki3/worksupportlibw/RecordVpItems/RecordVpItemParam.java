@@ -61,8 +61,8 @@ public class RecordVpItemParam extends RecordVpItem {
     private  @interface fragCode {}
 
     public interface OnClickParamsNameListener{
-        void onClickParamsName(int dataNum);
-        void onClickParamsAddBtn(int dataNum);
+        public void onClickParamsName(int dataNum);
+        public void onClickParamsAddBtn(int dataNum);
     }
 
     public RecordVpItemParam(RecordData data, int dataNum, @Nullable Calendar cal, Fragment fragment, @fragCode int code){

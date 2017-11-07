@@ -36,10 +36,10 @@ public class AboutVPAdapter extends PagerAdapter {
     }
 
     public interface IAboutVPAdapter{
-        void onClickLibItem();
-        void onClickLauncher();
-        void onCheckedChange0();
-        void onCheckedChange1();
+        public void onClickLibItem();
+        public void onClickLauncher();
+        public void onCheckedChange0();
+        public void onCheckedChange1();
     }
 
     public class Item0{

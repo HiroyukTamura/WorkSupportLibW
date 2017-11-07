@@ -49,8 +49,8 @@ class TempItemTag {
     }
     
     public interface ITempItemTag{
-        void onClickRemoveTagBtn(int dataNum, int tagNum);
-        void onClickTag(int tagNum, int dataNum, String value);
+        public void onClickRemoveTagBtn(int dataNum, int tagNum);
+        public void onClickTag(int tagNum, int dataNum, String value);
     }
 
     View buildView(){
