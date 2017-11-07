@@ -53,7 +53,7 @@ public class GroupSettingRVAdapter extends RecyclerView.Adapter implements Compo
             listener = (IGroupSettingRVAdapter) fragment;
     }
 
-    interface IGroupSettingRVAdapter{
+    public interface IGroupSettingRVAdapter{
         void onClickRemoveMe();
         void onClickRemoveOthers(Bundle bundle);
     }

@@ -123,7 +123,7 @@ public class RecordVPAdapter extends PagerAdapter {
             listener = (IRecordVPAdapter) fragment;
     }
 
-    interface IRecordVPAdapter{
+    public interface IRecordVPAdapter{
         void onPostInitData();
         void onPostUpdateData();
     }

@@ -82,7 +82,7 @@ public class ShareBoardRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         inflater = LayoutInflater.from(fragment.getContext());
     }
 
-    interface IShareBoardRVAdapter{
+    public interface IShareBoardRVAdapter{
         void onClickVertAsset(int code);
         void onClickItemUploaded(int listPos);
         void onClickExpandableView(int listPos);

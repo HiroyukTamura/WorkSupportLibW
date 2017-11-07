@@ -85,7 +85,7 @@ public class SocialListRVAdapter extends RecyclerView.Adapter implements SmoothC
 //            //チェックされた項目がない
 //            ((AddGroupFragment)fragment).kickHideFab();
 
-    interface ISocialListRVAdapter{
+    public interface ISocialListRVAdapter{
         void kickShowFab();
         void kickHideFab();
     }

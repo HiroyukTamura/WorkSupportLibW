@@ -53,7 +53,7 @@ public class SocialGroupListRVAdapter extends RecyclerView.Adapter {
             listener = (ISocialGroupListRVAdapter) fragment;
     }
 
-    interface ISocialGroupListRVAdapter{
+    public interface ISocialGroupListRVAdapter{
         void showBoard(GroupInUserDataNode node);
         void showDialog(GroupInUserDataNode node);
     }
