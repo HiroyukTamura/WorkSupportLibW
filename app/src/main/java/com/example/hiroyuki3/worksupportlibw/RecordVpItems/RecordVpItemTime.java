@@ -65,6 +65,8 @@ public class RecordVpItemTime extends RecordVpItem {
     public static String TIME_EVE_RANGE = "TIME_EVE_RANGE";
     private View view;
     private IRecordVpItemTime listener;
+    private TimeEventRangeRVAdapter.ITimeEventRangeRVAdapter timeRangeListener;
+    private TimeEventRVAdapter.ITimeEventRVAdapter timeEveListener;
     @BindView(R2.id.time_event_rv) RecyclerView timeEventRv;
     @BindView(R2.id.rv_container) LinearLayout container;
     @BindView(R2.id.add_range) ImageView addRange;
@@ -75,14 +77,18 @@ public class RecordVpItemTime extends RecordVpItem {
     @IntDef(value = {CODE_RECORD_FRAG, CODE_EDIT_FRAG, CODE_BLANK_FRAG})
     private @interface fragCode {}
 
-    public RecordVpItemTime(@NonNull RecordData data, int dataNum, Calendar cal, @NonNull Fragment fragment, @Nullable IRecordVpItemTime listener, @fragCode int code) {
+    public RecordVpItemTime(@NonNull RecordData data, int dataNum, Calendar cal, @NonNull Fragment fragment,
+                            @Nullable IRecordVpItemTime listener, @Nullable TimeEventRVAdapter.ITimeEventRVAdapter timeEveListener, @Nullable TimeEventRangeRVAdapter.ITimeEventRangeRVAdapter timeRangeListener, @fragCode int code) {
         super(data, dataNum, cal, fragment);
         this.code = code;
         this.listener = listener;
+        this.timeEveListener = timeEveListener;
+        this.timeRangeListener = timeRangeListener;
     }
 
-    public RecordVpItemTime(@NonNull RecordData data, int dataNum, @NonNull Fragment fragment, @Nullable IRecordVpItemTime listener, @fragCode int code){
-        this(data, dataNum, Calendar.getInstance(), fragment, listener, code);
+    public RecordVpItemTime(@NonNull RecordData data, int dataNum, @NonNull Fragment fragment, @Nullable IRecordVpItemTime listener,
+                            @Nullable TimeEventRVAdapter.ITimeEventRVAdapter timeEveListener, @Nullable TimeEventRangeRVAdapter.ITimeEventRangeRVAdapter timeRangeListener, @fragCode int code){
+        this(data, dataNum, Calendar.getInstance(), fragment, listener, timeEveListener, timeRangeListener, code);
     }
 
     public interface IRecordVpItemTime{
@@ -150,7 +156,7 @@ public class RecordVpItemTime extends RecordVpItem {
 
         timeEventRv.setLayoutManager(new LinearLayoutManager(getFragment().getContext()));
         timeEventRv.setNestedScrollingEnabled(false);
-        adapter = new TimeEventRVAdapter(dataSet.getEventList(), getFragment(), getCal(), getDataNum());
+        adapter = new TimeEventRVAdapter(dataSet.getEventList(), getFragment(), getCal(), getDataNum(), timeEveListener);
         timeEventRv.setAdapter(adapter);
 
         for (int i=0; i<dataSet.getRangeList().size(); i++) {
@@ -210,7 +216,7 @@ public class RecordVpItemTime extends RecordVpItem {
 //        }
         int colorIdC = colorId.get(range.getColorNum());
         params.setColor(colorIdC);
-        TimeEventRangeRVAdapter rangeAdapter = new TimeEventRangeRVAdapter(getFragment(), range, getDataNum(), i);
+        TimeEventRangeRVAdapter rangeAdapter = new TimeEventRangeRVAdapter(getFragment(), range, getDataNum(), i, timeRangeListener);
         initRecycler(getFragment().getContext(), params.rv, rangeAdapter);
         rangePairList.add(new Pair<>(params, rangeAdapter));
     }

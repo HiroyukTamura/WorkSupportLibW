@@ -17,6 +17,8 @@ import com.cks.hiroyuki2.worksupprotlib.Entity.RecordData;
 import com.cks.hiroyuki2.worksupprotlib.Entity.TimeEvent;
 import com.cks.hiroyuki2.worksupprotlib.Entity.TimeEventRange;
 import com.example.hiroyuki3.worksupportlibw.Adapters.RecordVPAdapter;
+import com.example.hiroyuki3.worksupportlibw.Adapters.TimeEventRVAdapter;
+import com.example.hiroyuki3.worksupportlibw.Adapters.TimeEventRangeRVAdapter;
 import com.example.hiroyuki3.worksupportlibw.R;
 import com.example.hiroyuki3.worksupportlibw.RecordVpItems.RecordVpItem;
 import com.example.hiroyuki3.worksupportlibw.RecordVpItems.RecordVpItemComment;
@@ -52,7 +54,8 @@ import static com.example.hiroyuki3.worksupportlibw.RecordVpItems.RecordVpItemTi
 /**
  * {@link RecordVPAdapter}のビューをいい感じに設定する人。RecordFragmentと、BlankFragmentから呼ばれる。
  */
-public class RecordUiOperator implements RecordVpItemTime.IRecordVpItemTime, RecordVpItemTagPool.onClickCardListener, RecordVpItemParam.OnClickParamsNameListener, RecordVpItemComment.onClickCommentListener{
+public class RecordUiOperator implements RecordVpItemTime.IRecordVpItemTime, RecordVpItemTagPool.onClickCardListener, RecordVpItemParam.OnClickParamsNameListener, RecordVpItemComment.onClickCommentListener,
+        TimeEventRVAdapter.ITimeEventRVAdapter, TimeEventRangeRVAdapter.ITimeEventRangeRVAdapter{
 
     private static final String TAG = "MANUAL_TAG: " + RecordUiOperator.class.getSimpleName();
     private List<RecordData> list;
@@ -83,6 +86,9 @@ public class RecordUiOperator implements RecordVpItemTime.IRecordVpItemTime, Rec
         public void updateAndSync(List<RecordData> dataList, String date);
         public void onClickTagPoolContent(Calendar cal, int dataNum);
         public void onClickAddTimeEveBtn(Bundle bundle);
+        public void onClickItem(Bundle bundle);
+        public void onClickTime(Bundle bundle);
+        public void onClickValue(Bundle bundle);
     }
 
     public void initRecordData(){
@@ -107,7 +113,7 @@ public class RecordUiOperator implements RecordVpItemTime.IRecordVpItemTime, Rec
     private RecordVpItem buildView(RecordData data, int i){
         switch (data.dataType){
             case 1:
-                return new RecordVpItemTime(data, i, cal, fragment, this, code);
+                return new RecordVpItemTime(data, i, cal, fragment, this, this, this, code);
             case 2:
                 return new RecordVpItemTagPool(data, i, cal, fragment, this);
             case 3:
@@ -331,4 +337,27 @@ public class RecordUiOperator implements RecordVpItemTime.IRecordVpItemTime, Rec
 //        list.set(getDataNum(), data);
 //        fragment.adapter.syncDataMapAndFireBase(list, date);
     }
+
+    //TimeEventRVAdapter.ITimeEventRVAdapter, TimeEventRangeRVAdapter.ITimeEventRangeRVAdapter
+    @Override
+    public void onClickItem(Bundle bundle) {
+        if (listener != null)
+            listener.onClickItem(bundle);
+        //kickTimePickerDialog(DIALOG_TAG_ITEM_CLICK, CALLBACK_ITEM_CLICK, bundle, fragment);
+    }
+
+    @Override
+    public void onClickTime(Bundle bundle) {
+        if (listener != null)
+            listener.onClickTime(bundle);
+        //            kickTimePickerDialog(DIALOG_TAG_RANGE_CLICK_TIME, CALLBACK_RANGE_CLICK_TIME, bundle, fragment);
+    }
+
+    @Override
+    public void onClickValue(Bundle bundle) {
+        if (listener != null)
+            listener.onClickValue(bundle);
+        //            kickInputDialog(bundle, DIALOG_TAG_RANGE_CLICK_VALUE, CALLBACK_RANGE_CLICK_VALUE, fragment);
+    }
+    //endregion
 }
