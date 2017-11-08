@@ -309,6 +309,7 @@ public class RecordUiOperator implements RecordVpItemTime.IRecordVpItemTime, Rec
         return hashMap;
     }
 
+
     public RecordVpItem getItem(int pos){
         return itemList.get(pos);
     }
