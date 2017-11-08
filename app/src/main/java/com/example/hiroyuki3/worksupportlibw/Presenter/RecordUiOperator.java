@@ -302,11 +302,10 @@ public class RecordUiOperator implements RecordVpItemTime.IRecordVpItemTime, Rec
     //endregion
 
     public static HashMap<String, Object> getDataNonNull(List<RecordData> list, int dataNum){
-        HashMap<String, Object> hashMap = list.get(dataNum).data;
-        if (hashMap == null){
+        if (list.get(dataNum).data == null){
             list.get(dataNum).data = new HashMap<>();
         }
-        return hashMap;
+        return list.get(dataNum).data;
     }
 
 
