@@ -264,7 +264,7 @@ public class RecordUiOperator implements RecordVpItemTime.IRecordVpItemTime, Rec
             if (value == null)
                 continue;
             String[] strings = value.split(delimiter);
-            strings[2] = Boolean.toString(i != 0);
+            strings[2] = Boolean.toString(elevatedList.get(i) != 0);
             data.put(numStr,  joinArr(strings, delimiter));
         }
     }
@@ -359,6 +359,5 @@ public class RecordUiOperator implements RecordVpItemTime.IRecordVpItemTime, Rec
             listener.onClickValue(bundle);
         //            kickInputDialog(bundle, DIALOG_TAG_RANGE_CLICK_VALUE, CALLBACK_RANGE_CLICK_VALUE, fragment);
     }
-
     //endregion
 }
