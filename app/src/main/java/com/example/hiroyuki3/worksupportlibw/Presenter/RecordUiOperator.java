@@ -359,5 +359,6 @@ public class RecordUiOperator implements RecordVpItemTime.IRecordVpItemTime, Rec
             listener.onClickValue(bundle);
         //            kickInputDialog(bundle, DIALOG_TAG_RANGE_CLICK_VALUE, CALLBACK_RANGE_CLICK_VALUE, fragment);
     }
+
     //endregion
 }
