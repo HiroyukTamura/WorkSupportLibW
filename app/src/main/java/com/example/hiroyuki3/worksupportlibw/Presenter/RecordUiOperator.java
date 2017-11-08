@@ -320,4 +320,15 @@ public class RecordUiOperator implements RecordVpItemTime.IRecordVpItemTime, Rec
     public void onClickColorFl(Bundle bundle) {
         //onClickColorFl()で動作する必要があるのはEditTempFragmentの場合。で、EditTempFragmentはUiOperatorを使わずに自前でinterfaceを実装するので、ここに来るのはRecordFragmentの場合のみ。よってここには何も書かなくてよし。
     }
+
+    @Override
+    public void syncFirebaseAndMap(int dataNum, String date, RecordData data) {
+        list.set(dataNum, data);
+        if (listener != null)
+            listener.updateAndSync(list, date);
+//        List<RecordData> list = fragment.adapter.retrieveList(dateInt);
+//        if (list == null) return;
+//        list.set(getDataNum(), data);
+//        fragment.adapter.syncDataMapAndFireBase(list, date);
+    }
 }

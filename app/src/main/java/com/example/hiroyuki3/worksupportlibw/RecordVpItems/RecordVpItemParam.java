@@ -63,6 +63,7 @@ public class RecordVpItemParam extends RecordVpItem {
     public interface OnClickParamsNameListener{
         public void onClickParamsName(int dataNum);
         public void onClickParamsAddBtn(int dataNum);
+        public void syncFirebaseAndMap(int dataNum, String date, RecordData data);
     }
 
     public RecordVpItemParam(RecordData data, int dataNum, @Nullable Calendar cal, Fragment fragment, @Nullable OnClickParamsNameListener listener, @fragCode int code){
@@ -126,11 +127,14 @@ public class RecordVpItemParam extends RecordVpItem {
     }
 
     public void syncFirebaseAndMap(List<Bundle> bundles){
+        if (listener == null) return;
+
         RecordData data = bundle2DataParams(bundles, getData().dataName, getCal());
         super.setData(data);
         String date = cal2date(getCal(), datePattern);
-        int dateInt = Integer.parseInt(date);
-//        List<RecordData> list = fragment.adapter.retrieveList(dateInt);// TODO: 2017/11/07 ここの処理どうするんだ？？ 
+//        int dateInt = Integer.parseInt(date);
+        listener.syncFirebaseAndMap(getDataNum(), date, data);
+//        List<RecordData> list = fragment.adapter.retrieveList(dateInt);
 //        if (list == null) return;
 //        list.set(getDataNum(), data);
 //        fragment.adapter.syncDataMapAndFireBase(list, date);
