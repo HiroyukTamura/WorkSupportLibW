@@ -86,7 +86,7 @@ public class RecordVpItemParam extends RecordVpItem {
 
 //        if (getFragment() instanceof RecordFragment)
 //            return view;
-        if (code == CODE_EDIT_FRAG)
+        if (code == CODE_RECORD_FRAG)
             return view;
 
         addBtn.setVisibility(View.VISIBLE);
