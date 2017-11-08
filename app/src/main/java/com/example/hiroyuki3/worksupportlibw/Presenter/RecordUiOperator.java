@@ -82,7 +82,7 @@ public class RecordUiOperator implements RecordVpItemTime.IRecordVpItemTime, Rec
         public void onClickCommentEdit(Bundle bundle);
         public void updateAndSync(List<RecordData> dataList, String date);
         public void onClickTagPoolContent(Calendar cal, int dataNum);
-        public void onClickAddTimeEveBtn(TimeEvent timeEvent, int dataNum);
+        public void onClickAddTimeEveBtn(Bundle bundle);
     }
 
     public void initRecordData(){
@@ -307,9 +307,9 @@ public class RecordUiOperator implements RecordVpItemTime.IRecordVpItemTime, Rec
     }
 
     @Override
-    public void onClickAddTimeEveBtn(TimeEvent timeEvent, int dataNum) {
+    public void onClickAddTimeEveBtn(Bundle bundle) {
         if (listener != null)
-            listener.onClickAddTimeEveBtn(timeEvent, dataNum);
+            listener.onClickAddTimeEveBtn(bundle);
 //        Bundle bundle = new Bundle();
 //        bundle.putInt(DATA_NUM, dataNum);
 //        bundle.putSerializable(TIME_EVENT, timeEvent);

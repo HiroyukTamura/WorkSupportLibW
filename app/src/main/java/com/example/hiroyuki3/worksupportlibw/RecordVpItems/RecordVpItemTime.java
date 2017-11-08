@@ -43,6 +43,7 @@ import static com.cks.hiroyuki2.worksupprotlib.Util.getTimeEveDataSetFromRecordD
 import static com.cks.hiroyuki2.worksupprotlib.Util.initRecycler;
 import static com.cks.hiroyuki2.worksupprotlib.UtilSpec.colorId;
 import static com.example.hiroyuki3.worksupportlibw.Adapters.RecordVPAdapter.DATA_NUM;
+import static com.example.hiroyuki3.worksupportlibw.Adapters.TimeEventRVAdapter.TIME_EVENT;
 import static com.example.hiroyuki3.worksupportlibw.Adapters.TimeEventRangeRVAdapter.POS_IN_LIST;
 import static com.example.hiroyuki3.worksupportlibw.AdditionalUtil.CODE_BLANK_FRAG;
 import static com.example.hiroyuki3.worksupportlibw.AdditionalUtil.CODE_EDIT_FRAG;
@@ -85,7 +86,7 @@ public class RecordVpItemTime extends RecordVpItem {
 
     public interface IRecordVpItemTime{
         public void onClickColorFl(Bundle bundle);
-        public void onClickAddTimeEveBtn(TimeEvent timeEvent, int dataNum);
+        public void onClickAddTimeEveBtn(Bundle bundle);
     }
 
     /**
@@ -157,14 +158,14 @@ public class RecordVpItemTime extends RecordVpItem {
 
     @OnClick(R2.id.add_time_eve)
     void onClickAddTimeEveBtn() {
-//        Bundle bundle = new Bundle();
-//        bundle.putInt(DATA_NUM, getDataNum());
+        Bundle bundle = new Bundle();
+        bundle.putInt(DATA_NUM, getDataNum());
         TimeEvent timeEvent = new TimeEvent("", 0, getCopyOfCal(getCal()), 0);
-//        bundle.putSerializable(TIME_EVENT, timeEvent);
+        bundle.putSerializable(TIME_EVENT, timeEvent);
 //        kickTimePickerDialog(DIALOG_TAG_ITEM_ADD, CALLBACK_ITEM_ADD, bundle, getFragment());
 
         if (listener != null)
-            listener.onClickAddTimeEveBtn(timeEvent, getDataNum());
+            listener.onClickAddTimeEveBtn(bundle);
     }
 
     @OnClick(R2.id.add_range)
