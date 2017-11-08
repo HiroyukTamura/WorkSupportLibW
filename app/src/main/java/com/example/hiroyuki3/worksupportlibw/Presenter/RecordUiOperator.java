@@ -62,20 +62,18 @@ public class RecordUiOperator implements RecordVpItemTime.IRecordVpItemTime, Rec
 //    private EditTemplateFragment editFrag;
     private List<RecordVpItem> itemList;
     private IRecordUiOperator listener;
-    private boolean showInfo;
 
     private int code;
     @Retention(RetentionPolicy.SOURCE)
     @IntDef(value = {CODE_RECORD_FRAG, CODE_BLANK_FRAG})
     private @interface fragCode {}
 
-    public RecordUiOperator(@NonNull List<RecordData> list/*このRecordDataの中身のcalは特に使われていません*/, LinearLayout ll, Calendar cal, Fragment fragment, @fragCode int code, boolean showInfo){
+    public RecordUiOperator(@NonNull List<RecordData> list/*このRecordDataの中身のcalは特に使われていません*/, LinearLayout ll, Calendar cal, Fragment fragment, @fragCode int code){
         this.list = list;
         this.ll = ll;
         this.cal = cal;
         this.fragment = fragment;
         this.code = code;
-        this.showInfo = showInfo;
         if (fragment instanceof IRecordUiOperator)
             listener = (IRecordUiOperator) fragment;
     }
@@ -85,7 +83,6 @@ public class RecordUiOperator implements RecordVpItemTime.IRecordVpItemTime, Rec
         public void updateAndSync(List<RecordData> dataList, String date);
         public void onClickTagPoolContent(Calendar cal, int dataNum);
         public void onClickAddTimeEveBtn(Bundle bundle);
-        public void onClickInfoBtn();
     }
 
     public void initRecordData(){
@@ -110,7 +107,7 @@ public class RecordUiOperator implements RecordVpItemTime.IRecordVpItemTime, Rec
     private RecordVpItem buildView(RecordData data, int i){
         switch (data.dataType){
             case 1:
-                return new RecordVpItemTime(data, i, cal, fragment, this, code, showInfo);
+                return new RecordVpItemTime(data, i, cal, fragment, this, code);
             case 2:
                 return new RecordVpItemTagPool(data, i, cal, fragment, this);
             case 3:
@@ -333,11 +330,5 @@ public class RecordUiOperator implements RecordVpItemTime.IRecordVpItemTime, Rec
 //        if (list == null) return;
 //        list.set(getDataNum(), data);
 //        fragment.adapter.syncDataMapAndFireBase(list, date);
-    }
-
-    @Override
-    public void onClickInfoBtn() {
-        if (listener != null)
-            listener.onClickInfoBtn();
     }
 }
