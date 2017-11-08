@@ -16,6 +16,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -38,6 +39,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static android.view.View.INVISIBLE;
+import static android.view.View.VISIBLE;
 import static com.cks.hiroyuki2.worksupprotlib.Util.getCopyOfCal;
 import static com.cks.hiroyuki2.worksupprotlib.Util.getTimeEveDataSetFromRecordData;
 import static com.cks.hiroyuki2.worksupprotlib.Util.initRecycler;
@@ -63,30 +66,32 @@ public class RecordVpItemTime extends RecordVpItem {
     public static String TIME_EVE_RANGE = "TIME_EVE_RANGE";
     private View view;
     private IRecordVpItemTime listener;
+    private boolean showInfo;
     @BindView(R2.id.time_event_rv) RecyclerView timeEventRv;
     @BindView(R2.id.rv_container) LinearLayout container;
     @BindView(R2.id.add_range) ImageView addRange;
+    @BindView(R2.id.info_btn) ImageButton infoBtn;
 
     private int code;
     @Retention(RetentionPolicy.SOURCE)
     @IntDef(value = {CODE_RECORD_FRAG, CODE_EDIT_FRAG, CODE_BLANK_FRAG})
     private @interface fragCode {}
 
-    public RecordVpItemTime(@NonNull RecordData data, int dataNum, Calendar cal, @NonNull Fragment fragment, @Nullable IRecordVpItemTime listener, @fragCode int code) {
+    public RecordVpItemTime(@NonNull RecordData data, int dataNum, Calendar cal, @NonNull Fragment fragment, @Nullable IRecordVpItemTime listener, @fragCode int code, boolean showInfo) {
         super(data, dataNum, cal, fragment);
         this.code = code;
         this.listener = listener;
+        this.showInfo = showInfo;
     }
 
-    public RecordVpItemTime(@NonNull RecordData data, int dataNum, @NonNull Fragment fragment, @Nullable IRecordVpItemTime listener, @fragCode int code){
-        super(data, dataNum, Calendar.getInstance(), fragment);
-        this.code = code;
-        this.listener = listener;
+    public RecordVpItemTime(@NonNull RecordData data, int dataNum, @NonNull Fragment fragment, @Nullable IRecordVpItemTime listener, @fragCode int code, boolean showInfo){
+        this(data, dataNum, Calendar.getInstance(), fragment, listener, code, showInfo);
     }
 
     public interface IRecordVpItemTime{
         public void onClickColorFl(Bundle bundle);
         public void onClickAddTimeEveBtn(Bundle bundle);
+        public void onClickInfoBtn();
     }
 
     /**
@@ -140,6 +145,9 @@ public class RecordVpItemTime extends RecordVpItem {
     public View buildView() {
         view = getFragment().getLayoutInflater().inflate(R.layout.record_vp_item_timeline2, null);
         ButterKnife.bind(this, view);
+
+        innerSetVisibleInfoBtn(showInfo);
+
         dataSet = getTimeEveDataSetFromRecordData(getData());
         if (dataSet == null)
             return null;
@@ -176,6 +184,12 @@ public class RecordVpItemTime extends RecordVpItem {
 
         addRangeItem(range, rangePairList.size());
         addRangeToList(range);
+    }
+
+    @OnClick(R2.id.info_btn)
+    void onClickInfoBtn(){
+        if (listener != null)
+            listener.onClickInfoBtn();
     }
 
     public void updateTime(@IntRange(from = 0) int dataNum, TimeEvent timeEvent) {
@@ -240,5 +254,17 @@ public class RecordVpItemTime extends RecordVpItem {
 
     public View getView(){
         return view;
+    }
+
+    public void setVisibleInfoBtn(boolean showInfo){
+        this.showInfo = showInfo;
+        innerSetVisibleInfoBtn(showInfo);
+    }
+
+    private void innerSetVisibleInfoBtn(boolean showInfo){
+        if (showInfo)
+            infoBtn.setVisibility(VISIBLE);
+        else
+            infoBtn.setVisibility(INVISIBLE);
     }
 }

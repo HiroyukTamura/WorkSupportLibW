@@ -60,7 +60,7 @@ public class RecordVpItemParam extends RecordVpItem {
     @IntDef(value = {CODE_BLANK_FRAG, CODE_EDIT_FRAG, CODE_RECORD_FRAG})
     private  @interface fragCode {}
 
-    public interface OnClickParamsNameListener{
+    public interface OnClickParamsNameListener{// TODO: 2017/11/08 これ名前かえるべき
         public void onClickParamsName(int dataNum);
         public void onClickParamsAddBtn(int dataNum);
         public void syncFirebaseAndMap(int dataNum, String date, RecordData data);
