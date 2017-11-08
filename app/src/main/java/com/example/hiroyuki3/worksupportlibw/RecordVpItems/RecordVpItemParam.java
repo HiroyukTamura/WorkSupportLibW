@@ -65,12 +65,11 @@ public class RecordVpItemParam extends RecordVpItem {
         public void onClickParamsAddBtn(int dataNum);
     }
 
-    public RecordVpItemParam(RecordData data, int dataNum, @Nullable Calendar cal, Fragment fragment, @fragCode int code){
+    public RecordVpItemParam(RecordData data, int dataNum, @Nullable Calendar cal, Fragment fragment, @Nullable OnClickParamsNameListener listener, @fragCode int code){
         super(data, dataNum, cal, fragment);
 
         this.code = code;
-        if (fragment instanceof OnClickParamsNameListener)
-            listener = (OnClickParamsNameListener) fragment;
+        this.listener = listener;
     }
 
     @Override @Nullable

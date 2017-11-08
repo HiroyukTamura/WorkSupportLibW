@@ -71,18 +71,16 @@ public class RecordVpItemTime extends RecordVpItem {
     @IntDef(value = {CODE_RECORD_FRAG, CODE_EDIT_FRAG, CODE_BLANK_FRAG})
     private @interface fragCode {}
 
-    public RecordVpItemTime(RecordData data, int dataNum, Calendar cal, Fragment fragment, @fragCode int code) {
+    public RecordVpItemTime(@NonNull RecordData data, int dataNum, Calendar cal, @NonNull Fragment fragment, @Nullable IRecordVpItemTime listener, @fragCode int code) {
         super(data, dataNum, cal, fragment);
         this.code = code;
-        if (fragment instanceof IRecordVpItemTime)
-            listener = (IRecordVpItemTime) fragment;
+        this.listener = listener;
     }
 
-    public RecordVpItemTime(RecordData data, int dataNum, Fragment fragment, @fragCode int code){
+    public RecordVpItemTime(@NonNull RecordData data, int dataNum, @NonNull Fragment fragment, @Nullable IRecordVpItemTime listener, @fragCode int code){
         super(data, dataNum, Calendar.getInstance(), fragment);
         this.code = code;
-        if (fragment instanceof IRecordVpItemTime)
-            listener = (IRecordVpItemTime) fragment;
+        this.listener = listener;
     }
 
     public interface IRecordVpItemTime{
@@ -197,7 +195,7 @@ public class RecordVpItemTime extends RecordVpItem {
 
         TimeEventRangeParams params = new TimeEventRangeParams(i);
         ButterKnife.bind(params, v);
-        if (code == CODE_RECORD_FRAG){
+        if (code == CODE_RECORD_FRAG || code == CODE_BLANK_FRAG){
             params.colorFl.setBackground(null);
             params.colorFl.setForeground(null);
         }

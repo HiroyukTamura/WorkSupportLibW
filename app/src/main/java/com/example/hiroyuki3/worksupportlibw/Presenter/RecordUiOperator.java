@@ -52,7 +52,7 @@ import static com.example.hiroyuki3.worksupportlibw.RecordVpItems.RecordVpItemTi
 /**
  * {@link RecordVPAdapter}のビューをいい感じに設定する人。RecordFragmentと、BlankFragmentから呼ばれる。
  */
-public class RecordUiOperator implements RecordVpItemTagPool.onClickCardListener, RecordVpItemParam.OnClickParamsNameListener, RecordVpItemComment.onClickCommentListener{
+public class RecordUiOperator implements RecordVpItemTime.IRecordVpItemTime, RecordVpItemTagPool.onClickCardListener, RecordVpItemParam.OnClickParamsNameListener, RecordVpItemComment.onClickCommentListener{
 
     private static final String TAG = "MANUAL_TAG: " + RecordUiOperator.class.getSimpleName();
     private List<RecordData> list;
@@ -106,11 +106,11 @@ public class RecordUiOperator implements RecordVpItemTagPool.onClickCardListener
     private RecordVpItem buildView(RecordData data, int i){
         switch (data.dataType){
             case 1:
-                return new RecordVpItemTime(data, i, cal, fragment, code);
+                return new RecordVpItemTime(data, i, cal, fragment, this, code);
             case 2:
                 return new RecordVpItemTagPool(data, i, cal, fragment, this);
             case 3:
-                return new RecordVpItemParam(data, i, cal, fragment, code);
+                return new RecordVpItemParam(data, i, cal, fragment, this, code);
             case 4:
                 return new RecordVpItemComment(data, i, cal, fragment, this);
         }
@@ -303,5 +303,15 @@ public class RecordUiOperator implements RecordVpItemTagPool.onClickCardListener
 
     public RecordVpItem getItem(int pos){
         return itemList.get(pos);
+    }
+
+    @Override
+    public void onClickAddTimeEveBtn(TimeEvent timeEvent, int dataNum) {
+
+    }
+
+    @Override
+    public void onClickColorFl(Bundle bundle) {
+
     }
 }

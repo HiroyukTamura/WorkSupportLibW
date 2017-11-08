@@ -4,6 +4,7 @@
 
 package com.example.hiroyuki3.worksupportlibw.RecordVpItems;
 
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.TextView;
@@ -38,7 +39,7 @@ public class RecordVpItemComment extends RecordVpItem {
         public void onClickCommentEdit(int dataNum, String comment);
     }
 
-    public RecordVpItemComment(RecordData data, int dataNum, Calendar cal, Fragment fragment, onClickCommentListener listener) {
+    public RecordVpItemComment(RecordData data, int dataNum, Calendar cal, Fragment fragment, @Nullable onClickCommentListener listener) {
         super(data, dataNum, cal, fragment);
         this.listener = listener;
     }
@@ -66,11 +67,13 @@ public class RecordVpItemComment extends RecordVpItem {
 
     @OnClick(R2.id.comment_name)
     void onClickCommentName(){
-        listener.onClickCommentName(getDataNum());
+        if (listener != null)
+            listener.onClickCommentName(getDataNum());
     }
 
     @OnClick(R2.id.edit_text)
     void onClickEditText(){
-        listener.onClickCommentEdit(getDataNum(), getNullableText(tv));
+        if (listener != null)
+            listener.onClickCommentEdit(getDataNum(), getNullableText(tv));
     }
 }

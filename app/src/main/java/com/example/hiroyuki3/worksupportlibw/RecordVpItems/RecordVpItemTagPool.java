@@ -4,6 +4,7 @@
 
 package com.example.hiroyuki3.worksupportlibw.RecordVpItems;
 
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -43,7 +44,7 @@ public class RecordVpItemTagPool extends RecordVpItem {
         public void onClickTagPoolContent(Calendar cal, int dataNum);
     }
 
-    public RecordVpItemTagPool(RecordData data, int dataNum, Calendar cal, Fragment fragment, onClickCardListener listener) {
+    public RecordVpItemTagPool(RecordData data, int dataNum, Calendar cal, Fragment fragment, @Nullable onClickCardListener listener) {
         super(data, dataNum, cal, fragment);
         this.listener = listener;
     }
@@ -91,6 +92,7 @@ public class RecordVpItemTagPool extends RecordVpItem {
 
     @OnClick(R2.id.tag_box_card)
     void onClickTagPoolContent(){
-        listener.onClickTagPoolContent(getCal(), getDataNum());
+        if (listener != null)
+            listener.onClickTagPoolContent(getCal(), getDataNum());
     }
 }
