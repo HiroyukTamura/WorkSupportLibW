@@ -79,9 +79,10 @@ public class RecordUiOperator implements RecordVpItemTime.IRecordVpItemTime, Rec
     }
 
     public interface IRecordUiOperator{
-        void onClickCommentEdit(Bundle bundle);
-        void updateAndSync(List<RecordData> dataList, String date);
-        void onClickTagPoolContent(Calendar cal, int dataNum);
+        public void onClickCommentEdit(Bundle bundle);
+        public void updateAndSync(List<RecordData> dataList, String date);
+        public void onClickTagPoolContent(Calendar cal, int dataNum);
+        public void onClickAddTimeEveBtn(TimeEvent timeEvent, int dataNum);
     }
 
     public void initRecordData(){
@@ -307,11 +308,16 @@ public class RecordUiOperator implements RecordVpItemTime.IRecordVpItemTime, Rec
 
     @Override
     public void onClickAddTimeEveBtn(TimeEvent timeEvent, int dataNum) {
-
+        if (listener != null)
+            listener.onClickAddTimeEveBtn(timeEvent, dataNum);
+//        Bundle bundle = new Bundle();
+//        bundle.putInt(DATA_NUM, dataNum);
+//        bundle.putSerializable(TIME_EVENT, timeEvent);
+//        kickTimePickerDialog(DIALOG_TAG_ITEM_ADD, CALLBACK_ITEM_ADD, bundle, this);
     }
 
     @Override
     public void onClickColorFl(Bundle bundle) {
-
+        //onClickColorFl()で動作する必要があるのはEditTempFragmentの場合。で、EditTempFragmentはUiOperatorを使わずに自前でinterfaceを実装するので、ここに来るのはRecordFragmentの場合のみ。よってここには何も書かなくてよし。
     }
 }
