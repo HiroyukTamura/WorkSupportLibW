@@ -69,7 +69,7 @@ public class RecordParamsRVAdapter extends RecyclerView.Adapter<RecordParamsRVAd
     @IntDef(value = {CODE_EDIT_FRAG, CODE_RECORD_FRAG, CODE_BLANK_FRAG})
     private @interface fragCode {}
 
-    public RecordParamsRVAdapter(@NonNull List<Bundle> list, int dataNum, @Nullable String dataName, @NonNull Fragment fragment, @Nullable RecordVpItemParam param, @fragCode int code){
+    public RecordParamsRVAdapter(@NonNull List<Bundle> list, int dataNum, @Nullable String dataName, @NonNull Fragment fragment, @Nullable RecordVpItemParam param, @Nullable IRecordParamsRVAdapter listener, @fragCode int code){
         Log.d(TAG, "RecordParamsRVAdapter: constructor fire");
         this.list = list;
         this.dataNum = dataNum;
@@ -79,13 +79,12 @@ public class RecordParamsRVAdapter extends RecyclerView.Adapter<RecordParamsRVAd
         this.code = code;
 //        indexMax = list.size()-1;
         inflater = (LayoutInflater)fragment.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);/*非同期でないのでwarning無視*/
-        if (fragment instanceof IRecordParamsRVAdapter)
-            listener = (IRecordParamsRVAdapter) fragment;
+        this.listener = listener;
     }
 
-    public RecordParamsRVAdapter(@NonNull List<Bundle> list, int dataNum, @Nullable String dataName, @NonNull Fragment fragment, @fragCode int code){//todo 後でこれなくすこと
-        this(list, dataNum, dataName, fragment, null, code);
-    }
+//    public RecordParamsRVAdapter(@NonNull List<Bundle> list, int dataNum, @Nullable String dataName, @NonNull Fragment fragment, @fragCode int code){//todo 後でこれなくすこと
+//        this(list, dataNum, dataName, fragment, null, code);
+//    }
 
     public interface IRecordParamsRVAdapter{
         public void onClickKey(Bundle bundle);
@@ -175,7 +174,7 @@ public class RecordParamsRVAdapter extends RecyclerView.Adapter<RecordParamsRVAd
 //                    }
 //                });
 
-                if (code != CODE_RECORD_FRAG)
+                if (code != CODE_EDIT_FRAG)
 //                if (!(fragment instanceof EditTemplateFragment))
                     break;
 

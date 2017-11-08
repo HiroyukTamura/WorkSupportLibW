@@ -45,7 +45,7 @@ import static com.example.hiroyuki3.worksupportlibw.AdditionalUtil.CODE_RECORD_F
  * アセット兄弟！Paramsおじさん！
  */
 
-public class RecordVpItemParam extends RecordVpItem {
+public class RecordVpItemParam extends RecordVpItem implements RecordParamsRVAdapter.IRecordParamsRVAdapter {
     private static final String TAG = "MANUAL_TAG: " + RecordVpItemParam.class.getSimpleName();
     private OnClickParamsNameListener listener;
 
@@ -64,6 +64,8 @@ public class RecordVpItemParam extends RecordVpItem {
         public void onClickParamsName(int dataNum);
         public void onClickParamsAddBtn(int dataNum);
         public void syncFirebaseAndMap(int dataNum, String date, RecordData data);
+        public void onClickKey(Bundle bundle);
+        public void onClickMax(Bundle bundle);
     }
 
     public RecordVpItemParam(RecordData data, int dataNum, @Nullable Calendar cal, Fragment fragment, @Nullable OnClickParamsNameListener listener, @fragCode int code){
@@ -81,7 +83,7 @@ public class RecordVpItemParam extends RecordVpItem {
         View view = getFragment().getLayoutInflater().inflate(R.layout.record_vp_item_params, null);
         ButterKnife.bind(this, view);
         setNullableText(name, getData().dataName);
-        adapter = new RecordParamsRVAdapter(listBundle, getDataNum(), getData().dataName, getFragment(), this, code);
+        adapter = new RecordParamsRVAdapter(listBundle, getDataNum(), getData().dataName, getFragment(), this, this, code);
         setRecycler(getFragment().getContext(), view, adapter, R.id.recycler);
 
 //        if (getFragment() instanceof RecordFragment)
@@ -164,5 +166,17 @@ public class RecordVpItemParam extends RecordVpItem {
     public void addItem(@NonNull Bundle bundle){
         adapter.add(bundle);
         adapter.updateData();
+    }
+
+    @Override
+    public void onClickKey(Bundle bundle) {
+        if (listener != null)
+            listener.onClickKey(bundle);
+    }
+
+    @Override
+    public void onClickMax(Bundle bundle) {
+        if (listener != null)
+            listener.onClickMax(bundle);
     }
 }

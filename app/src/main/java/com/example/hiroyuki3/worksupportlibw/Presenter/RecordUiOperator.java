@@ -361,4 +361,15 @@ public class RecordUiOperator implements RecordVpItemTime.IRecordVpItemTime, Rec
         //            kickInputDialog(bundle, DIALOG_TAG_RANGE_CLICK_VALUE, CALLBACK_RANGE_CLICK_VALUE, fragment);
     }
     //endregion
+
+
+    @Override
+    public void onClickMax(Bundle bundle) {
+        //RecordFragmentではここにこない
+    }
+
+    @Override
+    public void onClickKey(Bundle bundle) {
+        //RecordFragmentではここにこない
+    }
 }
