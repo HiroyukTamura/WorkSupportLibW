@@ -211,6 +211,7 @@ public class RecordVPAdapter extends PagerAdapter {
         return view == object;
     }
 
+
     @Override
     public int getCount() {
         return PAGE_NUM;
