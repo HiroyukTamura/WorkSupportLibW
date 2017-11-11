@@ -179,7 +179,7 @@ public class RecordUiOperator implements RecordVpItemTime.IRecordVpItemTime, Rec
         int dataNum = data.getIntExtra(DATA_NUM, Integer.MAX_VALUE);
         int posInList = data.getIntExtra(POS_IN_LIST, Integer.MAX_VALUE);
         if (dataNum == Integer.MAX_VALUE || posInList == Integer.MAX_VALUE){
-            onError(fragment.getContext(), "dataNum == Integer.MAX_VALUE || posInList == Integer.MAX_VALUE", R.string.error);
+            onError(fragment, "dataNum == Integer.MAX_VALUE || posInList == Integer.MAX_VALUE", R.string.error);
             return;
         }
 
@@ -195,7 +195,7 @@ public class RecordUiOperator implements RecordVpItemTime.IRecordVpItemTime, Rec
         int pos = data.getIntExtra(POSITION, Integer.MAX_VALUE);
         int posInList = data.getIntExtra(POS_IN_LIST, Integer.MAX_VALUE);
         if (dataNum == Integer.MAX_VALUE || pos == Integer.MAX_VALUE || posInList == Integer.MAX_VALUE){
-            onError(fragment.getContext(), "dataNum == Integer.MAX_VALUE || pos == Integer.MAX_VALUE || posInList == Integer.MAX_VALUE", R.string.error);
+            onError(fragment, "dataNum == Integer.MAX_VALUE || pos == Integer.MAX_VALUE || posInList == Integer.MAX_VALUE", R.string.error);
             return;
         }
 
@@ -216,7 +216,7 @@ public class RecordUiOperator implements RecordVpItemTime.IRecordVpItemTime, Rec
         TimeEvent timeEvent = (TimeEvent) data.getSerializableExtra(TIME_EVENT);
         int dataNum = data.getIntExtra(DATA_NUM, Integer.MAX_VALUE);
         if (dataNum == Integer.MAX_VALUE){
-            onError(fragment.getContext(), "dataNum == Integer.MAX_VALUE", R.string.error);
+            onError(fragment, "dataNum == Integer.MAX_VALUE", R.string.error);
             return;
         }
 

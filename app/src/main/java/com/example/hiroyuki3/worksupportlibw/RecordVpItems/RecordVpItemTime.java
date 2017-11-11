@@ -222,7 +222,7 @@ public class RecordVpItemTime extends RecordVpItem {
 
     public void removeRangeItem(int posInList){
         rangePairList.remove(posInList);
-        container.removeViewAt(posInList+3);// recycler、"+"ボタン、仕切り線の分を追加
+        container.removeViewAt(posInList+4);// recycler、"+"ボタン、仕切り線の分を追加
         for (int i = 0; i < rangePairList.size(); i++) {
             rangePairList.get(i).first.setPosInList(i);
             rangePairList.get(i).second.setPosInList(i);
