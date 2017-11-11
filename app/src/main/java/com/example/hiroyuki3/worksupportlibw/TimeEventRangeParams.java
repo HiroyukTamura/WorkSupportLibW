@@ -29,6 +29,7 @@ public class TimeEventRangeParams {
         private int posInList;
 
         public TimeEventRangeParams(RecordVpItemTime vpItemTime, int posInList){
+            this.vpItemTime = vpItemTime;
             this.posInList = posInList;
         }
 
