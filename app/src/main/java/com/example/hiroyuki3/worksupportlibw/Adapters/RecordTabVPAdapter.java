@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.cks.hiroyuki2.worksupprotlib.FirebaseConnection;
 import com.cks.hiroyuki2.worksupprotlib.Util;
 import com.example.hiroyuki3.worksupportlibw.R;
 
@@ -28,6 +29,7 @@ import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 
+import static com.cks.hiroyuki2.worksupprotlib.Util.cal2date;
 import static com.cks.hiroyuki2.worksupprotlib.Util.date2Cal;
 import static com.cks.hiroyuki2.worksupprotlib.Util.datePattern;
 import static com.cks.hiroyuki2.worksupprotlib.Util.getCopyOfCal;
@@ -51,6 +53,7 @@ public class RecordTabVPAdapter extends PagerAdapter implements View.OnClickList
     public int startOfWeek;
     public View currentItem;
     private AdapterCallback callback;
+    private List<String> holidays;
 
     public RecordTabVPAdapter(Context context, Calendar calMed, AdapterCallback callback){
 //        this.fragment = fragment;
@@ -61,6 +64,7 @@ public class RecordTabVPAdapter extends PagerAdapter implements View.OnClickList
         SharedPreferences pref = context.getSharedPreferences(Util.PREF_NAME, Context.MODE_PRIVATE);
         startOfWeek =  pref.getInt(Util.PREF_KEY_START_OF_WEEK, Calendar.SUNDAY);
         listDayOfWeek = makeWofList(startOfWeek);
+        holidays = FirebaseConnection.getInstance().getHolidayArr();
     }
 
     @Override
@@ -88,11 +92,11 @@ public class RecordTabVPAdapter extends PagerAdapter implements View.OnClickList
         Calendar calTmp = getCopyOfCal(calMed);
         calTmp.add(Calendar.DATE, 7*(- MED_NUM + position));
         calTmp.add(Calendar.DATE, -dayOfWeekMed + 1);
-        int startDate = Integer.parseInt(Util.cal2date(calTmp, datePattern));
+        int startDate = Integer.parseInt(cal2date(calTmp, datePattern));
         for (int i=0; i<7; i++){
             FrameLayout fm = (FrameLayout) ll.getChildAt(i);
             fm.setOnClickListener(this);
-            fm.setTag(Integer.parseInt(Util.cal2date(calTmp, datePattern)));
+            fm.setTag(Integer.parseInt(cal2date(calTmp, datePattern)));
             TextView dayTv = fm.findViewById(R.id.tv);
             dayTv.setText(String.valueOf(calTmp.get(Calendar.DAY_OF_MONTH)));
             ImageView iv = fm.findViewById(R.id.iv);
@@ -104,7 +108,7 @@ public class RecordTabVPAdapter extends PagerAdapter implements View.OnClickList
             TextView tv = (TextView) dayContainer.getChildAt(i);
             tv.setText(listDayOfWeek.get(i));
 
-            if (calTmp.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY){
+            if (calTmp.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY || holidays.contains((cal2date(calTmp, datePattern)))){
                 tv.setTextColor(ContextCompat.getColor(context, R.color.red_anton));
                 dayTv.setTextColor(ContextCompat.getColor(context, R.color.red_anton));
             }
@@ -134,7 +138,7 @@ public class RecordTabVPAdapter extends PagerAdapter implements View.OnClickList
 
             try {
                 Calendar cal = date2Cal(dateStr, datePattern);
-                if (cal.get(Calendar.DAY_OF_MONTH) == Calendar.SUNDAY){
+                if (cal.get(Calendar.DAY_OF_MONTH) == Calendar.SUNDAY || holidays.contains((cal2date(cal, datePattern)))){
                     oldTv.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
                 } else {
                     oldTv.setTextColor(Color.WHITE);
