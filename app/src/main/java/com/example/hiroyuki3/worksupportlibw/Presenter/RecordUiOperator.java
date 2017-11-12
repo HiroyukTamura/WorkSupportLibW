@@ -374,4 +374,10 @@ public class RecordUiOperator implements RecordVpItemTime.IRecordVpItemTime, Rec
     public void onClickMax(Bundle bundle, int pos, int dataNum) {
         //RecordFragmentではここにこない
     }
+
+    @Override
+    public void onRemoveItem(int dataNum, Calendar cal) {
+        if (listener != null)
+            listener.updateAndSync(list, cal2date(cal, datePattern));
+    }
 }

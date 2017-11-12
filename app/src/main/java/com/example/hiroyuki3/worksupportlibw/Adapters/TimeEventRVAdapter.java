@@ -76,6 +76,7 @@ public class TimeEventRVAdapter extends RecyclerView.Adapter implements Comparat
 
     public interface ITimeEventRVAdapter{
         public void onClickItem(Bundle bundle);
+        public void onRemoveItem(int dataNum, Calendar cal);
 //        public void onRemoveItem();
     }
 
@@ -140,7 +141,6 @@ public class TimeEventRVAdapter extends RecyclerView.Adapter implements Comparat
         list.remove(pos);
         sortList();
         notifyDataSetChanged();
-        //todo Firebase同期 toast表示を入れること
     }
 
     public void update(){
