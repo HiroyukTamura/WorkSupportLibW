@@ -752,7 +752,8 @@ public class AnalyticsVPUiOperator implements ValueEventListener, IValueFormatte
         if (listener != null) {
             listener.onScrollChanged(hsv, scrollX);
         }
-//        VerticalViewPager vp = analyticsFragment.getRootView().findViewById(R.id.vertical_vp);
+        if (analyticsFragment.getView() == null) //時々NPEで落ちる
+            return;
         VerticalViewPager vp = analyticsFragment.getView().findViewById(R.id.vertical_vp);
         if (vp == null) return;
             
@@ -762,6 +763,8 @@ public class AnalyticsVPUiOperator implements ValueEventListener, IValueFormatte
 
     private void scroll(int pos, int scrollX){
 //        View item = analyticsFragment.getRootView().findViewWithTag(pos);
+        if (analyticsFragment.getView() == null)//時々NPEで落ちる
+            return;
         View item = analyticsFragment.getView().findViewWithTag(pos);
         HorizontalScrollView hsv = item.findViewById(R.id.scroll);
         hsv.getViewTreeObserver().removeOnScrollChangedListener(this);

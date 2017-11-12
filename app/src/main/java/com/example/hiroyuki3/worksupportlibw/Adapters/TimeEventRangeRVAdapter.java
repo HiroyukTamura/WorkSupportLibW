@@ -24,6 +24,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.cks.hiroyuki2.worksupprotlib.Util.TIME_EVENT_RANGE;
 import static com.example.hiroyuki3.worksupportlibw.Adapters.RecordVPAdapter.DATA_NUM;
 import static com.example.hiroyuki3.worksupportlibw.Adapters.TimeEventRVAdapter.TIME_EVENT;
 
@@ -100,11 +101,12 @@ public class TimeEventRangeRVAdapter extends RecyclerView.Adapter {
         bundle.putInt(POSITION, pos);
         bundle.putInt(DATA_NUM, dataNum);
         bundle.putInt(POS_IN_LIST, posInList);
-        bundle.putSerializable(TIME_EVENT, range.getTimeEve(pos));
         if (v.getId() == R.id.value) {
+            bundle.putSerializable(TIME_EVENT, range.getTimeEve(pos));
             listener.onClickValue(bundle);
 //            kickInputDialog(bundle, DIALOG_TAG_RANGE_CLICK_VALUE, CALLBACK_RANGE_CLICK_VALUE, fragment);
         } else if (v.getId() == R.id.time){
+            bundle.putSerializable(TIME_EVENT_RANGE, range);
             listener.onClickTime(bundle);
 //            kickTimePickerDialog(DIALOG_TAG_RANGE_CLICK_TIME, CALLBACK_RANGE_CLICK_TIME, bundle, fragment);
         }
