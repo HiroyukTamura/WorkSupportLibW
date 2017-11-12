@@ -5,9 +5,7 @@
 package com.example.hiroyuki3.worksupportlibw.Adapters;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -20,6 +18,7 @@ import android.widget.TextView;
 import com.cks.hiroyuki2.worksupportlib.R2;
 import com.cks.hiroyuki2.worksupprotlib.Entity.TimeEvent;
 import com.example.hiroyuki3.worksupportlibw.R;
+import com.example.hiroyuki3.worksupportlibw.RecordVpItems.RecordVpItemTime;
 
 import java.util.Calendar;
 import java.util.Collections;
@@ -44,7 +43,8 @@ import static com.example.hiroyuki3.worksupportlibw.Adapters.RecordVPAdapter.PAG
 public class TimeEventRVAdapter extends RecyclerView.Adapter implements Comparator<TimeEvent>{
 
     private LayoutInflater inflater;
-    private Fragment fragment;
+//    private Fragment fragment;
+    private RecordVpItemTime vpItemTime;
     private List<TimeEvent> list = new LinkedList<>();
     private int dataNum;
     private Calendar cal;
@@ -64,19 +64,19 @@ public class TimeEventRVAdapter extends RecyclerView.Adapter implements Comparat
     public static final String TIME_EVENT = "TIME_EVENT";
     //endregion
 
-    public TimeEventRVAdapter(@Nullable List<TimeEvent> list, @NonNull Fragment fragment, Calendar cal, int dataNum, @Nullable ITimeEventRVAdapter listener) {
-        this.fragment = fragment;
+    public TimeEventRVAdapter(@Nullable List<TimeEvent> list, RecordVpItemTime vpItemTime, Calendar cal, int dataNum, @Nullable ITimeEventRVAdapter listener) {
+        this.vpItemTime = vpItemTime;
         this.dataNum = dataNum;
         this.cal = cal;
         this.listener = listener;
-        inflater = fragment.getLayoutInflater();
+        inflater = vpItemTime.getFragment().getLayoutInflater();
         if (list != null)
             this.list = list;
     }
 
     public interface ITimeEventRVAdapter{
         public void onClickItem(Bundle bundle);
-        public void onRemoveItem(int dataNum, Calendar cal);
+        public void onRemoveItem(int dataNum, RecordVpItemTime vpItemTime);
 //        public void onRemoveItem();
     }
 
@@ -108,7 +108,7 @@ public class TimeEventRVAdapter extends RecyclerView.Adapter implements Comparat
         ((ViewHolder) holder).removeBtn.setTag(position);
         ((ViewHolder) holder).time.setText(timeEvent.getTimeStr());//timeEveはrangeではないのでoffsetを気にする必要はなし
         ((ViewHolder) holder).value.setText(timeEvent.getName());
-        int color = ContextCompat.getColor(fragment.getContext(), colorId.get(timeEvent.getColorNum()));
+        int color = ContextCompat.getColor(vpItemTime.getFragment().getContext(), colorId.get(timeEvent.getColorNum()));
         ((ViewHolder) holder).circle.setColorFilter(color);
     }
 
@@ -142,8 +142,7 @@ public class TimeEventRVAdapter extends RecyclerView.Adapter implements Comparat
         sortList();
         notifyDataSetChanged();
         if (listener != null)
-            listener.onRemoveItem(dataNum, cal);
-        // TODO: 2017/11/12 これ明日やってください。頭まわらない。
+            listener.onRemoveItem(dataNum, vpItemTime);
     }
 
     public void update(){

@@ -376,8 +376,7 @@ public class RecordUiOperator implements RecordVpItemTime.IRecordVpItemTime, Rec
     }
 
     @Override
-    public void onRemoveItem(int dataNum, Calendar cal) {
-        if (listener != null)
-            listener.updateAndSync(list, cal2date(cal, datePattern));
+    public void onRemoveItem(int dataNum, RecordVpItemTime vpItemTime) {
+        syncTimeDataMapAndFb(dataNum, vpItemTime);
     }
 }

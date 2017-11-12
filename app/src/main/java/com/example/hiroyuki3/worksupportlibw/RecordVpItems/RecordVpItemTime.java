@@ -94,49 +94,6 @@ public class RecordVpItemTime extends RecordVpItem {
     }
 
     /**
-     * posInListは、アイテムが削除されるたびに値が変更されることに注意してください。
-     */
-//    class TimeEventRangeParams {
-//        @BindView(R2.id.start_circle) ImageView startCircle;
-//        @BindView(R2.id.end_circle) ImageView endCircle;
-//        @BindView(R2.id.stroke) View stroke;
-//        @BindView(R2.id.rv) RecyclerView rv;
-//        @BindView(R2.id.color_fl) FrameLayout colorFl;
-//        int posInList;
-//
-//        TimeEventRangeParams(int posInList){
-//            this.posInList = posInList;
-//        }
-//
-//        void setColor(int colorRes){
-//            stroke.setBackgroundResource(colorRes);
-//            startCircle.setColorFilter(ContextCompat.getColor(getFragment().getContext(), colorRes));
-//            endCircle.setColorFilter(ContextCompat.getColor(getFragment().getContext(), colorRes));
-//        }
-//
-//        @OnClick(R2.id.remove)
-//        void onClickRemove(View view){
-//            removeRangeItem(posInList);
-//        }
-//
-//        @OnClick(R2.id.color_fl)
-//        void onClickColorFl(){
-//            if (listener == null) return;
-//
-//            Bundle bundle = new Bundle();
-//            bundle.putInt(DATA_NUM, getDataNum());
-//            bundle.putInt(POS_IN_LIST, posInList);
-//            bundle.putSerializable(TIME_EVE_RANGE, dataSet.getRangeList().get(posInList));
-//            listener.onClickColorFl(bundle);
-//
-////            if (getFragment() instanceof RecordFragment)
-////                return;
-////
-////            kickCircleAndInputDialog(DIALOG_TAG_RANGE_COLOR, CALLBACK_RANGE_COLOR, bundle, getFragment());
-//        }
-//    }
-
-    /**
      * {@link RecordData#data}のエントリはただ一つ、かつkey="0"である
      */
     @Override
@@ -153,7 +110,7 @@ public class RecordVpItemTime extends RecordVpItem {
 
         timeEventRv.setLayoutManager(new LinearLayoutManager(getFragment().getContext()));
         timeEventRv.setNestedScrollingEnabled(false);
-        adapter = new TimeEventRVAdapter(dataSet.getEventList(), getFragment(), getCal(), getDataNum(), timeEveListener);
+        adapter = new TimeEventRVAdapter(dataSet.getEventList(), this, getCal(), getDataNum(), timeEveListener);
         timeEventRv.setAdapter(adapter);
 
         for (int i=0; i<dataSet.getRangeList().size(); i++) {
