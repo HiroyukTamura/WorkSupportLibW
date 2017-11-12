@@ -434,12 +434,12 @@ public class AnalyticsVPUiOperator implements ValueEventListener, IValueFormatte
 
             } else if (endOffset - startOffset == 2){
                 add2LineBefore24h(startOffset, dataRow, range);
-                addWithoutValueAndCircle2Line(true, 0, 0, dataRow, colorNum);//24時間分の線分を描画
+                addWithoutValueAndCircle2Line(true, 0, 0, dataRow, colorNum, createHighLightVal(range));//24時間分の線分を描画
                 add2LineAfter24h(endOffset, dataRow, range);
             }
 
             //合計時間を計算して小数第2位で四捨五入
-            long hourLong = (range.getEnd().getHourLong() + endOffset*24) - (range.getStart().getHourLong() + startOffset*24);
+            float hourLong = (range.getEnd().getHourFloat() + endOffset*24) - (range.getStart().getHourFloat() + startOffset*24);
             BigDecimal bigDecimal = BigDecimal.valueOf(hourLong);
             String hourStr = bigDecimal.setScale(0, BigDecimal.ROUND_HALF_UP).toString() + "h";
 
@@ -453,7 +453,7 @@ public class AnalyticsVPUiOperator implements ValueEventListener, IValueFormatte
 
         List<TimeEvent> eveList = timeEveSet.getEventList();
         for (TimeEvent timeEve: eveList) {
-            addTimeEve2Line(timeEve.getColorNum(), timeEve.getHourLong(), dataRow, createHighLightVal(timeEve));
+            addTimeEve2Line(timeEve.getColorNum(), timeEve.getHourFloat(), dataRow, createHighLightVal(timeEve));
         }
 
         setLegend(timeEveSet);
@@ -465,24 +465,24 @@ public class AnalyticsVPUiOperator implements ValueEventListener, IValueFormatte
     private void add2LineBefore24h(int startOffset, int dataRow, TimeEventRange range){
         if (!isBeforeWeek(startOffset, dataRow)){
             //●のないただの線分を描画
-            addWithoutValueAndCircle2Line(true, startOffset, range.getStart().getHourLong(), dataRow, range.getColorNum());
+            addWithoutValueAndCircle2Line(true, startOffset, range.getStart().getHourFloat(), dataRow, range.getColorNum(), createHighLightVal(range));
             //次に●を片方だけ描画
-            addTimeEve2Line(range.getColorNum(), range.getStart().getHourLong(), dataRow + startOffset, createHighLightVal(range));
+            addTimeEve2Line(range.getColorNum(), range.getStart().getHourFloat(), dataRow + startOffset, createHighLightVal(range));
         }
     }
 
     private void add2LineAfter24h(int endOffset, int dataRow, TimeEventRange range){
         //24時以降を描画
         if (!isAfterWeek(endOffset, dataRow)){
-            addWithoutValueAndCircle2Line(false, endOffset, range.getEnd().getHourLong(), dataRow, range.getColorNum());
-            addTimeEve2Line(range.getColorNum(), range.getEnd().getHourLong(), dataRow + endOffset, createHighLightVal(range));
+            addWithoutValueAndCircle2Line(false, endOffset, range.getEnd().getHourFloat(), dataRow, range.getColorNum(), createHighLightVal(range));
+            addTimeEve2Line(range.getColorNum(), range.getEnd().getHourFloat(), dataRow + endOffset, createHighLightVal(range));
         }
     }
 
     private void add2LineNormal(TimeEventRange range, int dataRow, int offset){
         List<Entry> entryList = new ArrayList<>();
-        entryList.add(new Entry(range.getStart().getHourLong(), dataRow + offset, createHighLightVal(range)));
-        entryList.add(new Entry(range.getEnd().getHourLong(), dataRow + offset, createHighLightVal(range)));
+        entryList.add(new Entry(range.getStart().getHourFloat(), dataRow + offset, createHighLightVal(range)));
+        entryList.add(new Entry(range.getEnd().getHourFloat(), dataRow + offset, createHighLightVal(range)));
         add2Lines(entryList, range.getColorNum());
     }
 
@@ -496,7 +496,7 @@ public class AnalyticsVPUiOperator implements ValueEventListener, IValueFormatte
         return endOffset == 1 && dataRaw == 6;
     }
 
-    private void addTimeEve2Line(int colorNum, long hourMin, int dataRow, String highLight){
+    private void addTimeEve2Line(int colorNum, float hourMin, int dataRow, String highLight){
         List<Entry> entryTimeEve = new ArrayList<>();
         entryTimeEve.add(new Entry(hourMin, dataRow, highLight));
         add2Lines(entryTimeEve, colorNum);
@@ -505,11 +505,11 @@ public class AnalyticsVPUiOperator implements ValueEventListener, IValueFormatte
     /**
      * 時刻も●もない線分をlinesに加える。これは、日を跨いだrangeに用いられる
      */
-    private void addWithoutValueAndCircle2Line(boolean isStart, int offset, long hourMin, int dataRow, int colorNum){
+    private void addWithoutValueAndCircle2Line(boolean isStart, int offset, float hourMin, int dataRow, int colorNum, @NonNull String highLight){
         List<Entry> entryList = new ArrayList<>();
         int edge = isStart ? 24 : 0;
-        entryList.add(new Entry(hourMin, dataRow + offset));//サークルがないのでハイライトは不要
-        entryList.add(new Entry(edge, dataRow + offset));//サークルがないのでハイライトは不要
+        entryList.add(new Entry(hourMin, dataRow + offset, highLight));//サークルがないのでハイライトは不要
+        entryList.add(new Entry(edge, dataRow + offset, highLight));//サークルがないのでハイライトは不要
 
         LineDataSet dataSet = new LineDataSet(entryList, "Label");
         dataSet.setDrawValues(false);
