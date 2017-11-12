@@ -37,6 +37,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static android.view.View.VISIBLE;
 import static com.cks.hiroyuki2.worksupprotlib.TemplateEditor.writeTemplate;
 import static com.cks.hiroyuki2.worksupprotlib.Util.INDEX;
 import static com.cks.hiroyuki2.worksupprotlib.Util.PARAMS_VALUES;
@@ -144,7 +145,7 @@ public class RecordParamsRVAdapter extends RecyclerView.Adapter<RecordParamsRVAd
         switch (values[0]){
             case "0":{
                 holder.checkBox.setChecked(Boolean.parseBoolean(values[2]));
-                holder.checkBox.setVisibility(View.VISIBLE);
+                holder.checkBox.setVisibility(VISIBLE);
                 holder.checkBox.setOnCheckedChangeListener(this);
 //                holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 //                    @Override
@@ -158,7 +159,7 @@ public class RecordParamsRVAdapter extends RecyclerView.Adapter<RecordParamsRVAd
             case "1":{
                 holder.seekBar.setMax(Integer.parseInt(values[3]));
                 holder.seekBar.setProgress(Integer.parseInt(values[2]));
-                holder.seekBar.setVisibility(View.VISIBLE);
+                holder.seekBar.setVisibility(VISIBLE);
                 holder.seekBar.setOnProgressChangeListener(this);
 //                holder.seekBar.setOnProgressChangeListener(new DiscreteSeekBar.OnProgressChangeListener() {
 //                    @Override
@@ -178,7 +179,7 @@ public class RecordParamsRVAdapter extends RecyclerView.Adapter<RecordParamsRVAd
 //                if (!(fragment instanceof EditTemplateFragment))
                     break;
 
-                holder.max.setVisibility(View.VISIBLE);
+                holder.max.setVisibility(VISIBLE);
 //                holder.max.setOnClickListener(listener);
                 break;}
         }
@@ -186,7 +187,7 @@ public class RecordParamsRVAdapter extends RecyclerView.Adapter<RecordParamsRVAd
 //        if (!(fragment instanceof EditTemplateFragment))
         if (code != CODE_EDIT_FRAG) return;
 
-        holder.remove.setVisibility(View.VISIBLE);
+        holder.remove.setVisibility(VISIBLE);
 //        holder.remove.setOnClickListener(listener);
     }
 

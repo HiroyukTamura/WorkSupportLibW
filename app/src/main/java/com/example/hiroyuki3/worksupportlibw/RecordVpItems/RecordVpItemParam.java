@@ -77,9 +77,11 @@ public class RecordVpItemParam extends RecordVpItem implements RecordParamsRVAda
 
     @Override @Nullable
     public View buildView() {
+
         List<Bundle> listBundle = data2BundleParams(getData());
         if (listBundle.isEmpty())
             return null;
+
         View view = getFragment().getLayoutInflater().inflate(R.layout.record_vp_item_params, null);
         ButterKnife.bind(this, view);
         setNullableText(name, getData().dataName);
@@ -103,7 +105,7 @@ public class RecordVpItemParam extends RecordVpItem implements RecordParamsRVAda
                 final int toPos = target.getAdapterPosition();
                 adapter.swap(fromPos, toPos);
                 adapter.updateData();
-                adapter.notifyItemMoved(fromPos, toPos);
+                adapter.notifyDataSetChanged();
                 return true;
             }
 
