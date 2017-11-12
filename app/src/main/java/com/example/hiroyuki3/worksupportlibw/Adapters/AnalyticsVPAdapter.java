@@ -86,8 +86,7 @@ public class AnalyticsVPAdapter extends PagerAdapter {
     }
 
     private Calendar getCal(int position){
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(startCal.getTime());
+        Calendar cal = Util.getCopyOfCal(startCal);
         cal.add(Calendar.DATE, 7*(position - PAGE/2));
         return cal;
     }

@@ -298,7 +298,8 @@ public class AnalyticsVPUiOperator implements ValueEventListener, IValueFormatte
 
 //            axisValue[i] = cal.get(Calendar.DATE)+ "("+dof[i]+")";
 
-            cal.add(Calendar.DATE, 1);
+            if (n != -1 && n != 7)
+                cal.add(Calendar.DATE, 1);
         }
     }
 
