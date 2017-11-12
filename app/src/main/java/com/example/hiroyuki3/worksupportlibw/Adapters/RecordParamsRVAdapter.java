@@ -125,6 +125,7 @@ public class RecordParamsRVAdapter extends RecyclerView.Adapter<RecordParamsRVAd
             holder.checkBox.setOnCheckedChangeListener(null);
             holder.seekBar.setVisibility(GONE);
             holder.seekBar.setOnProgressChangeListener(null);
+            holder.max.setVisibility(GONE);
             return;
         }
 
@@ -139,6 +140,8 @@ public class RecordParamsRVAdapter extends RecyclerView.Adapter<RecordParamsRVAd
 
                 holder.seekBar.setVisibility(GONE);
                 holder.seekBar.setOnProgressChangeListener(null);
+
+                holder.max.setVisibility(GONE);
                 break;}
 
             case "1":{
@@ -149,13 +152,15 @@ public class RecordParamsRVAdapter extends RecyclerView.Adapter<RecordParamsRVAd
                 holder.seekBar.setProgress(Integer.parseInt(values[2]));
                 holder.seekBar.setVisibility(VISIBLE);
                 holder.seekBar.setOnProgressChangeListener(this);
-
-                if (code != CODE_EDIT_FRAG)
 //                if (!(fragment instanceof EditTemplateFragment))
-                    break;
-
-                holder.max.setVisibility(VISIBLE);
+//                    break;
 //                holder.max.setOnClickListener(listener);
+
+                if (code == CODE_EDIT_FRAG){
+                    holder.max.setVisibility(VISIBLE);
+                } else {
+                    holder.max.setVisibility(GONE);
+                }
                 break;}
         }
 
@@ -189,7 +194,7 @@ public class RecordParamsRVAdapter extends RecyclerView.Adapter<RecordParamsRVAd
     public void swap(int fromPos, int toPos){
         Bundle bundle = list.remove(fromPos);
         list.add(toPos, bundle);
-        notifyItemMoved(fromPos, toPos);
+        notifyDataSetChanged();
     }
 
     public void add(@NonNull Bundle bundle){
@@ -252,7 +257,7 @@ public class RecordParamsRVAdapter extends RecyclerView.Adapter<RecordParamsRVAd
     //region onClick系列
     @OnClick({R2.id.key, R2.id.max, R2.id.remove})
     void onClickBtn(View view){
-        if (code != CODE_RECORD_FRAG)
+        if (code != CODE_EDIT_FRAG)
             return;
 
         int pos = (int) ((ViewGroup)view.getParent()).getTag();
