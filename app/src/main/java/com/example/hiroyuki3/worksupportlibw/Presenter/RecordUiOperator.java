@@ -365,14 +365,13 @@ public class RecordUiOperator implements RecordVpItemTime.IRecordVpItemTime, Rec
     }
     //endregion
 
-
     @Override
-    public void onClickMax(Bundle bundle) {
+    public void onClickKey(Bundle bundle, int pos, int dataNum) {
         //RecordFragmentではここにこない
     }
 
     @Override
-    public void onClickKey(Bundle bundle) {
+    public void onClickMax(Bundle bundle, int pos, int dataNum) {
         //RecordFragmentではここにこない
     }
 }

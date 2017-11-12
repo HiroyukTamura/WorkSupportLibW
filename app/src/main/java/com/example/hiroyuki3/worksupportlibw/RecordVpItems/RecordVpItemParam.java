@@ -64,8 +64,8 @@ public class RecordVpItemParam extends RecordVpItem implements RecordParamsRVAda
         public void onClickParamsName(int dataNum);
         public void onClickParamsAddBtn(int dataNum);
         public void syncFirebaseAndMap(int dataNum, String date, RecordData data);
-        public void onClickKey(Bundle bundle);
-        public void onClickMax(Bundle bundle);
+        public void onClickKey(Bundle bundle, int pos, int dataNum);
+        public void onClickMax(Bundle bundle, int pos, int dataNum);
     }
 
     public RecordVpItemParam(RecordData data, int dataNum, @Nullable Calendar cal, Fragment fragment, @Nullable OnClickParamsNameListener listener, @fragCode int code){
@@ -170,14 +170,14 @@ public class RecordVpItemParam extends RecordVpItem implements RecordParamsRVAda
     }
 
     @Override
-    public void onClickKey(Bundle bundle) {
+    public void onClickKey(Bundle bundle, int pos, int dataNum) {
         if (listener != null)
-            listener.onClickKey(bundle);
+            listener.onClickKey(bundle, pos, dataNum);
     }
 
     @Override
-    public void onClickMax(Bundle bundle) {
+    public void onClickMax(Bundle bundle, int pos, int dataNum) {
         if (listener != null)
-            listener.onClickMax(bundle);
+            listener.onClickMax(bundle, pos, dataNum);
     }
 }
