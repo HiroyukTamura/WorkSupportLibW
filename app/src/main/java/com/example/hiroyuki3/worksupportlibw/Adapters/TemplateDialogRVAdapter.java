@@ -34,11 +34,13 @@ public class TemplateDialogRVAdapter extends RecyclerView.Adapter<TemplateDialog
     private LayoutInflater inflater;
     private Context context;
     private List<RecordData> list;
+    private String timeLineName;
 
     public TemplateDialogRVAdapter(Context context, @NonNull List<RecordData> list){
         this.context = context;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.list = list;
+        timeLineName = context.getString(R.string.timeline_name);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -60,7 +62,9 @@ public class TemplateDialogRVAdapter extends RecyclerView.Adapter<TemplateDialog
     public void onBindViewHolder(ViewHolder holder, int position) {
         ButterKnife.bind(this, holder.itemView);
         holder.iv.setTag(position);
-        String s = list.get(position).getDataName();
+        String s = list.get(position).getDataType() == 1 ?
+                timeLineName :
+                list.get(position).getDataName();
         setNullableText(holder.tv, s);
     }
 

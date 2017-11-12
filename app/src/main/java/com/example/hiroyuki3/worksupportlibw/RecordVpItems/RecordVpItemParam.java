@@ -105,7 +105,6 @@ public class RecordVpItemParam extends RecordVpItem implements RecordParamsRVAda
                 final int toPos = target.getAdapterPosition();
                 adapter.swap(fromPos, toPos);
                 adapter.updateData();
-                adapter.notifyDataSetChanged();
                 return true;
             }
 

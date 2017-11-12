@@ -37,6 +37,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 import static com.cks.hiroyuki2.worksupprotlib.TemplateEditor.writeTemplate;
 import static com.cks.hiroyuki2.worksupprotlib.Util.INDEX;
@@ -119,26 +120,15 @@ public class RecordParamsRVAdapter extends RecyclerView.Adapter<RecordParamsRVAd
 
         final Bundle bundle = list.get(position);
         final String[] values = bundle.getStringArray(PARAMS_VALUES);
-        if (values == null) return;
-//        View.OnClickListener listener = new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                switch (v.getId()){
-//                    case R.id.key:{
-//                        DialogKicker.makeBundleInOnClick(bundle, Util.TEMPLATE_PARAMS_ITEM, dataNum);
-//                        DialogKicker.kickDialogInOnClick(Util.TEMPLATE_PARAMS_ITEM, Util.CALLBACK_TEMPLATE_PARAMS_ITEM, bundle, fragment);
-//                        break;}
-//                    case R.id.max:{
-//                        DialogKicker.makeBundleInOnClick(bundle, Util.TEMPLATE_PARAMS_SLIDER_MAX, dataNum);
-//                        DialogKicker.kickDialogInOnClick(Util.TEMPLATE_PARAMS_SLIDER_MAX, Util.CALLBACK_TEMPLATE_PARAMS_SLIDER_MAX, bundle, fragment);
-//                        break;}
-//                    case R.id.remove:{
-//                        list.remove(holder.getAdapterPosition());
-//                        updateData();
-//                        break;}
-//                }
-//            }
-//        };
+
+        if (values == null){
+            holder.checkBox.setVisibility(GONE);
+            holder.checkBox.setOnCheckedChangeListener(null);
+            holder.seekBar.setVisibility(GONE);
+            holder.seekBar.setOnProgressChangeListener(null);
+            return;
+        }
+
         holder.key.setText(values[1]);
 //        if (fragment instanceof EditTemplateFragment)
 //            holder.key.setOnClickListener(listener);
@@ -147,33 +137,19 @@ public class RecordParamsRVAdapter extends RecyclerView.Adapter<RecordParamsRVAd
                 holder.checkBox.setChecked(Boolean.parseBoolean(values[2]));
                 holder.checkBox.setVisibility(VISIBLE);
                 holder.checkBox.setOnCheckedChangeListener(this);
-//                holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//                    @Override
-//                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                        values[2] = Boolean.toString(isChecked);
-//                        callBack(values, holder.getAdapterPosition());
-//                    }
-//                });
+
+                holder.seekBar.setVisibility(GONE);
+                holder.seekBar.setOnProgressChangeListener(null);
                 break;}
 
             case "1":{
+                holder.checkBox.setVisibility(GONE);
+                holder.checkBox.setOnCheckedChangeListener(null);
+
                 holder.seekBar.setMax(Integer.parseInt(values[3]));
                 holder.seekBar.setProgress(Integer.parseInt(values[2]));
                 holder.seekBar.setVisibility(VISIBLE);
                 holder.seekBar.setOnProgressChangeListener(this);
-//                holder.seekBar.setOnProgressChangeListener(new DiscreteSeekBar.OnProgressChangeListener() {
-//                    @Override
-//                    public void onProgressChanged(DiscreteSeekBar seekBar, int value, boolean fromUser) {}
-//
-//                    @Override
-//                    public void onStartTrackingTouch(DiscreteSeekBar seekBar) {}
-//
-//                    @Override
-//                    public void onStopTrackingTouch(DiscreteSeekBar seekBar) {
-//                        values[2] = Integer.toString(seekBar.getProgress());
-//                        callBack(values, holder.getAdapterPosition());
-//                    }
-//                });
 
                 if (code != CODE_EDIT_FRAG)
 //                if (!(fragment instanceof EditTemplateFragment))
@@ -185,9 +161,12 @@ public class RecordParamsRVAdapter extends RecyclerView.Adapter<RecordParamsRVAd
         }
 
 //        if (!(fragment instanceof EditTemplateFragment))
-        if (code != CODE_EDIT_FRAG) return;
+        if (code == CODE_EDIT_FRAG){
+            holder.remove.setVisibility(VISIBLE);
+        } else {
+            holder.remove.setVisibility(GONE);
+        }
 
-        holder.remove.setVisibility(VISIBLE);
 //        holder.remove.setOnClickListener(listener);
     }
 
@@ -211,6 +190,7 @@ public class RecordParamsRVAdapter extends RecyclerView.Adapter<RecordParamsRVAd
     public void swap(int fromPos, int toPos){
         Bundle bundle = list.remove(fromPos);
         list.add(toPos, bundle);
+        notifyItemMoved(fromPos, toPos);
     }
 
     public void add(@NonNull Bundle bundle){
