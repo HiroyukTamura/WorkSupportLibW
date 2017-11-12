@@ -28,6 +28,11 @@ import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 
+import static com.cks.hiroyuki2.worksupprotlib.Util.date2Cal;
+import static com.cks.hiroyuki2.worksupprotlib.Util.datePattern;
+import static com.cks.hiroyuki2.worksupprotlib.Util.getCopyOfCal;
+import static com.cks.hiroyuki2.worksupprotlib.Util.logStackTrace;
+
 /**
  * Record画面のTabを担うおじさん！
  */
@@ -80,15 +85,14 @@ public class RecordTabVPAdapter extends PagerAdapter implements View.OnClickList
         LinearLayout ll = view.findViewById(R.id.date_container);
         LinearLayout dayContainer = view.findViewById(R.id.day_container);
         int dayOfWeekMed = calMed.get(Calendar.DAY_OF_WEEK);
-        Calendar calTmp = Calendar.getInstance();
-        calTmp.setTime(calMed.getTime());
+        Calendar calTmp = getCopyOfCal(calMed);
         calTmp.add(Calendar.DATE, 7*(- MED_NUM + position));
         calTmp.add(Calendar.DATE, -dayOfWeekMed + 1);
-        int startDate = Integer.parseInt(Util.cal2date(calTmp, Util.datePattern));
+        int startDate = Integer.parseInt(Util.cal2date(calTmp, datePattern));
         for (int i=0; i<7; i++){
             FrameLayout fm = (FrameLayout) ll.getChildAt(i);
             fm.setOnClickListener(this);
-            fm.setTag(Integer.parseInt(Util.cal2date(calTmp, Util.datePattern)));
+            fm.setTag(Integer.parseInt(Util.cal2date(calTmp, datePattern)));
             TextView dayTv = fm.findViewById(R.id.tv);
             dayTv.setText(String.valueOf(calTmp.get(Calendar.DAY_OF_MONTH)));
             ImageView iv = fm.findViewById(R.id.iv);
@@ -121,13 +125,23 @@ public class RecordTabVPAdapter extends PagerAdapter implements View.OnClickList
 
     @Override
     public void onClick(View view) {
-        Log.d(TAG, "onClick: fire");
         View oldCircle = currentItem.findViewWithTag(TAG_VISIBLE);
         if (oldCircle != null){
+            String dateStr = Integer.toString((Integer) oldCircle.getTag());
             oldCircle.setTag(null);
             oldCircle.setVisibility(View.GONE);
             TextView oldTv = ((FrameLayout)oldCircle.getParent()).findViewById(R.id.tv);
-            oldTv.setTextColor(Color.WHITE);
+
+            try {
+                Calendar cal = date2Cal(dateStr, datePattern);
+                if (cal.get(Calendar.DAY_OF_MONTH) == Calendar.SUNDAY){
+                    oldTv.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
+                } else {
+                    oldTv.setTextColor(Color.WHITE);
+                }
+            } catch (ParseException e) {
+                logStackTrace(e);
+            }
         }
 
         View newCircle = view.findViewById(R.id.iv);
@@ -136,12 +150,12 @@ public class RecordTabVPAdapter extends PagerAdapter implements View.OnClickList
         ((TextView)view.findViewById(R.id.tv)).setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
 
         String dateStr = Integer.toString((Integer) view.getTag());
-        Log.w(TAG, "onClick: dateStr" + dateStr);
+        Log.d(TAG, "onClick: dateStr" + dateStr);
         try {
-            Calendar cal = Util.date2Cal(dateStr, Util.datePattern);
+            Calendar cal = date2Cal(dateStr, datePattern);
             callback.postOnClick(cal);
         } catch (ParseException e) {
-            Util.logStackTrace(e);
+            logStackTrace(e);
         }
     }
 
