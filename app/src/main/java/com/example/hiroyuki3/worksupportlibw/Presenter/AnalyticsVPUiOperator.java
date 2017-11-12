@@ -4,7 +4,6 @@
 
 package com.example.hiroyuki3.worksupportlibw.Presenter;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -89,8 +88,7 @@ public class AnalyticsVPUiOperator implements ValueEventListener, IValueFormatte
     private static final float LINE_WIDTH = 3f;
     private static final int COLUMN_NAME_LINE_LIMIT = 15;
 
-    @BindView(R2.id.chart)
-    LineChart chart;
+    @BindView(R2.id.chart) LineChart chart;
     @BindView(R2.id.scroll) HorizontalScrollView hsv;
     @BindView(R2.id.table) LinearLayout tableLL;
     @BindView(R2.id.table_time) LinearLayout tableTime;
@@ -153,7 +151,7 @@ public class AnalyticsVPUiOperator implements ValueEventListener, IValueFormatte
     private void initParams(){
         verticalRowPad = padding*2;
         hsv.getViewTreeObserver().addOnScrollChangedListener(this);
-        inflater = (LayoutInflater) analyticsFragment.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inflater = analyticsFragment.getLayoutInflater();
 //        hsv.getViewTreeObserver().addOnScrollChangedListener(this);
 //        mListener = (IAnalyticsVPUiOperator)rootView.getContext();
     }

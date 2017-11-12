@@ -141,6 +141,9 @@ public class TimeEventRVAdapter extends RecyclerView.Adapter implements Comparat
         list.remove(pos);
         sortList();
         notifyDataSetChanged();
+        if (listener != null)
+            listener.onRemoveItem(dataNum, cal);
+        // TODO: 2017/11/12 これ明日やってください。頭まわらない。
     }
 
     public void update(){
