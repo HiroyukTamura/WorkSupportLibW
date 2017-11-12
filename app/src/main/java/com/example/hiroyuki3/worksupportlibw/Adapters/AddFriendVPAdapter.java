@@ -68,7 +68,7 @@ public class AddFriendVPAdapter extends PagerAdapter implements Callback{
 
     @Override
     public int getCount() {
-        return 2;
+        return 1;
     }
 
     @Override
@@ -99,7 +99,6 @@ public class AddFriendVPAdapter extends PagerAdapter implements Callback{
 
 //                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 //                if (user == null){
-//                    //todo エラー画像を表示し、エラー処理をしてください
 //                    Toast.makeText(context, "エラー画像を表示し、エラー処理をしてください", Toast.LENGTH_LONG).show();
 //                } else {
 //                    String string = user.getUid() + Util.delimiter
