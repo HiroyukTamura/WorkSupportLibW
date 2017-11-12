@@ -26,7 +26,7 @@ import static com.cks.hiroyuki2.worksupprotlib.Util.delimiter;
 /**
  * EditTemplateFragment専属。
  */
-class TempItemTag {
+public class TempItemTag {
     private static final String TAG = "MANUAL_TAG: " + TempItemTag.class.getSimpleName();
     @BindView(R2.id.tv) TextView tv;
     @BindView(R2.id.card_container) CardView cv;
@@ -38,7 +38,7 @@ class TempItemTag {
     private Fragment frag;
     private ITempItemTag listener;
 
-    TempItemTag(int tagNum, String value, int dataNum, Fragment frag){
+    public TempItemTag(int tagNum, String value, int dataNum, Fragment frag){
         this.tagNum = tagNum;
         this.value = value;
         this.dataNum = dataNum;
