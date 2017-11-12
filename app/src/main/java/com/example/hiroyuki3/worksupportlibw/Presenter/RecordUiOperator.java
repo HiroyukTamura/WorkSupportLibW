@@ -237,6 +237,9 @@ public class RecordUiOperator implements RecordVpItemTime.IRecordVpItemTime, Rec
         updateTag2Map(dataNum, elevatedList);
         RecordVpItemTagPool itemTag = (RecordVpItemTagPool) itemList.get(dataNum - 1);
         itemTag.updateTag();
+
+        if (listener != null)
+            listener.updateAndSync(list, cal2date(cal, datePattern));
     }
 
     public void updateComment(@NonNull Intent data) {
