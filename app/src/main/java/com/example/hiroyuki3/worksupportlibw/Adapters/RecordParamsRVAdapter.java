@@ -43,7 +43,6 @@ import static com.cks.hiroyuki2.worksupprotlib.TemplateEditor.writeTemplate;
 import static com.cks.hiroyuki2.worksupprotlib.Util.INDEX;
 import static com.cks.hiroyuki2.worksupprotlib.Util.PARAMS_VALUES;
 import static com.cks.hiroyuki2.worksupprotlib.Util.TEMPLATE_PARAMS_SLIDER_MAX;
-import static com.cks.hiroyuki2.worksupprotlib.Util.bundle2Data;
 import static com.cks.hiroyuki2.worksupprotlib.Util.bundle2DataParams;
 import static com.cks.hiroyuki2.worksupprotlib.Util.onError;
 import static com.example.hiroyuki3.worksupportlibw.AdditionalUtil.CODE_BLANK_FRAG;
@@ -179,7 +178,7 @@ public class RecordParamsRVAdapter extends RecyclerView.Adapter<RecordParamsRVAd
      * ここでDialogFragmentから返されたbundleをlistにsetしないのは、返されたbundleはそもそもlistを構成しているbundleであるから。
      */
     public void updateData(){
-        RecordData data = bundle2Data(list, dataName, 3, 0, 0, 0);/*bundle2DataParamsでなくていいのか？*/
+        RecordData data = bundle2DataParams(list, dataName, 0, 0, 0);/*bundle2DataParamsでなくていいのか？*/
         boolean success = writeTemplate(dataNum, data, fragment.getContext());
         if (success)
             notifyDataSetChanged();
