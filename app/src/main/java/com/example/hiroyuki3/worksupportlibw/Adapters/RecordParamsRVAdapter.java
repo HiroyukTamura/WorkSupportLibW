@@ -40,9 +40,7 @@ import butterknife.OnClick;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 import static com.cks.hiroyuki2.worksupprotlib.TemplateEditor.writeTemplate;
-import static com.cks.hiroyuki2.worksupprotlib.Util.INDEX;
 import static com.cks.hiroyuki2.worksupprotlib.Util.PARAMS_VALUES;
-import static com.cks.hiroyuki2.worksupprotlib.Util.TEMPLATE_PARAMS_SLIDER_MAX;
 import static com.cks.hiroyuki2.worksupprotlib.Util.bundle2DataParams;
 import static com.cks.hiroyuki2.worksupprotlib.Util.onError;
 import static com.example.hiroyuki3.worksupportlibw.AdditionalUtil.CODE_BLANK_FRAG;
@@ -88,8 +86,8 @@ public class RecordParamsRVAdapter extends RecyclerView.Adapter<RecordParamsRVAd
 //    }
 
     public interface IRecordParamsRVAdapter{
-        public void onClickKey(Bundle bundle);
-        public void onClickMax(Bundle bundle);
+        public void onClickKey(Bundle bundle, int pos, int dataNum);
+        public void onClickMax(Bundle bundle, int pos, int dataNum);
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -265,15 +263,13 @@ public class RecordParamsRVAdapter extends RecyclerView.Adapter<RecordParamsRVAd
         int id = view.getId();
         if (id == R.id.key){
             Bundle bundle = list.get(pos);
-            bundle.putInt(INDEX, pos);
             if (listener != null)
-                listener.onClickKey(bundle);
+                listener.onClickKey(bundle, pos, dataNum);
         } else if (id == R.id.max) {
 //            onClickMax(pos);
             Bundle bundle = list.get(pos);
-            bundle.putInt(TEMPLATE_PARAMS_SLIDER_MAX, pos);
             if (listener != null)
-                listener.onClickMax(bundle);
+                listener.onClickMax(bundle, pos, dataNum);
         } else if (id == R.id.remove) {
             onClickRemove(pos);
         }
