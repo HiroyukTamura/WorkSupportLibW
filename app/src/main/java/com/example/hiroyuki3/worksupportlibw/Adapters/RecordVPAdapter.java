@@ -6,7 +6,6 @@ package com.example.hiroyuki3.worksupportlibw.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -44,11 +43,7 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.concurrent.TimeUnit;
 
-import static android.content.Context.MODE_PRIVATE;
 import static com.cks.hiroyuki2.worksupprotlib.Util.DATE_PATTERN_YM;
-import static com.cks.hiroyuki2.worksupprotlib.Util.DEFAULT;
-import static com.cks.hiroyuki2.worksupprotlib.Util.PREF_KEY_TEMPLATE;
-import static com.cks.hiroyuki2.worksupprotlib.Util.PREF_NAME;
 import static com.cks.hiroyuki2.worksupprotlib.Util.cal2date;
 import static com.cks.hiroyuki2.worksupprotlib.Util.date2Cal;
 import static com.cks.hiroyuki2.worksupprotlib.Util.logStackTrace;
@@ -139,7 +134,7 @@ public class RecordVPAdapter extends PagerAdapter {
             logStackTrace(e);/*エラー処理*/
         }
 
-        getTemplate();
+//        getTemplate();
 
         Calendar calTemp = Calendar.getInstance();
         calTemp.set(calMed.get(Calendar.YEAR), calMed.get(Calendar.MONTH), calMed.get(Calendar.DATE));
@@ -163,33 +158,33 @@ public class RecordVPAdapter extends PagerAdapter {
         retrieveOneMonthHeaderTag(calTemp);
     }
 
-    private void getTemplate(){
-        Log.d(TAG, "getTemplate: fire");
-        final SharedPreferences pref = fragment.getContext().getSharedPreferences(PREF_NAME, MODE_PRIVATE);/*非同期ではないのでok*/
-        templateCode = pref.getString(PREF_KEY_TEMPLATE, DEFAULT);
-
-        final DatabaseReference ref = FirebaseConnection.getInstance().userAttrDir.child("template");
-        ref.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (!dataSnapshot.exists()){
-                    Log.w(TAG, "onDataChange: templateノードがありませんよ");
-                    ref.setValue(DEFAULT, FirebaseConnection.getInstance());//書き込みに失敗したとしても、それはデフォルト値なので、特段問題はない。
-                } else {
-                    templateCode = (String) dataSnapshot.getValue();
-                    Log.d(TAG, "onDataChange: template:" + templateCode);
-                    SharedPreferences.Editor editor = pref.edit();
-                    editor.putString(PREF_KEY_TEMPLATE, templateCode);
-                    editor.apply();
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.w(TAG, "onCancelled: templateノード取得できませんでした " + databaseError.getMessage());
-            }
-        });
-    }
+//    private void getTemplate(){
+//        Log.d(TAG, "getTemplate: fire");
+//        final SharedPreferences pref = fragment.getContext().getSharedPreferences(PREF_NAME, MODE_PRIVATE);/*非同期ではないのでok*/
+//        templateCode = pref.getString(PREF_KEY_TEMPLATE, DEFAULT);
+//
+//        final DatabaseReference ref = FirebaseConnection.getInstance().userAttrDir.child("template");
+//        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                if (!dataSnapshot.exists()){
+//                    Log.w(TAG, "onDataChange: templateノードがありませんよ");
+//                    ref.setValue(DEFAULT, FirebaseConnection.getInstance());//書き込みに失敗したとしても、それはデフォルト値なので、特段問題はない。
+//                } else {
+//                    templateCode = (String) dataSnapshot.getValue();
+//                    Log.d(TAG, "onDataChange: template:" + templateCode);
+//                    SharedPreferences.Editor editor = pref.edit();
+//                    editor.putString(PREF_KEY_TEMPLATE, templateCode);
+//                    editor.apply();
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//                Log.w(TAG, "onCancelled: templateノード取得できませんでした " + databaseError.getMessage());
+//            }
+//        });
+//    }
     /*初期化系列メソッドここまで*/
     //endregion
 
@@ -270,13 +265,13 @@ public class RecordVPAdapter extends PagerAdapter {
 
     private void switchTemplateCode(LinearLayout ll, int position){
         Log.d(TAG, "switchTemplateCode: fire");
-        switch (templateCode){
-            case "DEFAULT":
+//        switch (templateCode){
+//            case "DEFAULT":
                 List<RecordData> list = TemplateEditor.deSerialize(fragment.getContext());
                 if (list == null) return;/*エラー処理*/
 //                initRecordData(list, ll, cal);
                 initRecordViewUtil(list, ll, position, fragment);
-        }
+//        }
     }
     //endregion
 

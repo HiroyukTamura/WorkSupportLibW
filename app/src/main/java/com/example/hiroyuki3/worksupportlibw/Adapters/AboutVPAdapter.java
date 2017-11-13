@@ -7,10 +7,13 @@ import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.hiroyuki3.worksupportlibw.R;
 import com.example.hiroyuki3.worksupportlibw.R2;
 
+import butterknife.BindString;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -25,6 +28,7 @@ public class AboutVPAdapter extends PagerAdapter {
     private String title0;
     private String title1;
     private IAboutVPAdapter listener;
+    private Item0 item0;
 
     public AboutVPAdapter(@NonNull Context context, @NonNull IAboutVPAdapter listener){
         this.context = context;
@@ -43,6 +47,8 @@ public class AboutVPAdapter extends PagerAdapter {
     }
 
     public class Item0{
+        @BindString(R2.string.app_name) String appName;
+        @BindView(R2.id.title_ll1) TextView titleLL1;
         @OnClick(R2.id.setting_ll0)
         void onClickSetting0(){
             listener.onClickResetData();
@@ -78,7 +84,10 @@ public class AboutVPAdapter extends PagerAdapter {
         switch (position){
             case 0:
                 view = inflater.inflate(R.layout.about_vp_item0, null);
-                ButterKnife.bind(new Item0(), view);
+                item0 = new Item0();
+                ButterKnife.bind(item0, view);
+                String string = item0.appName + "から退会する";
+                item0.titleLL1.setText(string);
                 break;
             case 1:
                 view = inflater.inflate(R.layout.about_vp_item1, null);
