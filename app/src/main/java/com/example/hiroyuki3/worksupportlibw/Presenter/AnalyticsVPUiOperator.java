@@ -76,6 +76,7 @@ import static com.cks.hiroyuki2.worksupprotlib.Util.cal2date;
 import static com.cks.hiroyuki2.worksupprotlib.Util.datePattern;
 import static com.cks.hiroyuki2.worksupprotlib.Util.delimiter;
 import static com.cks.hiroyuki2.worksupprotlib.Util.getTimeEveDataSetFromRecordData;
+import static com.cks.hiroyuki2.worksupprotlib.Util.getToolBarHeight;
 import static com.cks.hiroyuki2.worksupprotlib.Util.time2String;
 import static com.cks.hiroyuki2.worksupprotlib.UtilSpec.colorId;
 import static com.example.hiroyuki3.worksupportlibw.Adapters.AnalyticsVPAdapter.OFFSET;
@@ -99,7 +100,7 @@ public class AnalyticsVPUiOperator implements ValueEventListener, IValueFormatte
 //    @BindView(R.id.legend_fl) FlowLayout legendFl;
     @BindDimen(R2.dimen.column_min_width) int columnMinWidth;
     @BindDimen(R2.dimen.grid_padding) int padding;
-    @BindDimen(R2.dimen.legend_total_height) int legendHeight;
+    int legendHeight;
     @BindColor(R2.color.red_anton_dark) int colorGradationMax;
     @BindColor(R2.color.blue_pint) int colorGradationMin;
     @BindColor(R2.color.blue_gray_light) int blueGrayLight;
@@ -155,6 +156,7 @@ public class AnalyticsVPUiOperator implements ValueEventListener, IValueFormatte
         verticalRowPad = padding*2;
         hsv.getViewTreeObserver().addOnScrollChangedListener(this);
         inflater = analyticsFragment.getLayoutInflater();
+        legendHeight = getToolBarHeight(analyticsFragment.getContext());
 //        hsv.getViewTreeObserver().addOnScrollChangedListener(this);
 //        mListener = (IAnalyticsVPUiOperator)rootView.getContext();
     }
