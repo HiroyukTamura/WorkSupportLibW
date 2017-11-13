@@ -20,7 +20,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cks.hiroyuki2.worksupprotlib.FirebaseConnection;
-import com.cks.hiroyuki2.worksupprotlib.Util;
 import com.example.hiroyuki3.worksupportlibw.R;
 
 import java.text.ParseException;
@@ -29,6 +28,8 @@ import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 
+import static com.cks.hiroyuki2.worksupprotlib.Util.PREF_KEY_START_OF_WEEK;
+import static com.cks.hiroyuki2.worksupprotlib.Util.PREF_NAME;
 import static com.cks.hiroyuki2.worksupprotlib.Util.cal2date;
 import static com.cks.hiroyuki2.worksupprotlib.Util.date2Cal;
 import static com.cks.hiroyuki2.worksupprotlib.Util.datePattern;
@@ -61,8 +62,8 @@ public class RecordTabVPAdapter extends PagerAdapter implements View.OnClickList
         this.calMed = calMed;
         this.callback = callback;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        SharedPreferences pref = context.getSharedPreferences(Util.PREF_NAME, Context.MODE_PRIVATE);
-        startOfWeek =  pref.getInt(Util.PREF_KEY_START_OF_WEEK, Calendar.SUNDAY);
+        SharedPreferences pref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        startOfWeek =  pref.getInt(PREF_KEY_START_OF_WEEK, Calendar.SUNDAY);
         listDayOfWeek = makeWofList(startOfWeek);
         holidays = FirebaseConnection.getInstance().getHolidayArr();
     }
@@ -131,7 +132,7 @@ public class RecordTabVPAdapter extends PagerAdapter implements View.OnClickList
     public void onClick(View view) {
         View oldCircle = currentItem.findViewWithTag(TAG_VISIBLE);
         if (oldCircle != null){
-            String dateStr = Integer.toString((Integer) oldCircle.getTag());
+            String dateStr = Integer.toString((Integer) view.getTag());
             oldCircle.setTag(null);
             oldCircle.setVisibility(View.GONE);
             TextView oldTv = ((FrameLayout)oldCircle.getParent()).findViewById(R.id.tv);

@@ -108,7 +108,7 @@ public class RecordVPAdapter extends PagerAdapter {
     private List<Boolean> isInitHeaderTagData = new ArrayList<>();
     private RecordDataUtil rdu;
     private int currentPos;
-    private int prevPos;
+//    private int prevPos;
 
     @Retention(RetentionPolicy.SOURCE)
     @IntDef(value = {CALLBACK_RANGE_CLICK_TIME, CALLBACK_RANGE_CLICK_VALUE})
@@ -200,7 +200,7 @@ public class RecordVPAdapter extends PagerAdapter {
     public void setPrimaryItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
         if (currentPos != position){
             currentPage = (View) object;
-            prevPos = currentPos;
+//            prevPos = currentPos;
             currentPos = position;
         }
         Log.d(TAG, "setPrimaryItem: " + currentPage.getTag().toString());
@@ -459,9 +459,5 @@ public class RecordVPAdapter extends PagerAdapter {
             rdu.dataMap.put(Integer.parseInt(date), null);
             fireBase.userRecDir.child(date).setValue(null, fireBase);
         }
-    }
-
-    public int getPrevPos(){
-        return prevPos;
     }
 }
