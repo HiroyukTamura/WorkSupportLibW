@@ -24,13 +24,16 @@ import java.lang.ref.WeakReference;
 import java.util.Calendar;
 import java.util.TreeMap;
 
+import static com.cks.hiroyuki2.worksupprotlib.Util.PREF_NAME;
+
 /**
  * Analytics画面のVPAdapterおじさん！でもUIの操作AnalyticsVPUiOperatorにおまかせ
  * AnalyticsFragment
  */
 public class AnalyticsVPAdapter extends PagerAdapter {
     private static final String TAG = "MANUAL_TAG: " + AnalyticsVPAdapter.class.getSimpleName();
-    public static final int PAGE = 7;
+    public static final int PAGE = 25;
+    public static final int OFFSET = 2;
     private LayoutInflater inflater;
     private Context context;
     private Calendar startCal;
@@ -77,7 +80,7 @@ public class AnalyticsVPAdapter extends PagerAdapter {
     //カレンダーを週の頭へ
     private Calendar makeStartCal(Context context){
         Calendar startCal = Calendar.getInstance();
-        SharedPreferences pref = context.getSharedPreferences(Util.PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences pref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         int startDof = pref.getInt(Util.PREF_KEY_START_OF_WEEK, Calendar.SUNDAY);
         while (startCal.get(Calendar.DAY_OF_WEEK) != startDof){
             startCal.add(Calendar.DATE, -1);

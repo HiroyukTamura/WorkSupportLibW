@@ -69,6 +69,7 @@ import butterknife.BindDrawable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import fr.castorflex.android.verticalviewpager.VerticalViewPager;
 
 import static com.cks.hiroyuki2.worksupprotlib.Util.cal2date;
@@ -77,6 +78,7 @@ import static com.cks.hiroyuki2.worksupprotlib.Util.delimiter;
 import static com.cks.hiroyuki2.worksupprotlib.Util.getTimeEveDataSetFromRecordData;
 import static com.cks.hiroyuki2.worksupprotlib.Util.time2String;
 import static com.cks.hiroyuki2.worksupprotlib.UtilSpec.colorId;
+import static com.example.hiroyuki3.worksupportlibw.Adapters.AnalyticsVPAdapter.OFFSET;
 
 /**
  * AnalyticsVPAdapterのお助けやくおじさん！みんな協力して働くんだね！
@@ -124,9 +126,10 @@ public class AnalyticsVPUiOperator implements ValueEventListener, IValueFormatte
     private List<Pair<String, Integer>> columnList = new ArrayList<>();//firstにはdataNameが、secondにはdataTypeが代入される。ただし、dataType==1の場合はcolumnTimeListに"start.name → end.name"として追加する
     private List<String> columnTimeList = new ArrayList<>();
     private String uid;
+    private Unbinder unbinder;
 
     public AnalyticsVPUiOperator(WeakReference<View> root, Calendar startCal, Fragment analyticsFragment, @NonNull String uid){
-        ButterKnife.bind(this, root.get());
+        unbinder = ButterKnife.bind(this, root.get());
 
         this.root = root.get();
         this.startCal = startCal;
@@ -143,9 +146,9 @@ public class AnalyticsVPUiOperator implements ValueEventListener, IValueFormatte
     }
 
     public interface IAnalyticsVPUiOperator {
-        public void onScrollChanged(HorizontalScrollView scrollView, int x);
         public void onClickDownBtn();
         public void onClickUpBtn();
+        public void onScrollChanged(HorizontalScrollView scrollView, int x);
     }
 
     private void initParams(){
@@ -751,24 +754,36 @@ public class AnalyticsVPUiOperator implements ValueEventListener, IValueFormatte
         if (listener != null) {
             listener.onScrollChanged(hsv, scrollX);
         }
+
         if (analyticsFragment.getView() == null) //時々NPEで落ちる
             return;
         VerticalViewPager vp = analyticsFragment.getView().findViewById(R.id.vertical_vp);
         if (vp == null) return;
-            
-        scroll(vp.getCurrentItem()+1, scrollX);
-        scroll(vp.getCurrentItem()-1, scrollX);
+
+//        scroll(vp.getCurrentItem()+2, scrollX);
+//        scroll(vp.getCurrentItem()+1, scrollX);
+//        scroll(vp.getCurrentItem()-1, scrollX);
+//        scroll(vp.getCurrentItem()-2, scrollX);
+        int currentPos = vp.getCurrentItem();
+        for (int i = -OFFSET; i <= OFFSET; i++) {
+            if (i == 0) continue;
+            View item = analyticsFragment.getView().findViewWithTag(currentPos+i);
+            if (item == null)
+                return;
+
+            HorizontalScrollView hsv = item.findViewById(R.id.scroll);
+            scroll(hsv, scrollX);
+        }
     }
 
-    private void scroll(int pos, int scrollX){
-//        View item = analyticsFragment.getRootView().findViewWithTag(pos);
-        if (analyticsFragment.getView() == null)//時々NPEで落ちる
-            return;
-        View item = analyticsFragment.getView().findViewWithTag(pos);
-        HorizontalScrollView hsv = item.findViewById(R.id.scroll);
+    public void scroll(HorizontalScrollView hsv, int scrollX){
         hsv.getViewTreeObserver().removeOnScrollChangedListener(this);
         hsv.scrollTo(scrollX, 0);
         hsv.getViewTreeObserver().addOnScrollChangedListener(this);
+    }
+
+    public HorizontalScrollView getHsv(){
+        return hsv;
     }
 
     @Override
@@ -821,5 +836,9 @@ public class AnalyticsVPUiOperator implements ValueEventListener, IValueFormatte
 
     public List<Pair<Integer, String>> getLegendListForTimeEve() {
         return legendListForTimeEve;
+    }
+
+    public void unbind(){
+        unbinder.unbind();
     }
 }

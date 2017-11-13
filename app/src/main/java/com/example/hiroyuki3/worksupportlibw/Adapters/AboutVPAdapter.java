@@ -16,6 +16,7 @@ import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 
 /**
  * About画面まわりやる人。@see AboutFragment
@@ -28,7 +29,8 @@ public class AboutVPAdapter extends PagerAdapter {
     private String title0;
     private String title1;
     private IAboutVPAdapter listener;
-    private Item0 item0;
+    private Unbinder unbinder0;
+    private Unbinder unbinder1;
 
     public AboutVPAdapter(@NonNull Context context, @NonNull IAboutVPAdapter listener){
         this.context = context;
@@ -84,14 +86,14 @@ public class AboutVPAdapter extends PagerAdapter {
         switch (position){
             case 0:
                 view = inflater.inflate(R.layout.about_vp_item0, null);
-                item0 = new Item0();
-                ButterKnife.bind(item0, view);
+                Item0 item0 = new Item0();
+                unbinder0 = ButterKnife.bind(item0, view);
                 String string = item0.appName + "から退会する";
                 item0.titleLL1.setText(string);
                 break;
             case 1:
                 view = inflater.inflate(R.layout.about_vp_item1, null);
-                ButterKnife.bind(new Item1(), view);
+                unbinder1 = ButterKnife.bind(new Item1(), view);
                 break;
         }
         container.addView(view);
@@ -123,5 +125,10 @@ public class AboutVPAdapter extends PagerAdapter {
                 return title1;
         }
         return null;
+    }
+
+    public void unbind(){
+        unbinder0.unbind();
+        unbinder1.unbind();
     }
 }
