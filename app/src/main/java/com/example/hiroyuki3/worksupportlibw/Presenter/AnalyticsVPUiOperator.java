@@ -76,7 +76,6 @@ import static com.cks.hiroyuki2.worksupprotlib.Util.cal2date;
 import static com.cks.hiroyuki2.worksupprotlib.Util.datePattern;
 import static com.cks.hiroyuki2.worksupprotlib.Util.delimiter;
 import static com.cks.hiroyuki2.worksupprotlib.Util.getTimeEveDataSetFromRecordData;
-import static com.cks.hiroyuki2.worksupprotlib.Util.getToolBarHeight;
 import static com.cks.hiroyuki2.worksupprotlib.Util.time2String;
 import static com.cks.hiroyuki2.worksupprotlib.UtilSpec.colorId;
 import static com.example.hiroyuki3.worksupportlibw.Adapters.AnalyticsVPAdapter.OFFSET;
@@ -129,13 +128,14 @@ public class AnalyticsVPUiOperator implements ValueEventListener, IValueFormatte
     private String uid;
     private Unbinder unbinder;
 
-    public AnalyticsVPUiOperator(WeakReference<View> root, Calendar startCal, Fragment analyticsFragment, @NonNull String uid){
+    public AnalyticsVPUiOperator(WeakReference<View> root, Calendar startCal, Fragment analyticsFragment, @NonNull String uid, int legendHeight){
         unbinder = ButterKnife.bind(this, root.get());
 
         this.root = root.get();
         this.startCal = startCal;
         this.analyticsFragment = analyticsFragment;
         this.uid = uid;
+        this.legendHeight = legendHeight;
 
         if (analyticsFragment instanceof IAnalyticsVPUiOperator)
             listener = (IAnalyticsVPUiOperator) analyticsFragment;
@@ -156,7 +156,6 @@ public class AnalyticsVPUiOperator implements ValueEventListener, IValueFormatte
         verticalRowPad = padding*2;
         hsv.getViewTreeObserver().addOnScrollChangedListener(this);
         inflater = analyticsFragment.getLayoutInflater();
-        legendHeight = getToolBarHeight(analyticsFragment.getContext());
 //        hsv.getViewTreeObserver().addOnScrollChangedListener(this);
 //        mListener = (IAnalyticsVPUiOperator)rootView.getContext();
     }
