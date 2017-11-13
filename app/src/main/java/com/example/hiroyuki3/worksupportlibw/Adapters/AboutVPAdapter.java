@@ -12,7 +12,6 @@ import com.example.hiroyuki3.worksupportlibw.R;
 import com.example.hiroyuki3.worksupportlibw.R2;
 
 import butterknife.ButterKnife;
-import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 
 /**
@@ -38,18 +37,15 @@ public class AboutVPAdapter extends PagerAdapter {
     public interface IAboutVPAdapter{
         public void onClickLibItem();
         public void onClickLauncher();
-        public void onCheckedChange0();
-        public void onCheckedChange1();
+        public void onClickResetData();
+        public void onClickAppLicense();
+        public void onClickAppTos();
     }
 
     public class Item0{
-        @OnCheckedChanged(R2.id.toggle)
-        void onCheckChange0(){
-            listener.onCheckedChange0();
-        }
-        @OnCheckedChanged(R2.id.toggle1)
-        void onCheckChange1(){
-            listener.onCheckedChange1();
+        @OnClick(R2.id.setting_ll0)
+        void onClickSetting0(){
+            listener.onClickResetData();
         }
     }
 
@@ -62,6 +58,16 @@ public class AboutVPAdapter extends PagerAdapter {
         @OnClick(R2.id.ll1)
         void onClickLL1(){
             listener.onClickLauncher();
+        }
+
+        @OnClick(R2.id.about_app_ll0)
+        void onClickAboutApp0(){
+            listener.onClickAppLicense();
+        }
+
+        @OnClick(R2.id.about_app_ll1)
+        void onClickAboutApp1(){
+            listener.onClickAppTos();
         }
     }
 
