@@ -108,6 +108,7 @@ public class RecordVPAdapter extends PagerAdapter {
     private List<Boolean> isInitHeaderTagData = new ArrayList<>();
     private RecordDataUtil rdu;
     private int currentPos;
+    private int prevPos;
 
     @Retention(RetentionPolicy.SOURCE)
     @IntDef(value = {CALLBACK_RANGE_CLICK_TIME, CALLBACK_RANGE_CLICK_VALUE})
@@ -192,10 +193,16 @@ public class RecordVPAdapter extends PagerAdapter {
     /*初期化系列メソッドここまで*/
     //endregion
 
+    /**
+     * onMeasure()など、必ずしも画面遷移前のみに発火するわけではないことに注意してください
+     */
     @Override
     public void setPrimaryItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-        currentPage = (View) object;
-        currentPos = position;
+        if (currentPos != position){
+            currentPage = (View) object;
+            prevPos = currentPos;
+            currentPos = position;
+        }
         Log.d(TAG, "setPrimaryItem: " + currentPage.getTag().toString());
         super.setPrimaryItem(container, position, object);
     }
@@ -452,5 +459,9 @@ public class RecordVPAdapter extends PagerAdapter {
             rdu.dataMap.put(Integer.parseInt(date), null);
             fireBase.userRecDir.child(date).setValue(null, fireBase);
         }
+    }
+
+    public int getPrevPos(){
+        return prevPos;
     }
 }
