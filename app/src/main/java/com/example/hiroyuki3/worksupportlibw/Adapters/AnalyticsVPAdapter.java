@@ -73,7 +73,7 @@ public class AnalyticsVPAdapter extends PagerAdapter {
         root.setTag(position);
         Calendar cal = getCal(position);
         Log.d(TAG, "instantiateItem: "+ cal.getTime().toString());
-        AnalyticsVPUiOperator operator = new AnalyticsVPUiOperator(new WeakReference<>(root), cal, analyticsFragment, uid, toolbarHeight);
+        AnalyticsVPUiOperator operator = new AnalyticsVPUiOperator(new WeakReference<>(root), cal, analyticsFragment, uid);
         operators.put(position, operator);
         container.addView(root);
         return root;

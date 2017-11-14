@@ -129,7 +129,7 @@ public class AnalyticsVPUiOperator implements ValueEventListener, IValueFormatte
     private String uid;
     private Unbinder unbinder;
 
-    public AnalyticsVPUiOperator(WeakReference<View> root, Calendar startCal, Fragment analyticsFragment, @NonNull String uid, int legendHeight){
+    public AnalyticsVPUiOperator(WeakReference<View> root, Calendar startCal, Fragment analyticsFragment, @NonNull String uid){
         unbinder = ButterKnife.bind(this, root.get());
 
         this.root = root.get();
