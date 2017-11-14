@@ -42,12 +42,12 @@ public class AnalyticsVPAdapter extends PagerAdapter {
     private String uid;
     private int toolbarHeight;
 
-    public AnalyticsVPAdapter(Context context, Fragment analyticsFragment, String uid, int toolbarHeignt){
+    public AnalyticsVPAdapter(Context context, Fragment analyticsFragment, String uid, int toolbarHeight){
         this.context = context;
         this.startCal = makeStartCal(context);
         this.analyticsFragment = analyticsFragment;
         this.uid = uid;
-        this.toolbarHeight = toolbarHeignt;
+        this.toolbarHeight = toolbarHeight;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
