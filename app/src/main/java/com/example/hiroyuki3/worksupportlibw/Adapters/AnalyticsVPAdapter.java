@@ -40,12 +40,14 @@ public class AnalyticsVPAdapter extends PagerAdapter {
     private TreeMap<Integer, AnalyticsVPUiOperator> operators = new TreeMap<>();
     private Fragment analyticsFragment;
     private String uid;
+    private int toolbarHeight;
 
-    public AnalyticsVPAdapter(Context context, Fragment analyticsFragment, String uid){
+    public AnalyticsVPAdapter(Context context, Fragment analyticsFragment, String uid, int toolbarHeignt){
         this.context = context;
         this.startCal = makeStartCal(context);
         this.analyticsFragment = analyticsFragment;
         this.uid = uid;
+        this.toolbarHeight = toolbarHeignt;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -71,7 +73,7 @@ public class AnalyticsVPAdapter extends PagerAdapter {
         root.setTag(position);
         Calendar cal = getCal(position);
         Log.d(TAG, "instantiateItem: "+ cal.getTime().toString());
-        AnalyticsVPUiOperator operator = new AnalyticsVPUiOperator(new WeakReference<>(root), cal, analyticsFragment, uid);
+        AnalyticsVPUiOperator operator = new AnalyticsVPUiOperator(new WeakReference<>(root), cal, analyticsFragment, uid, toolbarHeight);
         operators.put(position, operator);
         container.addView(root);
         return root;
