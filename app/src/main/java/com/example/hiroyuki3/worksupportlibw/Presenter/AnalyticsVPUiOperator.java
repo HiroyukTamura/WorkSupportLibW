@@ -752,7 +752,9 @@ public class AnalyticsVPUiOperator implements ValueEventListener, IValueFormatte
 
     @Override
     public void onScrollChanged() {
+        if (hsv == null) return;//時々NPEで落ちる
         int scrollX = hsv.getScrollX();
+
         if (listener != null) {
             listener.onScrollChanged(hsv, scrollX);
         }

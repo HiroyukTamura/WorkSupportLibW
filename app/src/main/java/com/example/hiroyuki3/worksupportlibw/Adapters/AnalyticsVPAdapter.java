@@ -24,6 +24,8 @@ import java.lang.ref.WeakReference;
 import java.util.Calendar;
 import java.util.TreeMap;
 
+import static android.content.Context.MODE_PRIVATE;
+import static com.cks.hiroyuki2.worksupprotlib.Util.PREF_KEY_START_OF_WEEK;
 import static com.cks.hiroyuki2.worksupprotlib.Util.PREF_NAME;
 
 /**
@@ -82,8 +84,8 @@ public class AnalyticsVPAdapter extends PagerAdapter {
     //カレンダーを週の頭へ
     private Calendar makeStartCal(Context context){
         Calendar startCal = Calendar.getInstance();
-        SharedPreferences pref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
-        int startDof = pref.getInt(Util.PREF_KEY_START_OF_WEEK, Calendar.SUNDAY);
+        SharedPreferences pref = context.getSharedPreferences(PREF_NAME, MODE_PRIVATE);
+        int startDof = pref.getInt(PREF_KEY_START_OF_WEEK, Calendar.SUNDAY);
         while (startCal.get(Calendar.DAY_OF_WEEK) != startDof){
             startCal.add(Calendar.DATE, -1);
         }
