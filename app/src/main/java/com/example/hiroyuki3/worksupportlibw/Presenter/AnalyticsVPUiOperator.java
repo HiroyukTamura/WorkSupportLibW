@@ -99,7 +99,7 @@ public class AnalyticsVPUiOperator implements ValueEventListener, IValueFormatte
 //    @BindView(R.id.legend_fl) FlowLayout legendFl;
     @BindDimen(R2.dimen.column_min_width) int columnMinWidth;
     @BindDimen(R2.dimen.grid_padding) int padding;
-    int legendHeight;
+    @BindDimen(R2.dimen.toolbar_height) int legendHeight;
     @BindColor(R2.color.red_anton_dark) int colorGradationMax;
     @BindColor(R2.color.blue_pint) int colorGradationMin;
     @BindColor(R2.color.blue_gray_light) int blueGrayLight;
@@ -128,14 +128,13 @@ public class AnalyticsVPUiOperator implements ValueEventListener, IValueFormatte
     private String uid;
     private Unbinder unbinder;
 
-    public AnalyticsVPUiOperator(WeakReference<View> root, Calendar startCal, Fragment analyticsFragment, @NonNull String uid, int legendHeight){
+    public AnalyticsVPUiOperator(WeakReference<View> root, Calendar startCal, Fragment analyticsFragment, @NonNull String uid){
         unbinder = ButterKnife.bind(this, root.get());
 
         this.root = root.get();
         this.startCal = startCal;
         this.analyticsFragment = analyticsFragment;
         this.uid = uid;
-        this.legendHeight = legendHeight;
 
         if (analyticsFragment instanceof IAnalyticsVPUiOperator)
             listener = (IAnalyticsVPUiOperator) analyticsFragment;
