@@ -81,7 +81,7 @@ dependencies {
     compile 'com.firebaseui:firebase-ui:3.1.0'
     compile 'com.github.SumiMakito:AwesomeQRCode:1.0.6'
     compile 'com.gordonwong:material-sheet-fab:1.2.1'
-    compile 'com.github.HiroyukTamura:WorkSupprotLib:e27fc62'
+    compile 'com.github.HiroyukTamura:WorkSupprotLib:2.2.0'
     compile 'de.hdodenhof:circleimageview:2.2.0'
     compile 'com.github.PhilJay:MPAndroidChart:v3.0.2'
     compile 'com.github.castorflex.verticalviewpager:library:19.0.1'
