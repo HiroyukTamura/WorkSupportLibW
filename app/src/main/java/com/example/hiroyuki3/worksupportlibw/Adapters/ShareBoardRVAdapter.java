@@ -407,7 +407,7 @@ public class ShareBoardRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 ((ViewHolderFile) holder).vert.setTag(listPos);
                 ((ViewHolderFile) holder).titleTv.setText(content.contentName);
                 ((ViewHolderFile) holder).subTitleTv.setText(subTitle);
-                if (content.comment != null){
+                if (content.comment != null && !content.comment.isEmpty()){
                     ((ViewHolderFile) holder).commentTv.setText(content.comment);
                     ((ViewHolderFile) holder).commentLl.setVisibility(VISIBLE);
                 } else {
@@ -420,7 +420,7 @@ public class ShareBoardRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 ((ViewHolderUploaded) holder).vert.setTag(listPos);
                 ((ViewHolderUploaded) holder).titleTv.setText(content.contentName);
                 ((ViewHolderUploaded) holder).subTitleTv.setText(subTitle);
-                if (content.comment != null){
+                if (content.comment != null && !content.comment.isEmpty()){
                     ((ViewHolderUploaded) holder).commentTv.setText(content.comment);
                     ((ViewHolderUploaded) holder).commentLl.setVisibility(VISIBLE);
                 } else {
