@@ -104,14 +104,15 @@ public class ShareBoardRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             ButterKnife.bind(this, v);
         }
 
+        /*getAdapterPosition() == actualPos*/
         @OnClick(R2.id.vert)
         void onClickVert(View ll){
-            onClickVertAsset(getAdapterPosition());
+            onClickVertAsset(getAdapterPosition()-1);
         }
 
         @OnClick(R2.id.card)
         void onClickCard(View v){
-            onClickCardAsset(getAdapterPosition());
+            onClickCardAsset(getAdapterPosition()-1);
         }
     }
 
@@ -132,15 +133,16 @@ public class ShareBoardRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             ButterKnife.bind(this, v);
         }
 
+        /*getAdapterPosition() == actualPos*/
         @OnClick(R2.id.vert)
         void onClickVert(View ll){
-            onClickVertAsset(getAdapterPosition());
-        }
+            onClickVertAsset(getAdapterPosition()-1);
+        }//getAdapterPosition() == actualPos
 
         @OnClick(R2.id.card)
         void onClickCard(View v){
-            onClickCardAsset(getAdapterPosition());
-        }
+            onClickCardAsset(getAdapterPosition()-1);
+        }//getAdapterPosition() == actualPos
 
 //        @OnClick({R.id.item2, R.id.item3})
 //        void onClickItem(View v){
@@ -163,19 +165,20 @@ public class ShareBoardRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             ButterKnife.bind(this, v);
         }
 
+        /*getAdapterPosition() == actualPos*/
         @OnClick(R2.id.vert)
         void onClickVert(View ll){
-            onClickVertAsset(getAdapterPosition());
+            onClickVertAsset(getAdapterPosition()-1);
         }
 
         @OnClick(R2.id.card)
         void onClickCard(View v){
-            onClickCardAsset(getAdapterPosition());
+            onClickCardAsset(getAdapterPosition()-1);
         }
 
         @OnClick(R2.id.add_comment)
         void onClickAddComment(View v){
-            onClickAddCommentAsset(getAdapterPosition());
+            onClickAddCommentAsset(getAdapterPosition()-1);
         }
     }
 
