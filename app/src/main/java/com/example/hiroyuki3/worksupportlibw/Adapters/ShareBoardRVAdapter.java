@@ -297,7 +297,11 @@ public class ShareBoardRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                         CircleImageView iconRep = reply.findViewById(R.id.icon_ele);
                         setImgFromStorage(ele.user.getPhotoUrl(), iconRep, R.drawable.ic_face_origin_48dp);
                         TextView subTv = reply.findViewById(R.id.sub_title);
-                        String text = ele.lastEdit + "posted by " + ele.user.getName();
+                        String lastEditDate = new StringBuilder(ele.lastEdit)
+                                .insert(4, ".")
+                                .insert(7, ".")
+                                .toString();
+                        String text = lastEditDate + " by " + ele.user.getName();
                         subTv.setText(text);
 
                         ((ViewHolderDocument) holder).expandView.addView(reply);
