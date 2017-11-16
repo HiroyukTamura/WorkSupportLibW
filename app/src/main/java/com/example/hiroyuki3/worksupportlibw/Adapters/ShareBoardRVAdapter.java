@@ -107,12 +107,12 @@ public class ShareBoardRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         @OnClick(R2.id.vert)
         void onClickVert(View ll){
-            onClickVertAsset(ll);
+            onClickVertAsset(getAdapterPosition());
         }
 
         @OnClick(R2.id.card)
         void onClickCard(View v){
-            onClickCardAsset(v);
+            onClickCardAsset(getAdapterPosition());
         }
     }
 
@@ -135,12 +135,12 @@ public class ShareBoardRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         @OnClick(R2.id.vert)
         void onClickVert(View ll){
-            onClickVertAsset(ll);
+            onClickVertAsset(getAdapterPosition());
         }
 
         @OnClick(R2.id.card)
         void onClickCard(View v){
-            onClickCardAsset(v);
+            onClickCardAsset(getAdapterPosition());
         }
 
 //        @OnClick({R.id.item2, R.id.item3})
@@ -166,17 +166,17 @@ public class ShareBoardRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         @OnClick(R2.id.vert)
         void onClickVert(View ll){
-            onClickVertAsset(ll);
+            onClickVertAsset(getAdapterPosition());
         }
 
         @OnClick(R2.id.card)
         void onClickCard(View v){
-            onClickCardAsset(v);
+            onClickCardAsset(getAdapterPosition());
         }
 
         @OnClick(R2.id.add_comment)
         void onClickAddComment(View v){
-            onClickAddCommentAsset(v);
+            onClickAddCommentAsset(getAdapterPosition());
         }
     }
 
@@ -323,8 +323,7 @@ public class ShareBoardRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     //region onClick系列
-    private void onClickVertAsset(View ll){
-        int listPos = (int) ll.getTag();
+    private void onClickVertAsset(int listPos){
         Bundle bundle = new Bundle();
         bundle.putInt(BUNDLE_KEY_POSITION, listPos);
         if (listener != null)
@@ -344,11 +343,9 @@ public class ShareBoardRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 //            }
     }
 
-    private void onClickCardAsset(View view){
-
+    private void onClickCardAsset(int listPos){
         if (listener == null) return;
 
-        final int listPos = (int)((View) view.getParent()).getTag();
         int type = getItemViewTypeForListPos(listPos);
         if (type == ITEM_TYPE_UPLOADED) {
             listener.onClickItemUploaded(listPos);
@@ -373,9 +370,8 @@ public class ShareBoardRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 //        }
 //    }
 
-    private void onClickAddCommentAsset(View v){
+    private void onClickAddCommentAsset(int listPos){
         if (listener == null) return;
-        int listPos = (int)v.getTag();
         listener.showEditDocActAsComment(listPos, group.contentList.get(listPos).comment);
 //        fragment.showEditDocActAsComment(listPos, group.contentList.get(listPos).comment);
     }
@@ -407,8 +403,8 @@ public class ShareBoardRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         switch (getItemViewTypeForListPos(listPos)){
             case ITEM_TYPE_DATA:
-                ((ViewHolderFile) holder).fl.setTag(listPos);
-                ((ViewHolderFile) holder).vert.setTag(listPos);
+//                ((ViewHolderFile) holder).fl.setTag(listPos);
+//                ((ViewHolderFile) holder).vert.setTag(listPos);
                 ((ViewHolderFile) holder).titleTv.setText(content.contentName);
                 ((ViewHolderFile) holder).subTitleTv.setText(subTitle);
                 if (content.comment != null && !content.comment.isEmpty()){
@@ -420,8 +416,8 @@ public class ShareBoardRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 break;
 
             case ITEM_TYPE_UPLOADED:
-                ((ViewHolderUploaded) holder).fl.setTag(listPos);
-                ((ViewHolderUploaded) holder).vert.setTag(listPos);
+//                ((ViewHolderUploaded) holder).fl.setTag(listPos);
+//                ((ViewHolderUploaded) holder).vert.setTag(listPos);
                 ((ViewHolderUploaded) holder).titleTv.setText(content.contentName);
                 ((ViewHolderUploaded) holder).subTitleTv.setText(subTitle);
                 if (content.comment != null && !content.comment.isEmpty()){
@@ -433,8 +429,8 @@ public class ShareBoardRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 break;
 
             case ITEM_TYPE_DOCUMENT:
-                ((ViewHolderDocument) holder).fl.setTag(listPos);
-                ((ViewHolderDocument) holder).vert.setTag(listPos);
+//                ((ViewHolderDocument) holder).fl.setTag(listPos);
+//                ((ViewHolderDocument) holder).vert.setTag(listPos);
                 ((ViewHolderDocument) holder).titleTv.setText(content.contentName);
                 ((ViewHolderDocument) holder).subTitleTv.setText(subTitle);
                 break;
