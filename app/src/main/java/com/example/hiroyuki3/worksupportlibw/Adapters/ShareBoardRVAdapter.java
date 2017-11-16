@@ -47,7 +47,6 @@ import static com.cks.hiroyuki2.worksupprotlib.Util.setImgFromStorage;
 
 /**
  * ボードの中身を表示するおじさん！頼りになる！
- * ButterKnifeのonClickを実装しないのは、なぜかそうすると落ちるから。
  * ShareBoardFragment附属。
  */
 
