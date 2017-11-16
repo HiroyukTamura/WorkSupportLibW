@@ -5,6 +5,7 @@
 package com.example.hiroyuki3.worksupportlibw.Adapters;
 
 import android.content.Context;
+import android.support.annotation.Dimension;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -33,6 +34,7 @@ import butterknife.OnClick;
 import static com.cks.hiroyuki2.worksupprotlib.Util.DATE_PATTERN_YM;
 import static com.cks.hiroyuki2.worksupprotlib.Util.cal2DateWithSlash;
 import static com.cks.hiroyuki2.worksupprotlib.Util.date2Cal;
+import static com.cks.hiroyuki2.worksupprotlib.Util.dp2px;
 import static com.cks.hiroyuki2.worksupprotlib.UtilSpec.colorId;
 
 /**
@@ -49,6 +51,7 @@ public class CalendarRVAdapter extends RecyclerView.Adapter<CalendarRVAdapter.Vi
     private String[] wof;
     private Context context;
     private LayoutInflater inflater;
+    @Dimension private int dimenStart;
 
     public CalendarRVAdapter(CalendarEvent calEve, SharedCalendarUIOperator operator) throws ParseException{
         this.operator = operator;
@@ -58,6 +61,7 @@ public class CalendarRVAdapter extends RecyclerView.Adapter<CalendarRVAdapter.Vi
         context = operator.getRootView().getContext();
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         wof = context.getResources().getStringArray(R.array.dof);
+        dimenStart = context.getResources().getDimensionPixelOffset(R.dimen.schedule_padding_start);
     }
 
     public Calendar getCal() {
@@ -114,6 +118,10 @@ public class CalendarRVAdapter extends RecyclerView.Adapter<CalendarRVAdapter.Vi
             item.colorLine.setBackgroundResource(colorIdn);
             item.tv.setText(eve.getTitle());
             holder.root.addView(card);
+        }
+
+        if (position == treeMap.size()-1){
+            holder.root.setPadding(dimenStart, 0, 0, dp2px(context, 72));
         }
     }
 
