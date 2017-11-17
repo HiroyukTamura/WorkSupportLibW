@@ -27,6 +27,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 import static com.cks.hiroyuki2.worksupprotlib.Util.onError;
 import static com.cks.hiroyuki2.worksupprotlib.Util.setImgFromStorage;
 import static com.cks.hiroyuki2.worksupprotlib.Util.setNullableText;
@@ -46,11 +48,13 @@ public class GroupSettingRVAdapter extends RecyclerView.Adapter implements Compo
     public static final int CALLBACK_REMOVE_MEMBER = 8731;
     private FirebaseUser userMe;
     private IGroupSettingRVAdapter listener;
+    private String tagVal;
 
     public GroupSettingRVAdapter(Fragment fragment, List<User> userList, @NonNull FirebaseUser userMe) {
         this.fragment = fragment;
         this.userList = userList;
         this.userMe = userMe;
+        tagVal = fragment.getString(R.id.grp_set_invited_tag);
         if (fragment instanceof IGroupSettingRVAdapter)
             listener = (IGroupSettingRVAdapter) fragment;
     }
@@ -66,6 +70,8 @@ public class GroupSettingRVAdapter extends RecyclerView.Adapter implements Compo
         @BindView(R2.id.switch_widget) SwitchCompat switchWidget;
         @BindView(R2.id.remove) ImageButton remove;
         @BindView(R2.id.name) TextView name;
+        @BindView(R2.id.invite_tag) View invitedTag;
+        @BindView(R2.id.tv) TextView tagVal;
 
         ViewHolder(View v) {
             super(v);
@@ -89,6 +95,13 @@ public class GroupSettingRVAdapter extends RecyclerView.Adapter implements Compo
 
         setNullableText(((ViewHolder) holder).name, member.name);
         setImgFromStorage(member, ((ViewHolder) holder).icon, R.drawable.ic_face_origin_48dp);
+
+        if (!member.isChecked){
+            ((ViewHolder) holder).invitedTag.setVisibility(VISIBLE);
+            ((ViewHolder) holder).tagVal.setText(tagVal);
+        } else {
+            ((ViewHolder) holder).invitedTag.setVisibility(GONE);
+        }
         ((ViewHolder) holder).switchWidget.setOnCheckedChangeListener(this);
     }
 
