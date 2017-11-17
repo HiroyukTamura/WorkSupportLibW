@@ -39,26 +39,25 @@ import static com.cks.hiroyuki2.worksupprotlib.Util.setNullableText;
  * Groupのメンバーを表すRVAdapter. GroupSettingFragmentの舎弟。
  * itemの識別には、positionを一切使わずにUIDで識別しているところがミソ。
  */
-
 public class GroupSettingRVAdapter extends RecyclerView.Adapter implements CompoundButton.OnCheckedChangeListener{
 
     private static final String TAG = "MANUAL_TAG: " + GroupSettingRVAdapter.class.getSimpleName();
     private Fragment fragment;
     private List<User> userList;
-    public static final String REMOVE_MEMBER = "REMOVE_MEMBER";
+    public static final String CLICK_GROUP_MEMBER = "CLICK_GROUP_MEMBER";
     public static final String USER = "USER";
-    public static final int CALLBACK_REMOVE_MEMBER = 8731;
+    public static final int CALLBACK_CLICK_GROUP_MEMBER = 8731;
     private FirebaseUser userMe;
     private IGroupSettingRVAdapter listener;
     private String tagVal;
-    @ColorInt private int blueGray;
+    @ColorInt private int tagColor;
 
     public GroupSettingRVAdapter(Fragment fragment, List<User> userList, @NonNull FirebaseUser userMe) {
         this.fragment = fragment;
         this.userList = userList;
         this.userMe = userMe;
         tagVal = fragment.getString(R.string.grp_set_invited_tag);
-        blueGray = ContextCompat.getColor(fragment.getContext(), R.color.blue_gray);
+        tagColor = ContextCompat.getColor(fragment.getContext(), R.color.colorPrimary);
 
         if (fragment instanceof IGroupSettingRVAdapter)
             listener = (IGroupSettingRVAdapter) fragment;
@@ -97,6 +96,7 @@ public class GroupSettingRVAdapter extends RecyclerView.Adapter implements Compo
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         User member = userList.get(position);
         String uid = member.getUserUid();
+        ((ViewHolder) holder).rootView.setTag(uid);
 //        ((ViewHolder)holder).remove.setTag(uid);
 //        ((ViewHolder) holder).switchWidget.setTag(uid);
 
@@ -106,11 +106,12 @@ public class GroupSettingRVAdapter extends RecyclerView.Adapter implements Compo
         if (!member.isChecked){
             ((ViewHolder) holder).invitedTag.setVisibility(VISIBLE);
             ((ViewHolder) holder).tagVal.setText(tagVal);
-            ((ViewHolder) holder).card.setCardBackgroundColor(blueGray);
+            ((ViewHolder) holder).card.setCardBackgroundColor(tagColor);
+            ((ViewHolder) holder).card.setCardElevation(0);
         } else {
             ((ViewHolder) holder).invitedTag.setVisibility(GONE);
         }
-        ((ViewHolder) holder).switchWidget.setOnCheckedChangeListener(this);
+//        ((ViewHolder) holder).switchWidget.setOnCheckedChangeListener(this);
     }
 
     @Override
@@ -134,9 +135,9 @@ public class GroupSettingRVAdapter extends RecyclerView.Adapter implements Compo
 //        }
 //
 //        bundle.putSerializable(USER, userList.get(pos));
-//        bundle.putString("from", REMOVE_MEMBER);
+//        bundle.putString("from", CLICK_GROUP_MEMBER);
 //        listener.onClickRemoveOthers(bundle);
-//        kickDialogInOnClick(REMOVE_MEMBER, CALLBACK_REMOVE_MEMBER, bundle, fragment);
+//        kickDialogInOnClick(CLICK_GROUP_MEMBER, CALLBACK_CLICK_GROUP_MEMBER, bundle, fragment);
 //    }
 
     @OnClick(R2.id.group_rv_item_root)
@@ -153,14 +154,12 @@ public class GroupSettingRVAdapter extends RecyclerView.Adapter implements Compo
         }
 
         bundle.putSerializable(USER, userList.get(pos));
-//        bundle.putString("from", REMOVE_MEMBER);
+//        bundle.putString("from", CLICK_GROUP_MEMBER);
         listener.onClickRemoveOthers(bundle);
     }
 
     @Override
-    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-
-    }
+    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {}
 
     /**
      * @return 例外時Integer.MAX_VALUE
