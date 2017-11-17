@@ -56,7 +56,7 @@ public class GroupSettingRVAdapter extends RecyclerView.Adapter implements Compo
         this.userList = userList;
         this.userMe = userMe;
         tagVal = fragment.getString(R.string.grp_set_invited_tag);
-        tagColor = ContextCompat.getColor(fragment.getContext(), R.color.colorPrimary);
+        tagColor = ContextCompat.getColor(fragment.getContext(), R.color.colorPrimaryDark);
 
         if (fragment instanceof IGroupSettingRVAdapter)
             listener = (IGroupSettingRVAdapter) fragment;
