@@ -137,6 +137,7 @@ public class GroupSettingRVAdapter extends RecyclerView.Adapter implements Compo
 
     public void removeMember(int pos){
         userList.remove(pos);
+        notifyItemRemoved(pos);
     }
 
     public User getUser(int pos){
