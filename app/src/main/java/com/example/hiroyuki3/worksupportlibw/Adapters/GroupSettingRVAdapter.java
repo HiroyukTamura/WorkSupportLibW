@@ -15,7 +15,6 @@ import android.support.v7.widget.SwitchCompat;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.cks.hiroyuki2.worksupportlib.R2;
@@ -66,15 +65,16 @@ public class GroupSettingRVAdapter extends RecyclerView.Adapter implements Compo
     }
 
     public interface IGroupSettingRVAdapter{
-        public void onClickRemoveMe();
+//        public void onClickRemoveMe();
         public void onClickRemoveOthers(Bundle bundle);
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
 
+        @BindView(R2.id.group_rv_item_root) View rootView;
         @BindView(R2.id.icon) CircleImageView icon;
         @BindView(R2.id.switch_widget) SwitchCompat switchWidget;
-        @BindView(R2.id.remove) ImageButton remove;
+//        @BindView(R2.id.remove) ImageButton remove;
         @BindView(R2.id.name) TextView name;
         @BindView(R2.id.invite_tag) View invitedTag;
         @BindView(R2.id.tv) TextView tagVal;
@@ -97,8 +97,8 @@ public class GroupSettingRVAdapter extends RecyclerView.Adapter implements Compo
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         User member = userList.get(position);
         String uid = member.getUserUid();
-        ((ViewHolder)holder).remove.setTag(uid);
-        ((ViewHolder) holder).switchWidget.setTag(uid);
+//        ((ViewHolder)holder).remove.setTag(uid);
+//        ((ViewHolder) holder).switchWidget.setTag(uid);
 
         setNullableText(((ViewHolder) holder).name, member.name);
         setImgFromStorage(member, ((ViewHolder) holder).icon, R.drawable.ic_face_origin_48dp);
@@ -118,13 +118,32 @@ public class GroupSettingRVAdapter extends RecyclerView.Adapter implements Compo
         return userList.size();
     }
 
-    @OnClick(R2.id.remove)
-    public void onRemoveClick(View v) {
+//    @OnClick(R2.id.remove)
+//    public void onRemoveClick(View v) {
+//        String uid = (String)v.getTag();
+//        if (userMe.getUid().equals(uid)) {
+//            listener.onClickRemoveMe();
+//            return;
+//        }
+//
+//        Bundle bundle = new Bundle();
+//        int pos = getPosFromUid(uid);
+//        if (pos == Integer.MAX_VALUE){
+//            onError(fragment, TAG+"pos == Integer.MAX_VALUE", R.string.error);
+//            return;
+//        }
+//
+//        bundle.putSerializable(USER, userList.get(pos));
+//        bundle.putString("from", REMOVE_MEMBER);
+//        listener.onClickRemoveOthers(bundle);
+//        kickDialogInOnClick(REMOVE_MEMBER, CALLBACK_REMOVE_MEMBER, bundle, fragment);
+//    }
+
+    @OnClick(R2.id.group_rv_item_root)
+    public void onClickItem(View v){
         String uid = (String)v.getTag();
-        if (userMe.getUid().equals(uid)) {
-            listener.onClickRemoveMe();
+        if (userMe.getUid().equals(uid))
             return;
-        }
 
         Bundle bundle = new Bundle();
         int pos = getPosFromUid(uid);
@@ -134,9 +153,8 @@ public class GroupSettingRVAdapter extends RecyclerView.Adapter implements Compo
         }
 
         bundle.putSerializable(USER, userList.get(pos));
-        bundle.putString("from", REMOVE_MEMBER);
+//        bundle.putString("from", REMOVE_MEMBER);
         listener.onClickRemoveOthers(bundle);
-//        kickDialogInOnClick(REMOVE_MEMBER, CALLBACK_REMOVE_MEMBER, bundle, fragment);
     }
 
     @Override
