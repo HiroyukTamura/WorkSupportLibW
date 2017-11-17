@@ -1,4 +1,8 @@
 language: android
+
+jdk:
+ - oraclejdk8
+ 
 android:
   components:
     # Uncomment the lines below if you want to
@@ -29,6 +33,11 @@ android:
   
 before_install:
 - chmod +x gradlew
+
+sudo: false
+
+notifications:
+  email: false
 
 # Emulator Management: Create, Start and Wait
 before_script:
