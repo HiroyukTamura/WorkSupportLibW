@@ -5,8 +5,11 @@
 package com.example.hiroyuki3.worksupportlibw.Adapters;
 
 import android.os.Bundle;
+import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SwitchCompat;
 import android.view.View;
@@ -49,12 +52,15 @@ public class GroupSettingRVAdapter extends RecyclerView.Adapter implements Compo
     private FirebaseUser userMe;
     private IGroupSettingRVAdapter listener;
     private String tagVal;
+    @ColorInt private int blueGray;
 
     public GroupSettingRVAdapter(Fragment fragment, List<User> userList, @NonNull FirebaseUser userMe) {
         this.fragment = fragment;
         this.userList = userList;
         this.userMe = userMe;
         tagVal = fragment.getString(R.string.grp_set_invited_tag);
+        blueGray = ContextCompat.getColor(fragment.getContext(), R.color.blue_gray);
+
         if (fragment instanceof IGroupSettingRVAdapter)
             listener = (IGroupSettingRVAdapter) fragment;
     }
@@ -72,6 +78,7 @@ public class GroupSettingRVAdapter extends RecyclerView.Adapter implements Compo
         @BindView(R2.id.name) TextView name;
         @BindView(R2.id.invite_tag) View invitedTag;
         @BindView(R2.id.tv) TextView tagVal;
+        @BindView(R2.id.card_container) CardView card;
 
         ViewHolder(View v) {
             super(v);
@@ -99,6 +106,7 @@ public class GroupSettingRVAdapter extends RecyclerView.Adapter implements Compo
         if (!member.isChecked){
             ((ViewHolder) holder).invitedTag.setVisibility(VISIBLE);
             ((ViewHolder) holder).tagVal.setText(tagVal);
+            ((ViewHolder) holder).card.setCardBackgroundColor(blueGray);
         } else {
             ((ViewHolder) holder).invitedTag.setVisibility(GONE);
         }
