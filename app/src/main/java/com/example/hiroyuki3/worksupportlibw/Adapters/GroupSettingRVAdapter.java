@@ -11,7 +11,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SwitchCompat;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
@@ -65,14 +64,14 @@ public class GroupSettingRVAdapter extends RecyclerView.Adapter implements Compo
 
     public interface IGroupSettingRVAdapter{
 //        public void onClickRemoveMe();
-        public void onClickRemoveOthers(Bundle bundle);
+        public void onClickGroupMember(Bundle bundle);
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R2.id.group_rv_item_root) View rootView;
         @BindView(R2.id.icon) CircleImageView icon;
-        @BindView(R2.id.switch_widget) SwitchCompat switchWidget;
+//        @BindView(R2.id.switch_widget) SwitchCompat switchWidget;
 //        @BindView(R2.id.remove) ImageButton remove;
         @BindView(R2.id.name) TextView name;
         @BindView(R2.id.invite_tag) View invitedTag;
@@ -154,8 +153,8 @@ public class GroupSettingRVAdapter extends RecyclerView.Adapter implements Compo
         }
 
         bundle.putSerializable(USER, userList.get(pos));
-//        bundle.putString("from", CLICK_GROUP_MEMBER);
-        listener.onClickRemoveOthers(bundle);
+        bundle.putString("from", CLICK_GROUP_MEMBER);
+        listener.onClickGroupMember(bundle);
     }
 
     @Override
