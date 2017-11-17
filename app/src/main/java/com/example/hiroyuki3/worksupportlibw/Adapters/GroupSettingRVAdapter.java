@@ -54,7 +54,7 @@ public class GroupSettingRVAdapter extends RecyclerView.Adapter implements Compo
         this.fragment = fragment;
         this.userList = userList;
         this.userMe = userMe;
-        tagVal = fragment.getString(R.id.grp_set_invited_tag);
+        tagVal = fragment.getString(R.string.grp_set_invited_tag);
         if (fragment instanceof IGroupSettingRVAdapter)
             listener = (IGroupSettingRVAdapter) fragment;
     }
