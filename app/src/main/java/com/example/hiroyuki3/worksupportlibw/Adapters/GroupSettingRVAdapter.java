@@ -34,6 +34,7 @@ import static android.view.View.VISIBLE;
 import static com.cks.hiroyuki2.worksupprotlib.Util.onError;
 import static com.cks.hiroyuki2.worksupprotlib.Util.setImgFromStorage;
 import static com.cks.hiroyuki2.worksupprotlib.Util.setNullableText;
+import static com.example.hiroyuki3.worksupportlibw.AdditionalUtil.getPosFromUid;
 
 /**
  * Groupのメンバーを表すRVAdapter. GroupSettingFragmentの舎弟。
@@ -151,7 +152,7 @@ public class GroupSettingRVAdapter extends RecyclerView.Adapter implements Compo
             return;
 
         Bundle bundle = new Bundle();
-        int pos = getPosFromUid(uid);
+        int pos = getPosFromUid(userList, uid);
         if (pos == Integer.MAX_VALUE){
             onError(fragment, TAG+"pos == Integer.MAX_VALUE", R.string.error);
             return;
@@ -167,18 +168,6 @@ public class GroupSettingRVAdapter extends RecyclerView.Adapter implements Compo
 
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {}
-
-    /**
-     * @return 例外時Integer.MAX_VALUE
-     */
-    public int getPosFromUid(@NonNull String uid){
-        for (int i = 0; i < userList.size(); i++) {
-            if (userList.get(i).getUserUid().equals(uid)){
-                return i;
-            }
-        }
-        return Integer.MAX_VALUE;
-    }
 
     public void removeMember(int pos){
         userList.remove(pos);

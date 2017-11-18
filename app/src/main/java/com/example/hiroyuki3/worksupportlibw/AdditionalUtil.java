@@ -1,5 +1,11 @@
 package com.example.hiroyuki3.worksupportlibw;
 
+import android.support.annotation.NonNull;
+
+import com.cks.hiroyuki2.worksupprotlib.Entity.User;
+
+import java.util.List;
+
 /**
  * Created by hiroyuki2 on 2017/11/07.
  */
@@ -22,4 +28,17 @@ public class AdditionalUtil {
     public final static int DIALOG_CODE_DOC_VERT = 1146;
     public final static String DIALOG_TAG_DATA_VERT = "DIALOG_TAG_DOC_DATA_VERT";
     public final static int DIALOG_CODE_DATA_VERT = 1147;
+
+    /**
+     * @return 例外時Integer.MAX_VALUE
+     * todo libに移植できる
+     */
+    public static  int getPosFromUid(@NonNull List<User> userList, @NonNull String uid){
+        for (int i = 0; i < userList.size(); i++) {
+            if (userList.get(i).getUserUid().equals(uid)){
+                return i;
+            }
+        }
+        return Integer.MAX_VALUE;
+    }
 }
