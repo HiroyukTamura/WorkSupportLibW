@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.cks.hiroyuki2.worksupportlib.R2;
 import com.cks.hiroyuki2.worksupprotlib.Entity.User;
+import com.example.hiroyuki3.worksupportlibw.AdditionalUtil;
 import com.example.hiroyuki3.worksupportlibw.R;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -34,7 +35,6 @@ import static android.view.View.VISIBLE;
 import static com.cks.hiroyuki2.worksupprotlib.Util.onError;
 import static com.cks.hiroyuki2.worksupprotlib.Util.setImgFromStorage;
 import static com.cks.hiroyuki2.worksupprotlib.Util.setNullableText;
-import static com.example.hiroyuki3.worksupportlibw.AdditionalUtil.getPosFromUid;
 
 /**
  * Groupのメンバーを表すRVAdapter. GroupSettingFragmentの舎弟。
@@ -152,7 +152,7 @@ public class GroupSettingRVAdapter extends RecyclerView.Adapter implements Compo
             return;
 
         Bundle bundle = new Bundle();
-        int pos = getPosFromUid(userList, uid);
+        int pos = getPosFromUid(uid);
         if (pos == Integer.MAX_VALUE){
             onError(fragment, TAG+"pos == Integer.MAX_VALUE", R.string.error);
             return;
@@ -176,5 +176,9 @@ public class GroupSettingRVAdapter extends RecyclerView.Adapter implements Compo
 
     public User getUser(int pos){
         return userList.get(pos);
+    }
+
+    public int getPosFromUid(@NonNull String uid){
+        return AdditionalUtil.getPosFromUid(userList, uid);
     }
 }
