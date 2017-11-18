@@ -1,12 +1,15 @@
 package com.example.hiroyuki3.worksupportlibw.Adapters;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.example.hiroyuki3.worksupportlibw.R;
@@ -18,10 +21,12 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
+import static com.cks.hiroyuki2.worksupprotlib.Util.PREF_NAME;
+
 /**
  * About画面まわりやる人。@see AboutFragment
  */
-public class AboutVPAdapter extends PagerAdapter {
+public class AboutVPAdapter extends PagerAdapter implements CompoundButton.OnCheckedChangeListener{
 
     private static final int page = 2;
     private Context context;
@@ -31,6 +36,8 @@ public class AboutVPAdapter extends PagerAdapter {
     private IAboutVPAdapter listener;
     private Unbinder unbinder0;
     private Unbinder unbinder1;
+    private SharedPreferences pref;
+    private static final String PREF_KEY_SHOW_NAV_IMG = "PREF_KEY_SHOW_NAV_IMG";
 
     public AboutVPAdapter(@NonNull Context context, @NonNull IAboutVPAdapter listener){
         this.context = context;
@@ -38,6 +45,7 @@ public class AboutVPAdapter extends PagerAdapter {
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         title0 = context.getString(R.string.about_vp_title0);
         title1 = context.getString(R.string.about_vp_title1);
+        pref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
     }
 
     public interface IAboutVPAdapter{
@@ -46,11 +54,14 @@ public class AboutVPAdapter extends PagerAdapter {
         public void onClickResetData();
         public void onClickAppLicense();
         public void onClickAppTos();
+        public void onSwitchChange();
     }
 
     public class Item0{
         @BindString(R2.string.app_name) String appName;
         @BindView(R2.id.title_ll1) TextView titleLL1;
+        @BindView(R2.id.toggle1) Switch toggle;
+
         @OnClick(R2.id.setting_ll0)
         void onClickSetting0(){
             listener.onClickResetData();
@@ -90,6 +101,8 @@ public class AboutVPAdapter extends PagerAdapter {
                 unbinder0 = ButterKnife.bind(item0, view);
                 String string = item0.appName + "から退会する";
                 item0.titleLL1.setText(string);
+                item0.toggle.setChecked(pref.getBoolean(PREF_KEY_SHOW_NAV_IMG, true));
+                item0.toggle.setOnCheckedChangeListener(this);
                 break;
             case 1:
                 view = inflater.inflate(R.layout.about_vp_item1, null);
@@ -125,6 +138,16 @@ public class AboutVPAdapter extends PagerAdapter {
                 return title1;
         }
         return null;
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+        if (compoundButton.getId() == R.id.toggle1){
+            pref.edit()
+                    .putBoolean(PREF_KEY_SHOW_NAV_IMG, b)
+                    .apply();
+            listener.onSwitchChange();
+        }
     }
 
     public void unbind(){
