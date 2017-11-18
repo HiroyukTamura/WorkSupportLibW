@@ -14,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cks.hiroyuki2.worksupportlib.R2;
@@ -56,7 +57,7 @@ public class GroupSettingRVAdapter extends RecyclerView.Adapter implements Compo
         this.userList = userList;
         this.userMe = userMe;
         tagVal = fragment.getString(R.string.grp_set_invited_tag);
-        tagColor = ContextCompat.getColor(fragment.getContext(), R.color.colorPrimaryDark);
+        tagColor = ContextCompat.getColor(fragment.getContext(), R.color.colorAccent);
 
         if (fragment instanceof IGroupSettingRVAdapter)
             listener = (IGroupSettingRVAdapter) fragment;
@@ -77,6 +78,7 @@ public class GroupSettingRVAdapter extends RecyclerView.Adapter implements Compo
         @BindView(R2.id.invite_tag) View invitedTag;
         @BindView(R2.id.tv) TextView tagVal;
         @BindView(R2.id.card_container) CardView card;
+        @BindView(R2.id.group_rv_item_clicker) LinearLayout clicker;
 
         ViewHolder(View v) {
             super(v);
