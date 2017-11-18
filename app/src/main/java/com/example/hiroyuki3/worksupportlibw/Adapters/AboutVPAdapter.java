@@ -5,11 +5,11 @@ import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
+import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import com.example.hiroyuki3.worksupportlibw.R;
@@ -60,7 +60,7 @@ public class AboutVPAdapter extends PagerAdapter implements CompoundButton.OnChe
     public class Item0{
         @BindString(R2.string.app_name) String appName;
         @BindView(R2.id.title_ll1) TextView titleLL1;
-        @BindView(R2.id.toggle1) Switch toggle;
+        @BindView(R2.id.toggle1) SwitchCompat toggle;
 
         @OnClick(R2.id.setting_ll0)
         void onClickSetting0(){
