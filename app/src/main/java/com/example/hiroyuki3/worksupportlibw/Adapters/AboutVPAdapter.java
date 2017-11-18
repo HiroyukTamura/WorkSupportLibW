@@ -54,7 +54,7 @@ public class AboutVPAdapter extends PagerAdapter implements CompoundButton.OnChe
         public void onClickResetData();
         public void onClickAppLicense();
         public void onClickAppTos();
-        public void onSwitchChange();
+        public void onSwitchChange(boolean show);
     }
 
     public class Item0{
@@ -146,7 +146,7 @@ public class AboutVPAdapter extends PagerAdapter implements CompoundButton.OnChe
             pref.edit()
                     .putBoolean(PREF_KEY_SHOW_NAV_IMG, b)
                     .apply();
-            listener.onSwitchChange();
+            listener.onSwitchChange(b);
         }
     }
 
