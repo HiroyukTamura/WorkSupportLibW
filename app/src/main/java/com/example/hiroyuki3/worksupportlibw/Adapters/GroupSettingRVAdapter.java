@@ -139,6 +139,9 @@ public class GroupSettingRVAdapter extends RecyclerView.Adapter implements Compo
 //        kickDialogInOnClick(CLICK_GROUP_MEMBER, CALLBACK_CLICK_GROUP_MEMBER, bundle, fragment);
 //    }
 
+    /**
+     * メンバー中、自分ではない、かつ参加済みのメンバーならば参加してリスナー発火
+     */
     @OnClick(R2.id.group_rv_item_root)
     public void onClickItem(View v){
         String uid = (String)v.getTag();
@@ -151,6 +154,9 @@ public class GroupSettingRVAdapter extends RecyclerView.Adapter implements Compo
             onError(fragment, TAG+"pos == Integer.MAX_VALUE", R.string.error);
             return;
         }
+
+        if (!getUser(pos).getIsChecked())
+            return;
 
         bundle.putSerializable(USER, userList.get(pos));
         bundle.putString("from", CLICK_GROUP_MEMBER);
