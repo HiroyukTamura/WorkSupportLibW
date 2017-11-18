@@ -37,7 +37,7 @@ public class AboutVPAdapter extends PagerAdapter implements CompoundButton.OnChe
     private Unbinder unbinder0;
     private Unbinder unbinder1;
     private SharedPreferences pref;
-    private static final String PREF_KEY_SHOW_NAV_IMG = "PREF_KEY_SHOW_NAV_IMG";
+    public static final String PREF_KEY_SHOW_NAV_IMG = "PREF_KEY_SHOW_NAV_IMG";
 
     public AboutVPAdapter(@NonNull Context context, @NonNull IAboutVPAdapter listener){
         this.context = context;
