@@ -61,7 +61,7 @@ public class SocialListRVAdapter extends RecyclerView.Adapter implements SmoothC
     @IntDef(value = {CODE_ADD_GROUP_FRAG, CODE_SOCIAL_FRAG})
     private  @interface fragCode {}
 
-    public SocialListRVAdapter(@NonNull List<User> list, Fragment fragment, @fragCode int code){
+    public SocialListRVAdapter(@NonNull List<User> list, Fragment fragment, /*このコードは要らないのでは？*/@fragCode int code){
         super();
         this.list = list;
         this.fragment = fragment;
