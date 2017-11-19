@@ -91,7 +91,7 @@ public class AboutVPAdapter extends PagerAdapter implements CompoundButton.OnChe
             listener.onClickAppTos();
         }
 
-        @OnClick(R2.id.about_app_ll2)
+        @OnClick(R2.id.about_app_ll3)
         void onCLickAboutApp2(){
             listener.onClickNotification();
         }
