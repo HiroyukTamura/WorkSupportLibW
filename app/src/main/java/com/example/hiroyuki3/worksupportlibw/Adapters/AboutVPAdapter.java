@@ -58,6 +58,7 @@ public class AboutVPAdapter extends PagerAdapter implements CompoundButton.OnChe
         public void onSwitchChange(boolean show);
     }
 
+
     public class Item0{
         @BindString(R2.string.app_name) String appName;
         @BindView(R2.id.title_ll1) TextView titleLL1;
