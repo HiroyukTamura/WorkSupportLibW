@@ -54,6 +54,7 @@ public class AboutVPAdapter extends PagerAdapter implements CompoundButton.OnChe
         public void onClickResetData();
         public void onClickAppLicense();
         public void onClickAppTos();
+        public void onClickNotification();
         public void onSwitchChange(boolean show);
     }
 
@@ -87,6 +88,11 @@ public class AboutVPAdapter extends PagerAdapter implements CompoundButton.OnChe
         @OnClick(R2.id.about_app_ll1)
         void onClickAboutApp1(){
             listener.onClickAppTos();
+        }
+
+        @OnClick(R2.id.about_app_ll2)
+        void onCLickAboutApp2(){
+            listener.onClickNotification();
         }
     }
 
