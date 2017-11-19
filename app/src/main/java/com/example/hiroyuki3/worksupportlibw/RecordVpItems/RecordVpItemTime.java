@@ -89,8 +89,8 @@ public class RecordVpItemTime extends RecordVpItem {
     }
 
     public interface IRecordVpItemTime{
-        public void onClickColorFl(Bundle bundle);
-        public void onClickAddTimeEveBtn(Bundle bundle);
+        void onClickColorFl(Bundle bundle);
+        void onClickAddTimeEveBtn(Bundle bundle);
     }
 
     /**

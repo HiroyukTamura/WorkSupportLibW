@@ -54,8 +54,8 @@ public class SocialGroupListRVAdapter extends RecyclerView.Adapter {
     }
 
     public interface ISocialGroupListRVAdapter{
-        public void showBoard(GroupInUserDataNode node);
-        public void showDialog(GroupInUserDataNode node);
+        void showBoard(GroupInUserDataNode node);
+        void showDialog(GroupInUserDataNode node);
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder{

@@ -66,7 +66,7 @@ public class GroupSettingRVAdapter extends RecyclerView.Adapter implements Compo
 
     public interface IGroupSettingRVAdapter{
 //        public void onClickRemoveMe();
-        public void onClickGroupMember(Bundle bundle);
+void onClickGroupMember(Bundle bundle);
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

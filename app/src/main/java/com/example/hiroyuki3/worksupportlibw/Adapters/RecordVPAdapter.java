@@ -120,8 +120,8 @@ public class RecordVPAdapter extends PagerAdapter {
     }
 
     public interface IRecordVPAdapter{
-        public void onPostInitData();
-        public void onPostUpdateData();
+        void onPostInitData();
+        void onPostUpdateData();
     }
 
     //region 初期化系列メソッド

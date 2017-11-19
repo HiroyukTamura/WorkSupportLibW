@@ -61,11 +61,11 @@ public class RecordVpItemParam extends RecordVpItem implements RecordParamsRVAda
     private  @interface fragCode {}
 
     public interface OnClickParamsNameListener{// TODO: 2017/11/08 これ名前かえるべき
-        public void onClickParamsName(int dataNum);
-        public void onClickParamsAddBtn(int dataNum);
-        public void syncFirebaseAndMap(int dataNum, String date, RecordData data);
-        public void onClickKey(Bundle bundle, int pos, int dataNum);
-        public void onClickMax(Bundle bundle, int pos, int dataNum);
+        void onClickParamsName(int dataNum);
+        void onClickParamsAddBtn(int dataNum);
+        void syncFirebaseAndMap(int dataNum, String date, RecordData data);
+        void onClickKey(Bundle bundle, int pos, int dataNum);
+        void onClickMax(Bundle bundle, int pos, int dataNum);
     }
 
     public RecordVpItemParam(RecordData data, int dataNum, @Nullable Calendar cal, Fragment fragment, @Nullable OnClickParamsNameListener listener, @fragCode int code){

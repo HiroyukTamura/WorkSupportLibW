@@ -56,8 +56,8 @@ public class TimeEventRangeRVAdapter extends RecyclerView.Adapter {
     }
 
     public interface ITimeEventRangeRVAdapter{
-        public void onClickValue(Bundle bundle);
-        public void onClickTime(Bundle bundle);
+        void onClickValue(Bundle bundle);
+        void onClickTime(Bundle bundle);
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

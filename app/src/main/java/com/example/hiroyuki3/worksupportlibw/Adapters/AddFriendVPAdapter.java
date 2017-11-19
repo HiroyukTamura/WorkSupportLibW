@@ -58,7 +58,7 @@ public class AddFriendVPAdapter extends PagerAdapter implements Callback{
     }
 
     public interface IAddFriendVPAdapter{
-        public void onClickCameraButton();
+        void onClickCameraButton();
     }
 
     @Override

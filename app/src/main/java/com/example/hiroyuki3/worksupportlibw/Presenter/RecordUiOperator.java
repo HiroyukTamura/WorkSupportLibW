@@ -82,13 +82,13 @@ public class RecordUiOperator implements RecordVpItemTime.IRecordVpItemTime, Rec
     }
 
     public interface IRecordUiOperator{
-        public void onClickCommentEdit(Bundle bundle);
-        public void updateAndSync(List<RecordData> dataList, String date);
-        public void onClickTagPoolContent(Calendar cal, int dataNum);
-        public void onClickAddTimeEveBtn(Bundle bundle);
-        public void onClickItem(Bundle bundle);
-        public void onClickTime(Bundle bundle);
-        public void onClickValue(Bundle bundle);
+        void onClickCommentEdit(Bundle bundle);
+        void updateAndSync(List<RecordData> dataList, String date);
+        void onClickTagPoolContent(Calendar cal, int dataNum);
+        void onClickAddTimeEveBtn(Bundle bundle);
+        void onClickItem(Bundle bundle);
+        void onClickTime(Bundle bundle);
+        void onClickValue(Bundle bundle);
     }
 
     public void initRecordData(){

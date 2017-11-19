@@ -83,11 +83,11 @@ public class ShareBoardRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
 
     public interface IShareBoardRVAdapter{
-        public void onClickVertAsset(int code, Bundle bundle);
-        public void onClickItemUploaded(int listPos);
-        public void onClickExpandableView(int listPos);
-        public void kickViewerActivity(String memberUid);
-        public void showEditDocActAsComment(int listPos, String comment);
+        void onClickVertAsset(int code, Bundle bundle);
+        void onClickItemUploaded(int listPos);
+        void onClickExpandableView(int listPos);
+        void kickViewerActivity(String memberUid);
+        void showEditDocActAsComment(int listPos, String comment);
     }
 
     class ViewHolderUploaded extends RecyclerView.ViewHolder {

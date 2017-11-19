@@ -49,7 +49,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import org.apmem.tools.layouts.FlowLayout;
 import org.jetbrains.annotations.Contract;
@@ -59,7 +58,6 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -85,7 +83,7 @@ import static com.example.hiroyuki3.worksupportlibw.Adapters.AnalyticsVPAdapter.
  * AnalyticsVPAdapterのお助けやくおじさん！みんな協力して働くんだね！
  */
 
-public class AnalyticsVPUiOperator implements ValueEventListener, IValueFormatter, ViewTreeObserver.OnScrollChangedListener, OnChartValueSelectedListener {
+public class AnalyticsVPUiOperator implements IValueFormatter, ViewTreeObserver.OnScrollChangedListener, OnChartValueSelectedListener {
 
     private static final String TAG = "MANUAL_TAG: " + AnalyticsVPUiOperator.class.getSimpleName();
     private static final float LINE_WIDTH = 3f;
@@ -148,9 +146,9 @@ public class AnalyticsVPUiOperator implements ValueEventListener, IValueFormatte
     }
 
     public interface IAnalyticsVPUiOperator {
-        public void onClickDownBtn();
-        public void onClickUpBtn();
-        public void onScrollChanged(HorizontalScrollView scrollView, int x);
+        void onClickDownBtn();
+        void onClickUpBtn();
+        void onScrollChanged(HorizontalScrollView scrollView, int x);
     }
 
     private void initParams(){
@@ -790,20 +788,20 @@ public class AnalyticsVPUiOperator implements ValueEventListener, IValueFormatte
         return hsv;
     }
 
-    @Override
-    public void onDataChange(DataSnapshot dataSnapshot) {
-        if (!dataSnapshot.exists()){
-            Log.d(TAG, "onDataChange: !dataSnapshot.exists()" + dataSnapshot.getRef().getKey());
-        } else {
-            List<HashMap<String, Object>> list = ( List<HashMap<String, Object>>) dataSnapshot.getValue();
-            Log.d(TAG, "onDataChange: ふにふに" + dataSnapshot.getRef().toString());//todo なにこれ？笑修正すること
-        }
-    }
-
-    @Override
-    public void onCancelled(DatabaseError databaseError) {
-        Log.w(TAG, "onCancelled: " + databaseError.getMessage());
-    }
+//    @Override
+//    public void onDataChange(DataSnapshot dataSnapshot) {
+//        if (!dataSnapshot.exists()){
+//            Log.d(TAG, "onDataChange: !dataSnapshot.exists()" + dataSnapshot.getRef().getKey());
+//        } else {
+//            List<HashMap<String, Object>> list = ( List<HashMap<String, Object>>) dataSnapshot.getValue();
+//            Log.d(TAG, "onDataChange: ふにふに" + dataSnapshot.getRef().toString());//todo なにこれ？笑修正すること
+//        }
+//    }
+//
+//    @Override
+//    public void onCancelled(DatabaseError databaseError) {
+//        Log.w(TAG, "onCancelled: " + databaseError.getMessage());
+//    }
 
     @OnClick(R2.id.up_btn)
     void wOnClickUpBtn(){

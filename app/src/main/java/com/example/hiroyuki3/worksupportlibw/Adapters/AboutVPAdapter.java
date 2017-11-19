@@ -49,13 +49,13 @@ public class AboutVPAdapter extends PagerAdapter implements CompoundButton.OnChe
     }
 
     public interface IAboutVPAdapter{
-        public void onClickLibItem();
-        public void onClickLauncher();
-        public void onClickResetData();
-        public void onClickAppLicense();
-        public void onClickAppTos();
-        public void onClickNotification();
-        public void onSwitchChange(boolean show);
+        void onClickLibItem();
+        void onClickLauncher();
+        void onClickResetData();
+        void onClickAppLicense();
+        void onClickAppTos();
+        void onClickNotification();
+        void onSwitchChange(boolean show);
     }
 
 

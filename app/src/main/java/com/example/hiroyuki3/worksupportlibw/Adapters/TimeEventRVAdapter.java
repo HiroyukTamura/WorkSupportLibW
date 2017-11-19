@@ -75,8 +75,8 @@ public class TimeEventRVAdapter extends RecyclerView.Adapter implements Comparat
     }
 
     public interface ITimeEventRVAdapter{
-        public void onClickItem(Bundle bundle);
-        public void onRemoveItem(int dataNum, RecordVpItemTime vpItemTime);
+        void onClickItem(Bundle bundle);
+        void onRemoveItem(int dataNum, RecordVpItemTime vpItemTime);
 //        public void onRemoveItem();
     }
 

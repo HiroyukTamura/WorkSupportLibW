@@ -165,7 +165,7 @@ public class RecordTabVPAdapter extends PagerAdapter implements View.OnClickList
     }
 
     public interface AdapterCallback {
-        public void postOnClick(Calendar cal);
+        void postOnClick(Calendar cal);
     }
 
     private List<String> makeWofList(int startOfWeek){
