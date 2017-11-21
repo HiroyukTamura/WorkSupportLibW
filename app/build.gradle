@@ -21,6 +21,7 @@ repositories {
 }
 
 apply plugin: 'com.android.library'
+apply plugin: 'io.fabric'
 
 android {
     compileSdkVersion 27
