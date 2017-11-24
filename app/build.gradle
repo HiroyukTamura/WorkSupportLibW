@@ -9,7 +9,8 @@ buildscript {
 
     dependencies {
         classpath 'io.fabric.tools:gradle:1.+'
-        classpath 'com.jakewharton:butterknife-gradle-plugin:8.8.1'
+        classpath 'com.jakewharton:butterknife-gradle-plugin:9.0.0-SNAPSHOT'
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.0'
     }
 }
 
@@ -22,6 +23,7 @@ repositories {
 
 apply plugin: 'com.android.library'
 apply plugin: 'io.fabric'
+apply plugin: 'com.github.dcendents.android-maven'
 
 android {
     compileSdkVersion 27
@@ -85,11 +87,11 @@ dependencies {
     compile 'com.firebaseui:firebase-ui:3.1.0'
     compile 'com.github.SumiMakito:AwesomeQRCode:1.0.6'
     compile 'com.gordonwong:material-sheet-fab:1.2.1'
-    compile 'com.github.HiroyukTamura:WorkSupprotLib:628cc67'
+    compile 'com.github.HiroyukTamura:WorkSupprotLib:2.2.10'
     compile 'de.hdodenhof:circleimageview:2.2.0'
     compile 'com.github.PhilJay:MPAndroidChart:v3.0.2'
     compile 'com.github.castorflex.verticalviewpager:library:19.0.1'
-    compile 'com.jakewharton:butterknife:8.8.1'
+    compile 'com.jakewharton:butterknife:9.0.0-SNAPSHOT'
     //    compile 'com.android.support:multidex:1.0.2'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:9.0.0-SNAPSHOT'
 }
