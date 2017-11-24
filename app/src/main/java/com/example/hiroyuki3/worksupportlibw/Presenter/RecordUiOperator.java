@@ -158,6 +158,7 @@ public class RecordUiOperator implements RecordVpItemTime.IRecordVpItemTime, Rec
 
     @Override
     public void onClickCommentName(int dataNum) {
+
         //do nothing
     }
 
