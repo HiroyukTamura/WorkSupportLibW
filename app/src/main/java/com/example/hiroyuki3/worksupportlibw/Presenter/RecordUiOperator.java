@@ -139,8 +139,6 @@ public class RecordUiOperator implements RecordVpItemTime.IRecordVpItemTime, Rec
 
     @Override
     public void onClickParamsAddBtn(int dataNum) {
-
-
         //なにもしない
     }
 
