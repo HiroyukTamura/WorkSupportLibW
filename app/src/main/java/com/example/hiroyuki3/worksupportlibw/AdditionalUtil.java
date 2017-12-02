@@ -1,5 +1,6 @@
 package com.example.hiroyuki3.worksupportlibw;
 
+
 import android.support.annotation.NonNull;
 
 import com.cks.hiroyuki2.worksupprotlib.Entity.User;
@@ -7,7 +8,7 @@ import com.cks.hiroyuki2.worksupprotlib.Entity.User;
 import java.util.List;
 
 /**
- * Created by hiroyuki2 on 2017/11/07.
+ * ユーティリティクラス。全てstaticで書いてください。また、特に必要がなければlibのutilに移植してください。
  */
 
 public class AdditionalUtil {
