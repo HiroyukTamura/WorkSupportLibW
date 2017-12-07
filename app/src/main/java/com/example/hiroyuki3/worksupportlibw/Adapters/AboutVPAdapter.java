@@ -109,7 +109,8 @@ public class AboutVPAdapter extends PagerAdapter implements CompoundButton.OnChe
                 String string = item0.appName + "から退会する";
                 item0.titleLL1.setText(string);
                 item0.toggle.setChecked(pref.getBoolean(PREF_KEY_SHOW_NAV_IMG, true));
-                item0.toggle.setOnCheckedChangeListener(this);
+                item0.toggle.setEnabled(false);
+                /*item0.toggle.setOnCheckedChangeListener(this);*/
                 break;
             case 1:
                 view = inflater.inflate(R.layout.about_vp_item1, null);
