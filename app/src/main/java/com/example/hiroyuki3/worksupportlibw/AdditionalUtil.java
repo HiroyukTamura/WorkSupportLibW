@@ -10,7 +10,6 @@ import java.util.List;
 /**
  * ユーティリティクラス。全てstaticで書いてください。また、特に必要がなければlibのutilに移植してください。
  */
-
 public class AdditionalUtil {
     public static final String ADD_NEW_TAG = "ADD_NEW_TAG";
 
