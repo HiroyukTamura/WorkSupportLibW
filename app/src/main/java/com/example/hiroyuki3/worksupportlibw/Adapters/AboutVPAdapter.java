@@ -97,6 +97,7 @@ public class AboutVPAdapter extends PagerAdapter implements CompoundButton.OnChe
         }
     }
 
+
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
