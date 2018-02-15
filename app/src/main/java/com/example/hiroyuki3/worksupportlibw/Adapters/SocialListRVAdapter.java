@@ -37,6 +37,7 @@ import cn.refactor.library.SmoothCheckBox;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.view.View.VISIBLE;
+import static com.cks.hiroyuki2.worksupprotlib.Util.UNSET_NAME;
 import static com.example.hiroyuki3.worksupportlibw.AdditionalUtil.CODE_ADD_GROUP_FRAG;
 import static com.example.hiroyuki3.worksupportlibw.AdditionalUtil.CODE_SOCIAL_FRAG;
 
@@ -117,8 +118,9 @@ public class SocialListRVAdapter extends RecyclerView.Adapter implements SmoothC
         ((ViewHolder) holder).container.setTag(position);
         User user = list.get(position);
         String name = user.getName();
-        if (name == null)
-            return;
+        if (name == null || name.toUpperCase().equals("null")) {
+            name = UNSET_NAME;
+        }
         ((ViewHolder)holder).name.setText(name);
 
         int color;
