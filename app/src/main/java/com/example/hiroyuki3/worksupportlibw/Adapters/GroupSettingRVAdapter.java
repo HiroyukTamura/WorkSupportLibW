@@ -19,7 +19,6 @@ import android.widget.TextView;
 
 import com.cks.hiroyuki2.worksupportlib.R2;
 import com.cks.hiroyuki2.worksupprotlib.Entity.User;
-import com.example.hiroyuki3.worksupportlibw.AdditionalUtil;
 import com.example.hiroyuki3.worksupportlibw.R;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -32,6 +31,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
+import static com.cks.hiroyuki2.worksupprotlib.Util.getPosFromUid;
 import static com.cks.hiroyuki2.worksupprotlib.Util.onError;
 import static com.cks.hiroyuki2.worksupprotlib.Util.setImgFromStorage;
 import static com.cks.hiroyuki2.worksupprotlib.Util.setNullableText;
@@ -152,7 +152,7 @@ void onClickGroupMember(Bundle bundle);
             return;
 
         Bundle bundle = new Bundle();
-        int pos = getPosFromUid(uid);
+        int pos = getPosFromUid(userList, uid);
         if (pos == Integer.MAX_VALUE){
             onError(fragment, TAG+"pos == Integer.MAX_VALUE", R.string.error);
             return;
@@ -178,7 +178,7 @@ void onClickGroupMember(Bundle bundle);
         return userList.get(pos);
     }
 
-    public int getPosFromUid(@NonNull String uid){
-        return AdditionalUtil.getPosFromUid(userList, uid);
-    }
+//    public int getPosFromUid(@NonNull String uid){
+//        return AdditionalUtil.getPosFromUid(userList, uid);
+//    }
 }
