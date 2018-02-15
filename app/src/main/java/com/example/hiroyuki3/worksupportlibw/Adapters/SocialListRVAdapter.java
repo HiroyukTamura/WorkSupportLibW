@@ -118,7 +118,7 @@ public class SocialListRVAdapter extends RecyclerView.Adapter implements SmoothC
         ((ViewHolder) holder).container.setTag(position);
         User user = list.get(position);
         String name = user.getName();
-        if (name == null || name.toUpperCase().equals("null")) {
+        if (name == null || name.toLowerCase().equals("null")) {
             name = UNSET_NAME;
         }
         ((ViewHolder)holder).name.setText(name);
