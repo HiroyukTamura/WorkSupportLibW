@@ -62,7 +62,7 @@ dependencies {
 //    compile 'com.android.support:palette-v7:27.0.1'//appcompatのバージョンコンフリクトエラーを消すためのもの
 //    compile 'com.android.support:design:27.0.1'//appcompatのバージョンコンフリクトエラーを消すためのもの
     compile 'junit:junit:4.12'
-    testCompile 'com.android.support.test:runner:1.0.1'9
+    testCompile 'com.android.support.test:runner:1.0.1'
     androidTestCompile('com.android.support.test.espresso:espresso-core:3.0.1', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
