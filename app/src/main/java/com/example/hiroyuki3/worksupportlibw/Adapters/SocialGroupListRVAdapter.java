@@ -30,6 +30,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static com.cks.hiroyuki2.worksupprotlib.Util.UNSET_NAME;
+
 /**
  * SocialFragment所属。GroupListを表示するRecyclerViewのAdapter
  */
@@ -87,13 +89,13 @@ public class SocialGroupListRVAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         ((ViewHolder) holder).container.setTag(position);
         GroupInUserDataNode group = list.get(position);
-        ((ViewHolder) holder).name.setText(group.name);
-
-        int color;
-        if (group.added)
-            color =  ((ViewHolder) holder).white;
+        if (group.name == null || group.name.toLowerCase().equals("null"))
+            ((ViewHolder) holder).name.setText(UNSET_NAME);
         else
-            color = ((ViewHolder) holder).greenLight;
+            ((ViewHolder) holder).name.setText(group.name);
+
+        int color = group.added ?
+                ((ViewHolder) holder).white : ((ViewHolder) holder).greenLight;
         ((ViewHolder) holder).container.setBackgroundColor(color);
         ((ViewHolder) holder).icon.setImageDrawable(null);
         ((ViewHolder) holder).iconInner.setImageDrawable(null);
