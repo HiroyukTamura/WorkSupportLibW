@@ -206,14 +206,14 @@ public class SocialListRVAdapter extends RecyclerView.Adapter implements SmoothC
 
     private void setImgOnCircle(User user, final CircleImageView civ, final ImageView iv){
         if (user.getPhotoUrl() != null && !user.getPhotoUrl().equals("null")){
-            Picasso.with(iv.getContext())
+            Picasso.get()
                     .load(user.getPhotoUrl())
                     .into(civ, new Callback() {
                         @Override
                         public void onSuccess() {}
 
                         @Override
-                        public void onError() {
+                        public void onError(Exception e) {
                             SocialListRVAdapter.this.onError(civ, iv);
                         }
                     });

@@ -95,7 +95,7 @@ public class AddFriendVPAdapter extends PagerAdapter implements Callback{
                 view = inflater.inflate(R.layout.addfriend_vp_item_qr, null);
                 ButterKnife.bind(this, view);
                 File file = new File(context.getFilesDir(), QR_FILE_NAME);
-                Picasso.with(context).load(file).into(iv, this);
+                Picasso.get().load(file).into(iv, this);
 
 //                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 //                if (user == null){
@@ -206,7 +206,8 @@ public class AddFriendVPAdapter extends PagerAdapter implements Callback{
     }
 
     @Override
-    public void onError() {
+    public void onError(Exception e) {
         toastNullable(context, R.string.qr_err_msg);
+        e.printStackTrace();
     }
 }

@@ -99,13 +99,15 @@ public class SocialGroupListRVAdapter extends RecyclerView.Adapter {
         ((ViewHolder) holder).container.setBackgroundColor(color);
         ((ViewHolder) holder).icon.setImageDrawable(null);
         ((ViewHolder) holder).iconInner.setImageDrawable(null);
-        Picasso.with(fragment.getContext())
+        Picasso.get()
                 .load(group.groupKey)
                 .into(((ViewHolder) holder).icon, new Callback() {
+
                     @Override
-                    public void onError() {
+                    public void onError(Exception e) {
                         ((ViewHolder) holder).icon.setImageDrawable(defaultDrw);
                         ((ViewHolder) holder).iconInner.setImageResource(R.drawable.ic_group_white_24dp);
+                        e.printStackTrace();
                     }
 
                     @Override
