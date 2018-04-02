@@ -43,7 +43,7 @@ public class TempItemTagPool extends RecordVpItem {
     @BindView(R2.id.tag_box0) FlowLayout fl0;
     @BindView(R2.id.tag_box1) FlowLayout fl1;
 
-    public TempItemTagPool(Fragment frag, List<RecordData> list, int dataNum){
+    public TempItemTagPool(@NonNull Fragment frag, @NonNull List<RecordData> list, int dataNum){
         super(list.get(dataNum), dataNum, null, frag);
         this.dataNum = dataNum;
         if (frag instanceof ITempItemTagPool){
@@ -110,7 +110,7 @@ public class TempItemTagPool extends RecordVpItem {
         }
     }
 
-    private void setFlHeightIfEmpty(FlowLayout fl){
+    private void setFlHeightIfEmpty(@NonNull FlowLayout fl){
         if (fl.getChildCount() != 0)
             return;
 
@@ -120,7 +120,7 @@ public class TempItemTagPool extends RecordVpItem {
         fl.addView(view1);
     }
 
-    private void deleteDummyIfExist(FlowLayout fl){
+    private void deleteDummyIfExist(@NonNull FlowLayout fl){
         View dummy = fl.findViewWithTag(DUMMY_VIEW);
         if (dummy != null)
             ((FlowLayout) dummy.getParent()).removeView(dummy);
@@ -135,7 +135,7 @@ public class TempItemTagPool extends RecordVpItem {
 
         tagList.remove(tagNum);
         for (int j = 0; j < tagList.size(); j++) {
-            tagList.get(j).updateDataNum(j);
+            tagList.get(j).updateTagNum(j);
         }
     }
 

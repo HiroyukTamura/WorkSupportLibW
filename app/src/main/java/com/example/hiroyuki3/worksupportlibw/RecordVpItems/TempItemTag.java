@@ -79,9 +79,10 @@ public class TempItemTag {
 //        frag.onClickTag(tagNum, dataNum, value);
     }
 
-    void updateDataNum(int dataNum){
-        this.dataNum = dataNum;
-        view.setTag(dataNum);
+    //todo これですよね
+    void updateTagNum(int tagNum){
+        this.tagNum = tagNum;
+        view.setTag(tagNum);
     }
 
     void updateValue(@NonNull String value){
